@@ -1,0 +1,146 @@
+.sign-in-page {
+  width: 100%;
+  min-height: 100svh; /* Use 100svh to account for mobile browser UI */
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.sign-in-card {
+  width: min(100%, 550px);
+  padding: 40px 20px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #7EC7FF 0%, #ADFFDA 100%);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.10);
+}
+
+.sign-in-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  font-family: 'Inter';
+  font-size: 18px;
+}
+
+.sign-in-brand .brand-mark {
+  width: 40px;
+  height: 40px;
+  position: relative;
+}
+
+.sign-in-brand .brand-mark i {
+  position: absolute;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ccd6e5;
+}
+
+.sign-in-brand .brand-mark i:first-child {
+  top: 0;
+}
+
+.sign-in-card h1 {
+  text-align: center;
+  font-family: 'Inter';
+  font-size: 16px;
+ 
+}
+
+.sign-in-card > p {
+  font-family: 'Inter Regular';
+  margin: 10px 0 12px;
+  text-align: center;
+  color: #515151;
+  font-size: 12px;
+}
+
+.social-button,
+.create-account-button,
+.submit-button,
+.sign-in-card input {
+
+    width: 100%;
+    display: flex;
+    padding: 16px 40px;
+    justify-content: center;
+    align-items: center;
+   
+border-radius: 50px;
+border: 0;
+  background: #fff;
+box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.10);
+    font-size: 16px;
+    font-family: 'Inter';
+    }
+
+
+
+.social-button,
+.create-account-button,
+.submit-button {
+  cursor: pointer;
+}
+
+.social-button + .social-button {
+  margin-top: 12px;
+}
+
+.sign-in-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 14px 0;
+  color: #BABABA;
+  font-size: 12px;
+  font-family: 'Inter Regular';
+}
+
+.sign-in-divider::before,
+.sign-in-divider::after {
+  content: '';
+  height: 1px;
+  flex: 1;
+  background: #b8b8b8;
+}
+
+.sign-in-card form {
+  display: grid;
+  gap: 7px;
+}
+
+.sign-in-card label {
+  font-size: 14px;
+  font-family: 'Inter';
+}
+
+
+
+.sign-in-card input + label {
+  margin-top: 9px;
+}
+
+.submit-button {
+  height: 60px;
+  margin-top: 6px;
+  border: 0;
+  background: #000;
+  color: #fff;
+}
+
+.create-account-button {
+  height: 60px;
+  margin-top: 12px;
+}
+
+#email,
+#password {
+    font-family: 'Inter';
+    font-size: 12px;
+}
+

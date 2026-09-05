@@ -1,0 +1,178 @@
+
+.home-page {
+  background: #000;
+  color: #fff;
+  font-family: 'Inter', Arial, sans-serif;
+}
+
+.home-header {
+  height: 72px;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  background: #fff;
+  color: #0a0a0a;
+}
+
+.brand {
+  font-family: 'Inter';
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.brand-mark {
+  width: 46px;
+  height: 46px;
+  display: block;
+  position: relative;
+}
+
+.brand-mark i {
+  position: absolute;
+  left: 0;
+  width: 46px;
+  height: 27px;
+  border-radius: 50% 50% 45% 45%;
+  background: #ccd6e5;
+}
+
+.brand-mark i:first-child {
+  top: 0;
+}
+
+.brand-mark i:last-child {
+  top: 30px;
+  left: 3px;
+  width: 40px;
+  height: 14px;
+}
+
+.login-button {
+  border: 1.5px solid currentColor;
+  background: transparent;
+  color: inherit;
+  border-radius: 28px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.login-button {
+  width: 82px;
+  height: 38px;
+  font-family: 'Inter Regular';
+  font-size: 12px
+}
+  
+
+.hero-copy {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.hero-copy h1 {
+  display: block;
+  margin: 0;
+  font-family: 'Inter Bold';
+  font-weight: 700;
+  font-size: 40px;
+  padding: 53px 0 0;
+}
+
+.hero-copy strong {
+  display: block;
+  background: linear-gradient(180deg, #7EC7FF 0%, #ADFFDA 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-copy p {
+  font-family: 'Inter';
+  margin: 20px 0;
+  font-size: 16px;
+
+}
+
+.characters {
+  margin: 68px auto 0;
+}
+
+.characters img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.welcome-panel {
+  position: relative;
+  z-index: 2; 
+  max-width: 100%;
+  margin-top: -28px;
+  padding: 20px 32px;
+  box-sizing: border-box;
+  border-radius: 40px 40px 0 0;
+  background: linear-gradient(180deg, #7EC7FF 5.17%, #ADFFDA 99.95%);
+  color: #070707;
+}
+
+.welcome-panel h2 {
+  display: block;
+  margin: 0;
+  font-family: 'Inter Bold';
+  font-size: 20px;
+  font-weight: 700;
+  unicode-bidi: normal;
+}
+
+.welcome-panel p {
+ font-family: 'Inter Regular';
+  font-size: 12px;
+}
+
+.primary-button {
+  margin-top: 33px;
+  display: flex;
+  height: 59px;
+  padding: 16px 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+  width: 100%;
+  font: inherit;
+  font-size: 16px;
+  cursor: pointer;
+  border: 0; 
+  border-radius: 50px;
+  background: #FFF;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
+}
+
+
+
+.secondary-button {
+  background: transparent;
+  width: 100%;
+  margin-top: 30px;
+  color: #070707;
+  border-radius: 50px;
+  border: 1px solid #000;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.10);
+  display: flex;
+  height: 59px;
+  padding: 16px 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+  font-size: 16px;
+}
+
