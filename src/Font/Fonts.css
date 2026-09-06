@@ -3,7 +3,8 @@
   src: url('../Font/Inter_18pt-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  line-height: normal;
+  font-display: swap; /*คือ จะช่วยให้ฟอนต์โหลดได้เร็วขึ้นและไม่บล็อกการแสดงผลของหน้าเว็บ*/
 }
 
 @font-face {
@@ -11,6 +12,7 @@
   src: url('../Font/Inter_18pt-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
+  line-height: normal;
   font-display: swap;
 }
 
@@ -19,5 +21,6 @@
   src: url('../Font/Inter_18pt-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
+  line-height: normal;
   font-display: swap;
 }

@@ -1,6 +1,6 @@
 import './SignIn.css'
 import '../Font/Fonts.css'
-function SignIn() {
+function SignIn({ onCreateAccount }: { onCreateAccount: () => void }) {
 	return (
 		<main className="sign-in-page">
 			<section className="sign-in-card">
@@ -22,14 +22,13 @@ function SignIn() {
 				<form>
 					<label htmlFor="email">Email</label>
 					<input id="email" type="email" placeholder="Enter your name" />
-
 					<label htmlFor="password">Password</label>
 					<input id="password" type="password" placeholder="***********" />
 
 					<button className="submit-button" type="submit">Log in</button>
 				</form>
 
-				<button className="create-account-button" type="button">Create account</button>
+				<button className="create-account-button" type="button" onClick={onCreateAccount}>Create account</button>
 			</section>
 		</main>
 	)
