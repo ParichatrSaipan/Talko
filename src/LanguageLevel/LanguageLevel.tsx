@@ -3,7 +3,7 @@ import '../Font/Fonts.css'
 import '../QuestionPage/QuestionPage.css'
 import './LanguageLevel.css'
 
-function LanguageLevel({ onBack }: { onBack: () => void }) {
+function LanguageLevel({ onBack, onContinue }: { onBack: () => void; onContinue: () => void }) {
   return (
     <main className="question-page language-level-page">
       <header className="question-header">
@@ -28,7 +28,7 @@ function LanguageLevel({ onBack }: { onBack: () => void }) {
           <img src={characterYellow} alt="Talko character" />
         </div>
 
-        <button className="language-level-continue" type="button">Continue</button>
+        <button className="language-level-continue" type="button" onClick={onContinue}>Continue</button>
       </section>
     </main>
   )
