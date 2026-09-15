@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import '../Font/Fonts.css'
 import './LanguageLevel.css'
+import Header from '../Header/Header.Component'
+import type { MenuDestination } from '../Hamburger/Menu'
 
 const answers = [
   { letter: 'A', text: 'have' },
@@ -9,19 +11,12 @@ const answers = [
   { letter: 'D', text: 'having' },
 ]
 
-function LevelTest({ onBack, onNext }: { onBack: () => void; onNext: () => void }) {
+function LevelTest({ onBack, onNext, onMenuNavigate }: { onBack: () => void; onNext: () => void; onMenuNavigate?: (destination: MenuDestination) => void }) {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
 
   return (
     <main className="level-test-page">
-      <header className="level-test-header">
-        <div className="level-test-brand">
-          <span className="level-test-brand-mark" aria-hidden="true">
-            <i />
-          </span>
-          <span>Talko</span>
-        </div>
-      </header>
+      <Header onMenuNavigate={onMenuNavigate} />
 
       <section className="level-test-content">
         <div className="level-test-progress-labels">

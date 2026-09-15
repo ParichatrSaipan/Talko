@@ -1,0 +1,141 @@
+.scene-page {
+	min-height: 100svh;
+	background: #000;
+	color: #fff;
+	font-family: 'Inter', sans-serif;
+}
+
+.scene-header {
+	height: 48px;
+	padding: 0 16px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background: #fff;
+	color: #070707;
+}
+
+.scene-brand {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 14px;
+}
+
+.scene-brand-mark {
+	width: 28px;
+	height: 28px;
+	position: relative;
+	display: block;
+}
+
+.scene-brand-mark i {
+	position: absolute;
+	left: 0;
+	width: 28px;
+	height: 17px;
+	border-radius: 50%;
+	background: #ccd6e5;
+}
+
+.scene-brand-mark i:first-child {
+	top: 0;
+}
+
+.scene-brand-mark i:last-child {
+	bottom: 0;
+	height: 9px;
+	border-radius: 8px;
+}
+
+.scene-menu {
+	width: 18px;
+	height: 16px;
+	padding: 0;
+	display: grid;
+	align-content: space-between;
+	border: 0;
+	background: transparent;
+}
+
+.scene-menu span {
+	height: 2px;
+	background: #070707;
+}
+
+.scene-content {
+	min-height: calc(100svh - 74px);
+	padding: 18px 14px;
+	background: radial-gradient(circle at 50% 40%, #162b2d 0%, #071112 48%, #000 100%);
+}
+
+.scene-back {
+	width: 30px;
+	height: 30px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: #fff;
+	cursor: pointer;
+}
+
+.scene-back::before {
+	content: '';
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	border-left: 2px solid #111;
+	border-bottom: 2px solid #111;
+	transform: rotate(45deg) translate(2px, -2px);
+}
+
+.scene-card {
+	max-width: 320px;
+	margin: 50px auto 0;
+	padding: 12px;
+	border: 2px solid #8be8ff;
+	border-radius: 16px;
+	background: linear-gradient(160deg, #75c8ff, #a7ffd9);
+	box-shadow: 0 0 8px rgba(139, 232, 255, .7);
+}
+
+.scene-card-body {
+	min-height: 205px;
+	padding: 20px 14px;
+	border-radius: 7px;
+	background: #fff;
+	color: #555;
+}
+
+.scene-card h1 {
+	margin: 0 0 18px;
+	color: #25aeea;
+	font-size: 18px;
+}
+
+.scene-card p,
+.scene-card li {
+	font-size: 11px;
+	line-height: 1.8;
+}
+
+.scene-card p {
+	margin: 0 0 8px;
+}
+
+.scene-card ul {
+	margin: 0;
+	padding-left: 15px;
+}
+
+.scene-practice {
+	width: 100%;
+	height: 40px;
+	margin-top: 34px;
+	border: 0;
+	border-radius: 24px;
+	background: #000;
+	color: #fff;
+	font: 12px 'Inter', sans-serif;
+	cursor: pointer;
+}

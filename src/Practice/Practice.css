@@ -1,0 +1,145 @@
+.practice-page {
+	min-height: 100svh;
+	background:
+		radial-gradient(circle at 0 100%, rgba(36, 80, 68, .82), transparent 48%),
+		radial-gradient(circle at 0 0, #1a3444, transparent 40%),
+		#000;
+	color: #fff;
+	font-family: 'Inter', sans-serif;
+}
+
+.practice-content {
+	width: min(100%, 430px);
+	margin: 0 auto;
+	padding: 18px 15px 40px;
+}
+
+.practice-back {
+	width: 34px;
+	height: 34px;
+	padding: 0 0 2px;
+	display: grid;
+	place-items: center;
+	border: 0;
+	border-radius: 50%;
+	background: #fff;
+	color: #080808;
+	font: 30px/1 'Inter Regular', sans-serif;
+	cursor: pointer;
+}
+
+.practice-tabs {
+	margin-top: 14px;
+	display: flex;
+	gap: 8px;
+}
+
+.practice-tabs button {
+	height: 34px;
+	padding: 0 13px;
+	border: 2px solid transparent;
+	border-radius: 999px;
+	background: #fff;
+	color: #080808;
+	font: 12px 'Inter Regular', 'Inter', sans-serif;
+	cursor: pointer;
+}
+
+.practice-tabs button.is-active {
+	border-color: #91eed8;
+	background: #73c2f4;
+	font-family: 'Inter Bold', 'Inter', sans-serif;
+}
+
+.practice-list {
+	margin-top: 23px;
+	display: grid;
+	gap: 10px;
+}
+
+.practice-card {
+	width: 100%;
+	min-height: 66px;
+	padding: 8px 12px 8px 10px;
+	display: grid;
+	grid-template-columns: 48px 1fr auto;
+	align-items: center;
+	gap: 16px;
+	border: 0;
+	border-radius: 16px;
+	background: #fff;
+	color: #080808;
+	font: inherit;
+	text-align: left;
+	cursor: pointer;
+}
+
+.practice-icon {
+	width: 48px;
+	height: 48px;
+	position: relative;
+	border-radius: 7px;
+	background: #f1f1f1;
+}
+
+.practice-icon img {
+	width: 30px;
+	height: 30px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	object-fit: contain;
+	transform: translate(-50%, -50%);
+}
+
+.practice-card-copy {
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.practice-card-copy strong {
+	font-family: 'Inter Bold', 'Inter', sans-serif;
+	font-size: 13px;
+	line-height: 1.15;
+}
+
+.practice-card-copy small {
+	margin-top: 2px;
+	color: #666;
+	font: 10px 'Inter Regular', 'Inter', sans-serif;
+}
+
+.practice-status {
+	margin-top: 4px;
+	padding: 3px 6px;
+	border-radius: 999px;
+	font: 8px 'Inter Regular', 'Inter', sans-serif;
+}
+
+.practice-status i {
+	font-style: normal;
+}
+
+.practice-status--progress {
+	background: #ffafb0;
+	color: #c62d35;
+}
+
+.practice-status--completed {
+	background: #b7f78f;
+	color: #3d9b19;
+}
+
+.practice-card-arrow {
+	color: #555;
+	font-size: 24px;
+}
+
+.practice-back:focus-visible,
+.practice-tabs button:focus-visible,
+.practice-card:focus-visible {
+	outline: 3px solid #8de7ed;
+	outline-offset: 3px;
+}

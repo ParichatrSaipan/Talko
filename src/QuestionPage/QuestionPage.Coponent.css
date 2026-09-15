@@ -17,7 +17,7 @@
 .question-brand {
   display: flex;
   align-items: center;
-  gap: 13px;
+  gap: 10px;
   font-family: 'Inter';
   font-size: 18px;
 }

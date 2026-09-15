@@ -1,8 +1,11 @@
-import '../Font/Fonts.css'
+//หน้าซีนย่อย ของแต่ละหัวข้อย่อย
+import '../../Font/Fonts.css'
 import './ChooseTopics.css'
-import interviewIcon from '../assets/icon_Interview.svg'
-import workIcon from '../assets/icon_Work.svg'
-import travelIcon from '../assets/icon_Travel.svg'
+import interviewIcon from '../../assets/icon_Interview.svg'
+import workIcon from '../../assets/icon_Work.svg'
+import travelIcon from '../../assets/icon_Travel.svg'
+import Header from '../../Header/Header.Component'
+import type { MenuDestination } from '../../Hamburger/Menu'
 
 const topics = [
 	{ title: 'Interview', description: 'Prepare for real interview conversations.', icon: interviewIcon },
@@ -14,20 +17,13 @@ type ChooseTopicsProps = {
 	onInterviewSelect?: () => void
 	onWorkSelect?: () => void
 	onTravelSelect?: () => void
+	onMenuNavigate?: (destination: MenuDestination) => void
 }
 
-function ChooseTopics({ onInterviewSelect, onWorkSelect, onTravelSelect }: ChooseTopicsProps) {
+function ChooseTopics({ onInterviewSelect, onWorkSelect, onTravelSelect, onMenuNavigate }: ChooseTopicsProps) {
 	return (
 		<main className="topics-page">
-			<header className="topics-header">
-				<div className="topics-brand">
-					<span className="topics-brand-mark" aria-hidden="true"><i /><i /></span>
-					<span>Talko</span>
-				</div>
-				<button className="topics-menu" type="button" aria-label="Open menu">
-					<span /><span /><span /><span />
-				</button>
-			</header>
+			<Header onMenuNavigate={onMenuNavigate} />
 
 			<section className="topics-content">
 				<h1>What do you want to<br /><span>practice?</span></h1>

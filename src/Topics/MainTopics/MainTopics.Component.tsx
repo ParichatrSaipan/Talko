@@ -1,11 +1,16 @@
+//หน้าหัวข้อหลักแต่ละหมวดหมู่ interview, work, travel
 import '../../Font/Fonts.css'
 import './MainTopics.Component.css'
 import interviewIcon from '../../assets/icon_Interview.svg'
 import mainImage from '../../assets/image_main.svg'
+import Header from '../../Header/Header.Component'
+import type { MenuDestination } from '../../Hamburger/Menu'
 
-type TopicCard = {
+export type TopicCard = {
 	title: string
 	description: string
+	sceneTitle: string
+	practiceItems: string[]
 	status?: string
 	statusType?: 'progress' | 'completed'
 }
@@ -13,29 +18,23 @@ type TopicCard = {
 type MainTopicsComponentProps = {
 	title?: string
 	icon?: string
+	onTopicSelect?: (topic: TopicCard) => void
+	onMenuNavigate?: (destination: MenuDestination) => void
 }
 
 const topicCards: TopicCard[] = [
-	{ title: 'topics', description: 'xxxxxx', status: '10% done', statusType: 'progress' },
-	{ title: 'topics', description: 'xxxxxx' },
-	{ title: 'topics', description: 'xxxxxx' },
-	{ title: 'topics', description: 'xxxxxx', status: 'completed', statusType: 'completed' },
-	{ title: 'topics', description: 'xxxxxx', status: '50% done', statusType: 'completed' },
-	{ title: 'topics', description: 'xxxxxx' },
+	{ title: 'topics', description: 'xxxxxx', sceneTitle: 'Introduce Yourself', practiceItems: ['Understanding the situation', 'Responding naturally', 'Asking a follow-up question'], status: '10% done', statusType: 'progress' },
+	{ title: 'topics', description: 'xxxxxx', sceneTitle: 'Talk About Your Experience', practiceItems: ['Explaining your experience', 'Using useful work vocabulary', 'Answering follow-up questions'] },
+	{ title: 'topics', description: 'xxxxxx', sceneTitle: 'Describe Your Daily Work', practiceItems: ['Describing your responsibilities', 'Speaking clearly and naturally', 'Giving specific examples'] },
+	{ title: 'topics', description: 'xxxxxx', sceneTitle: 'Handle a Work Situation', practiceItems: ['Understanding the situation', 'Responding professionally', 'Asking for clarification'], status: 'completed', statusType: 'completed' },
+	{ title: 'topics', description: 'xxxxxx', sceneTitle: 'Share Your Opinion', practiceItems: ['Giving your opinion', 'Supporting your ideas', 'Responding to another opinion'], status: '50% done', statusType: 'completed' },
+	{ title: 'topics', description: 'xxxxxx', sceneTitle: 'Ask and Answer Questions', practiceItems: ['Asking clear questions', 'Responding naturally', 'Keeping the conversation going'] },
 ]
 
-function MainTopicsComponent({ title = 'Interview', icon = interviewIcon }: MainTopicsComponentProps) {
+function MainTopicsComponent({ title = 'Interview', icon = interviewIcon, onTopicSelect, onMenuNavigate }: MainTopicsComponentProps) {
 	return (
 		<main className="main-topics-page">
-			<header className="main-topics-header">
-				<div className="main-topics-brand">
-					<span className="main-topics-brand-mark" aria-hidden="true"><i /></span>
-					<span>Talko</span>
-				</div>
-				<button className="main-topics-menu" type="button" aria-label="Open menu">
-					<span /><span /><span /><span />
-				</button>
-			</header>
+			<Header onMenuNavigate={onMenuNavigate} />
 
 			<section className="main-topics-hero">
 				<span className="main-topics-hero-icon">
@@ -49,7 +48,13 @@ function MainTopicsComponent({ title = 'Interview', icon = interviewIcon }: Main
 				<p className="main-topics-intro">Choose a real-life scenario to practice.</p>
 				<div className="main-topics-grid">
 					{topicCards.map((topic, index) => (
-						<article className="main-topic-card" key={`${topic.title}-${index}`}>
+						<article
+							className="main-topic-card"
+							key={`${topic.title}-${index}`}
+							onClick={() => onTopicSelect?.(topic)}
+							role={onTopicSelect ? 'button' : undefined}
+							tabIndex={onTopicSelect ? 0 : undefined}
+						>
 							<img className="main-topic-card-image" src={mainImage} alt="" />
 							<div className="main-topic-card-copy">
 								<h2>{topic.title}</h2>

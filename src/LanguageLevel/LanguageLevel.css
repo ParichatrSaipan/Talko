@@ -88,7 +88,7 @@ font-family: 'Inter Bold';
 
 
 .level-test-content {
-  min-height: calc(100svh - 80px);
+  min-height: calc(100svh - 74px);
   padding: 59px 16px 0px;
 }
 

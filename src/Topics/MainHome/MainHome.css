@@ -1,0 +1,237 @@
+.main-home-page {
+	min-height: 100svh;
+	background:
+		radial-gradient(circle at 100% 48%, rgba(36, 76, 67, .75), transparent 42%),
+		radial-gradient(circle at 0 0, #193342, transparent 38%),
+		#000;
+	color: #fff;
+	font-family: 'Inter', sans-serif;
+}
+
+.main-home-content {
+	width: min(100%, 430px);
+	margin: 0 auto;
+	padding: 58px 18px 44px;
+}
+
+.main-home-content h1 {
+	margin: 0 0 21px;
+	font-family: 'Inter Bold', 'Inter', sans-serif;
+	font-size: 30px;
+	line-height: 1.15;
+}
+
+.main-home-content h1 span {
+	color: #8de7ed;
+}
+
+.main-home-section h2 {
+	margin: 0 0 8px;
+	font: 15px 'Inter', sans-serif;
+}
+
+.main-home-progress-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 15px;
+}
+
+.main-home-stat {
+	height: 82px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	border-radius: 19px;
+	background: #fff;
+	color: #666;
+}
+
+.main-home-stat strong {
+	margin-bottom: 7px;
+	color: #70c2fa;
+	font-family: 'Inter Bold', 'Inter', sans-serif;
+	font-size: 20px;
+}
+
+.main-home-stat span {
+	font: 10px 'Inter Regular', 'Inter', sans-serif;
+}
+
+.main-home-featured {
+	margin-top: 24px;
+}
+
+.main-home-recommended {
+	margin-top: 31px;
+}
+
+.main-home-practice-card {
+	width: 100%;
+	height: 127px;
+	padding: 0;
+	display: grid;
+	grid-template-columns: 40% 60%;
+	overflow: hidden;
+	border: 0;
+	border-radius: 19px;
+	background: linear-gradient(110deg, #9af1d8, #70c1f5);
+	color: #070707;
+	font: inherit;
+	text-align: left;
+}
+
+.main-home-card-art {
+	height: 100%;
+	position: relative;
+	display: flex;
+	align-items: end;
+	justify-content: center;
+}
+
+.main-home-card-art::before,
+.main-home-card-art::after {
+	content: '';
+	position: absolute;
+	left: -16px;
+	bottom: -43px;
+	width: 145px;
+	height: 145px;
+	border-radius: 50%;
+	background: rgba(98, 199, 244, .18);
+}
+
+.main-home-card-art::after {
+	left: 3px;
+	bottom: -25px;
+	width: 112px;
+	height: 112px;
+	background: rgba(98, 199, 244, .25);
+}
+
+.main-home-card-art img {
+	width: 112px;
+	height: 101px;
+	position: relative;
+	z-index: 1;
+	object-fit: contain;
+}
+
+.main-home-card-copy {
+	padding: 16px 20px 12px 5px;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+}
+
+.main-home-card-copy small {
+	color: #626262;
+	font: 14px 'Inter Regular', 'Inter', sans-serif;
+}
+
+.main-home-card-copy > strong {
+	margin-top: 15px;
+	font-family: 'Inter Bold', 'Inter', sans-serif;
+	font-size: 20px;
+	line-height: 1.05;
+}
+
+.main-home-card-action {
+	margin-top: auto;
+	align-self: flex-end;
+	padding: 4px 0;
+	border: 0;
+	background: transparent;
+	color: #555;
+	font: 14px 'Inter Regular', 'Inter', sans-serif;
+	cursor: pointer;
+}
+
+.main-home-card-action i {
+	margin-left: 8px;
+	font: 25px/0 'Inter', sans-serif;
+}
+
+.main-home-explore {
+	margin-top: 53px;
+}
+
+.main-home-practice-links {
+	display: grid;
+	gap: 19px;
+}
+
+.main-home-practice-links button {
+	width: 100%;
+	padding: 0;
+	display: grid;
+	grid-template-columns: 62px 1fr auto;
+	align-items: center;
+	gap: 20px;
+	border: 0;
+	background: transparent;
+	color: #fff;
+	font: inherit;
+	text-align: left;
+	cursor: pointer;
+}
+
+.main-home-link-icon {
+	width: 62px;
+	height: 62px;
+	position: relative;
+	display: block;
+	border-radius: 16px;
+	background: #fff;
+}
+
+.main-home-link-icon--chat i {
+	position: absolute;
+	top: 14px;
+	left: 13px;
+	width: 36px;
+	height: 27px;
+	border-radius: 3px;
+	background: #000;
+}
+
+.main-home-link-icon--chat i::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	bottom: -8px;
+	border-top: 11px solid #000;
+	border-right: 12px solid transparent;
+}
+
+.main-home-link-icon img {
+	width: 38px;
+	height: 38px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	object-fit: contain;
+	transform: translate(-50%, -50%);
+}
+
+.main-home-practice-links strong {
+	font-family: 'Inter Bold', 'Inter', sans-serif;
+	font-size: 16px;
+}
+
+.main-home-link-arrow {
+	font-size: 29px;
+	line-height: 1;
+}
+
+.main-home-practice-card:focus-visible,
+.main-home-card-action:focus-visible,
+.main-home-practice-links button:focus-visible {
+	outline: 3px solid #91e9dc;
+	outline-offset: 3px;
+}
+
+@media (max-width: 350px) {
+	.main-home-content h1 { font-size: 27px; }
+	.main-home-card-copy > strong { font-size: 18px; }
+}

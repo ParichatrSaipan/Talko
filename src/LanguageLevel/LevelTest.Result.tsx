@@ -2,7 +2,7 @@ import characterResult from '../assets/Character_Result.svg'
 import '../Font/Fonts.css'
 import './LanguageLevel.css'
 
-function LevelTestResult({ onBack }: { onBack: () => void }) {
+function LevelTestResult({ onContinue }: { onContinue: () => void }) {
 	return (
 		<main className="level-result-page">
 			<img className="level-result-character" src={characterResult} alt="Talko character" />
@@ -31,7 +31,7 @@ function LevelTestResult({ onBack }: { onBack: () => void }) {
 						</ul>
 					</section>
 
-					<button className="level-result-continue" type="button" onClick={onBack}>Continue</button>
+					<button className="level-result-continue" type="button" onClick={onContinue}>Continue</button>
 			</div>
 		</main>
 	)

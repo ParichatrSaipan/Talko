@@ -1,0 +1,169 @@
+.vocab-page {
+	min-height: 100svh;
+	background:
+		radial-gradient(circle at 100% 48%, rgba(34, 76, 65, .78), transparent 44%),
+		radial-gradient(circle at 0 0, #1b3544, transparent 39%),
+		#000;
+	color: #fff;
+	font-family: 'Inter', sans-serif;
+}
+
+.vocab-content {
+	width: min(100%, 430px);
+	margin: 0 auto;
+	padding: 51px 14px 48px;
+	overflow: hidden;
+}
+
+.vocab-content h1 {
+	margin: 0;
+	font-family: 'Inter Bold', 'Inter', sans-serif;
+	font-size: 30px;
+}
+
+.vocab-content h1 span {
+	color: #8de7ed;
+}
+
+.vocab-search {
+	height: 42px;
+	margin-top: 29px;
+	padding: 0 15px;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	border-radius: 999px;
+	background: #fff;
+}
+
+.vocab-search > span {
+	width: 16px;
+	height: 16px;
+	position: relative;
+	flex: 0 0 auto;
+	border: 2px solid #bfc2c5;
+	border-radius: 50%;
+}
+
+.vocab-search > span::after {
+	content: '';
+	position: absolute;
+	right: -5px;
+	bottom: -3px;
+	width: 7px;
+	height: 2px;
+	background: #bfc2c5;
+	transform: rotate(45deg);
+}
+
+.vocab-search input {
+	width: 100%;
+	min-width: 0;
+	border: 0;
+	outline: 0;
+	background: transparent;
+	color: #111;
+	font: 13px 'Inter Regular', 'Inter', sans-serif;
+}
+
+.vocab-search input::placeholder {
+	color: #bfc2c5;
+}
+
+.vocab-filters {
+	margin-top: 21px;
+	padding-bottom: 2px;
+	display: flex;
+	gap: 9px;
+	overflow-x: auto;
+	scrollbar-width: none;
+}
+
+.vocab-filters::-webkit-scrollbar {
+	display: none;
+}
+
+.vocab-filters button {
+	min-width: 94px;
+	height: 39px;
+	padding: 0 18px;
+	flex: 0 0 auto;
+	border: 1px solid #ddd;
+	border-radius: 999px;
+	background: #fff;
+	color: #111;
+	font: 13px 'Inter', sans-serif;
+	cursor: pointer;
+}
+
+.vocab-filters button.is-active {
+	border: 2px solid #91eed8;
+	background: #72c2f5;
+	font-family: 'Inter Bold', 'Inter', sans-serif;
+}
+
+.vocab-list {
+	margin-top: 37px;
+	display: grid;
+	gap: 16px;
+}
+
+.vocab-card {
+	min-height: 81px;
+	padding: 13px 21px 12px 14px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	border-radius: 18px;
+	background: #fff;
+	color: #080808;
+}
+
+.vocab-card h2 {
+	margin: 0;
+	font-family: 'Inter Bold', 'Inter', sans-serif;
+	font-size: 15px;
+}
+
+.vocab-card p {
+	margin: 4px 0 0;
+	color: #666;
+	font: 12px 'Inter Regular', 'Inter', sans-serif;
+}
+
+.vocab-card small {
+	display: block;
+	margin-top: 2px;
+	color: #6abff5;
+	font: 11px 'Inter Regular', 'Inter', sans-serif;
+}
+
+.vocab-sound {
+	width: 38px;
+	height: 38px;
+	padding: 0;
+	position: relative;
+	flex: 0 0 auto;
+	border: 0;
+	background: transparent;
+	cursor: pointer;
+}
+
+.vocab-sound img {
+	width: 25px;
+	height: 25px;
+	display: block;
+	margin: auto;
+}
+
+.vocab-sound:focus-visible {
+	outline: 2px solid #69bff6;
+	border-radius: 50%;
+}
+
+.vocab-empty {
+	margin: 30px 0;
+	color: #bbb;
+	text-align: center;
+}

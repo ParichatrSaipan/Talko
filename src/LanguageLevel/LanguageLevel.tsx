@@ -1,20 +1,14 @@
 import characterYellow from '../assets/character_Yellow_Check.svg'
 import '../Font/Fonts.css'
-import '../QuestionPage/QuestionPage.css'
+import '../QuestionPage/QuestionPage.Coponent.css'
 import './LanguageLevel.css'
+import Header from '../Header/Header.Component'
+import type { MenuDestination } from '../Hamburger/Menu'
 
-function LanguageLevel({ onBack, onContinue }: { onBack: () => void; onContinue: () => void }) {
+function LanguageLevel({ onBack, onContinue, onMenuNavigate }: { onBack: () => void; onContinue: () => void; onMenuNavigate?: (destination: MenuDestination) => void }) {
   return (
     <main className="question-page language-level-page">
-      <header className="question-header">
-        <div className="question-brand">
-          <span className="question-brand-mark" aria-hidden="true">
-            <i />
-            <i />
-          </span>
-          <span>Talko</span>
-        </div>
-      </header>
+      <Header onMenuNavigate={onMenuNavigate} />
 
       <section className="language-level-content">
         <button className="question-back-button" type="button" onClick={onBack} aria-label="Go back">

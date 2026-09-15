@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import type { FormEvent, ReactNode } from 'react'
-import './QuestionPage.css'
+import './QuestionPage.Coponent.css'
+import Header from '../Header/Header.Component'
+import type { MenuDestination } from '../Hamburger/Menu'
 
 type QuestionPageProps = {
   title: ReactNode
@@ -10,7 +12,9 @@ type QuestionPageProps = {
   onSelect?: (option: string) => void
   placeholder?: string
   onContinue?: (value: string) => void
+  onMenuNavigate?: (destination: MenuDestination) => void
 }
+
 
 function QuestionPage({
   title,
@@ -20,6 +24,7 @@ function QuestionPage({
   onSelect,
   placeholder,
   onContinue,
+  onMenuNavigate,
 }: QuestionPageProps) {
   const [selected, setSelected] = useState<string | null>(null)
   const [value, setValue] = useState('')
@@ -31,15 +36,7 @@ function QuestionPage({
 
   return (
     <main className="question-page">
-      <header className="question-header">
-        <div className="question-brand">
-          <span className="question-brand-mark" aria-hidden="true">
-            <i />
-            <i />
-          </span>
-          <span>Talko</span>
-        </div>
-      </header>
+      <Header onMenuNavigate={onMenuNavigate} />
 
       <section className="question-content">
         <button className="question-back-button" type="button" onClick={onBack} aria-label="Go back">

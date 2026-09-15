@@ -1,21 +1,13 @@
-import './Home.css'
+import './GetStarted.css'
 import characterGroup from '../assets/Character_Group.svg'
 import '../Font/Fonts.css'
+import Header from '../Header/Header.Component'
 
 
 function Home({ onSignIn }: { onSignIn: () => void }) {
   return (
     <main className="home-page">
-      <header className="home-header">
-        <div className="brand">
-          <span className="brand-mark" aria-hidden="true">
-            <i />
-            <i />
-          </span>
-          <span>Talko</span>
-        </div>
-        <button className="login-button" type="button" onClick={onSignIn}>Log In</button>
-      </header>
+      <Header action={<button className="login-button" type="button" onClick={onSignIn}>Log In</button>} />
 
       
         <div className="hero-copy">

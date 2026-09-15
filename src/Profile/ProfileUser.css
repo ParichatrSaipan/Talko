@@ -1,0 +1,239 @@
+.profile-page {
+	min-height: 100svh;
+	background:
+		radial-gradient(circle at 100% 45%, rgba(33, 76, 65, .76), transparent 44%),
+		radial-gradient(circle at 0 0, #193442, transparent 38%),
+		#000;
+	color: #fff;
+	font-family: 'Inter', sans-serif;
+}
+
+.profile-content {
+	width: min(100%, 430px);
+	margin: 0 auto;
+	padding: 25px 16px 50px;
+}
+
+.profile-user {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+}
+
+.profile-avatar {
+	width: 56px;
+	height: 56px;
+	position: relative;
+	overflow: hidden;
+	flex: 0 0 auto;
+	border-radius: 50%;
+	background: #fff;
+}
+
+.profile-avatar i {
+	position: absolute;
+	left: 50%;
+	background: #16c7e8;
+	transform: translateX(-50%);
+}
+
+.profile-avatar i:first-child {
+	top: 10px;
+	width: 23px;
+	height: 23px;
+	border-radius: 50%;
+}
+
+.profile-avatar i:last-child {
+	bottom: -6px;
+	width: 51px;
+	height: 24px;
+	border-radius: 50% 50% 0 0;
+}
+
+.profile-user h1 {
+	margin: 0;
+	color: #8de7ed;
+	font-family: 'Inter Bold', 'Inter', sans-serif;
+	font-size: 32px;
+	line-height: 1;
+}
+
+.profile-user p {
+	margin: 6px 0 0;
+	font: 12px 'Inter Regular', 'Inter', sans-serif;
+}
+
+.profile-section {
+	margin-top: 38px;
+}
+
+.profile-section h2 {
+	margin: 0 0 9px;
+	font: 14px 'Inter', sans-serif;
+}
+
+.profile-skill-card {
+	padding: 20px 16px;
+	border-radius: 19px;
+	background: #fff;
+	color: #080808;
+}
+
+.profile-skill + .profile-skill {
+	margin-top: 17px;
+}
+
+.profile-skill-label {
+	margin-bottom: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	font-size: 13px;
+}
+
+.profile-skill-label strong {
+	font-family: 'Inter Bold', 'Inter', sans-serif;
+}
+
+.profile-skill-label span {
+	font: 11px 'Inter Regular', 'Inter', sans-serif;
+}
+
+.profile-progress {
+	height: 13px;
+	overflow: hidden;
+	border-radius: 999px;
+	background: #ececec;
+}
+
+.profile-progress > span {
+	display: block;
+	height: 100%;
+	border-radius: inherit;
+	background: linear-gradient(90deg, #99f2d9, #6bbff5);
+}
+
+.profile-recent {
+	margin-top: 34px;
+}
+
+.profile-section-heading {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.profile-section-heading > button {
+	width: 32px;
+	height: 32px;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: #fff;
+	cursor: pointer;
+}
+
+.profile-section-heading > button span {
+	font-size: 26px;
+	line-height: 1;
+}
+
+.profile-section-heading > button:focus-visible {
+	outline: 2px solid #8de7ed;
+	border-radius: 4px;
+}
+
+.profile-practice-list {
+	display: grid;
+	gap: 10px;
+}
+
+.profile-practice-card {
+	width: 100%;
+	min-height: 86px;
+	padding: 11px 14px 11px 12px;
+	display: grid;
+	grid-template-columns: 62px 1fr auto;
+	align-items: center;
+	gap: 18px;
+	border: 0;
+	border-radius: 18px;
+	background: #fff;
+	color: #080808;
+	font: inherit;
+	text-align: left;
+	cursor: pointer;
+}
+
+.profile-practice-icon {
+	width: 62px;
+	height: 62px;
+	position: relative;
+	border-radius: 8px;
+	background: #f1f1f1;
+}
+
+.profile-practice-icon img {
+	width: 36px;
+	height: 36px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	object-fit: contain;
+	transform: translate(-50%, -50%);
+}
+
+.profile-practice-copy {
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.profile-practice-copy strong {
+	font-family: 'Inter Bold', 'Inter', sans-serif;
+	font-size: 15px;
+	line-height: 1.15;
+}
+
+.profile-practice-copy small {
+	margin-top: 3px;
+	color: #666;
+	font: 12px 'Inter Regular', 'Inter', sans-serif;
+}
+
+.profile-status {
+	margin-top: 5px;
+	padding: 4px 7px;
+	border-radius: 999px;
+	font: 10px 'Inter Regular', 'Inter', sans-serif;
+}
+
+.profile-status i {
+	font-style: normal;
+}
+
+.profile-status--progress {
+	background: #ffafb0;
+	color: #c62d35;
+}
+
+.profile-status--completed {
+	background: #b7f78f;
+	color: #3d9b19;
+}
+
+.profile-practice-arrow {
+	color: #555;
+	font-size: 28px;
+}
+
+.profile-practice-card:hover {
+	filter: brightness(.97);
+}
+
+.profile-practice-card:focus-visible {
+	outline: 3px solid #8de7ed;
+	outline-offset: 3px;
+}
