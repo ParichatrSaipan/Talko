@@ -1,7 +1,19 @@
 //หน้าล็อกอิน
+import type { FormEvent } from 'react'
 import './SignIn.css'
 import '../Font/Fonts.css'
-function SignIn({ onCreateAccount }: { onCreateAccount: () => void }) {
+
+type SignInProps = {
+	onCreateAccount: () => void
+	onLogin: () => void
+}
+
+function SignIn({ onCreateAccount, onLogin }: SignInProps) {
+	function handleSubmit(event: FormEvent<HTMLFormElement>) {
+		event.preventDefault()
+		onLogin()
+	}
+
 	return (
 		<main className="sign-in-page">
 			<section className="sign-in-card">
@@ -20,7 +32,7 @@ function SignIn({ onCreateAccount }: { onCreateAccount: () => void }) {
 
 				<div className="sign-in-divider"><span>or</span></div>
 
-				<form>
+				<form onSubmit={handleSubmit}>
 					<label htmlFor="email">Email</label>
 					<input id="email" type="email" placeholder="Enter your name" />
 					<label htmlFor="password">Password</label>

@@ -51,7 +51,7 @@ function App() {
   }
 
   if (page === 'sign-in') {
-    return <SignIn onCreateAccount={() => setPage('age')} />
+    return <SignIn onCreateAccount={() => setPage('age')} onLogin={() => setPage('main-home')} />
   }
 
   if (page === 'age') {

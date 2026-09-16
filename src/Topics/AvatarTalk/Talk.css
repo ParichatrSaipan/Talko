@@ -54,7 +54,7 @@
 
 .talk-content {
 	min-height: calc(100svh - 74px);
-	padding: 28px 20px 24px;
+	padding: 24px 16px;
 	position: relative;
 }
 
@@ -78,11 +78,11 @@
 }
 
 .talk-video {
-	height: 225px;
-	margin-top: 22px;
+	height: 183px;
+	margin-top: 10px;
 	position: relative;
 	overflow: hidden;
-	border-radius: 22px;
+	border-radius: 20px;
 	background: #d6d6d6 url('../../assets/image_main.svg') center / cover;
 }
 
@@ -112,19 +112,27 @@
 
 .talk-bubble {
 	max-width: 280px;
-	margin-top: 28px;
-	padding: 18px 20px;
+	margin-top: 22px;
+	padding: 16px;
 	border-radius: 24px;
 	background: #fff;
 	color: #111;
-	font-size: 17px;
-	line-height: 1.25;
+	font: 14px 'Inter Regular';
 }
 
 .talk-bubble-tools {
 	display: flex;
-	gap: 18px;
-	margin-top: 18px;
+	gap: 24px;
+	margin-top: 14px;
+}
+
+.talk-sentence-translation {
+	margin: 12px 0 0;
+	padding: 10px;
+	border-radius: 4px;
+	background: rgba(173, 255, 218, 0.20);
+	color: #666;
+	font: 14px 'Inter Regular';
 }
 
 .talk-word-token {
@@ -132,9 +140,8 @@
 	padding: 0;
 	border: 0;
 	background: transparent;
-	color: inherit;
-	font: inherit;
-	line-height: inherit;
+	color: #000;
+	font: 14px 'Inter Regular';
 	cursor: pointer;
 }
 
@@ -150,22 +157,51 @@
 	padding: 0;
 	border: 0;
 	background: transparent;
-	color: #555;
+	color: #111;
 	font-size: 22px;
 	cursor: pointer;
 }
 
 .talk-bubble-tools img,
 .talk-word-sound img {
-	width: 24px;
-	height: 24px;
+	width: 18px;
 	display: block;
 }
 
+.talk-bubble-tools img {
+	opacity: .65;
+	transition: filter .15s ease, opacity .15s ease, transform .15s ease;
+}
+
+.talk-bubble-tools button:active img,
+.talk-bubble-tools button[aria-pressed="true"] img {
+	filter: brightness(0);
+	opacity: 1;
+	transform: scale(.94);
+}
+
+.talk-user-messages {
+	margin-top: 16px;
+	display: grid;
+	justify-items: end;
+	gap: 10px;
+}
+
+.talk-user-messages p {
+	max-width: 78%;
+	margin: 0;
+	padding: 13px 17px;
+	border-radius: 20px 20px 4px 20px;
+	background: linear-gradient(135deg, #adffda, #7ec7ff);
+	color: #080808;
+	font: 16px/1.35 'Inter Regular', 'Inter', sans-serif;
+	overflow-wrap: anywhere;
+}
+
 .talk-word-sheet {
-	width: min(100%, 430px);
-	min-height: 420px;
-	padding: 44px 32px 32px;
+	width: 100%;
+	height: 330px;
+	padding: 46px 16px 20px;
 	position: fixed;
 	right: auto;
 	bottom: 0;
@@ -186,11 +222,11 @@
 	border: 0;
 	background: transparent;
 	font-size: 34px;
-	line-height: 1;
 	cursor: pointer;
 }
 
 .talk-word-heading {
+	padding: 0 16px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -214,70 +250,159 @@
 	place-items: center;
 }
 
+.talk-word-sound.is-played img {
+	filter: brightness(0);
+}
+
 .talk-bookmark {
 	width: 30px;
 	height: 34px;
 	position: relative;
+	display: grid;
+	place-items: center;
 }
 
-.talk-bookmark span {
+.talk-bookmark img {
 	width: 16px;
-	height: 21px;
-	position: absolute;
-	top: 5px;
-	left: 7px;
-	border: 2px solid #666;
-	border-bottom: 0;
-	border-radius: 2px 2px 0 0;
+	height: 20px;
+	display: block;
 }
 
-.talk-bookmark span::after {
+.talk-bookmark.is-added img {
+	opacity: 0;
+}
+
+.talk-bookmark.is-added::after {
 	content: '';
-	width: 10px;
-	height: 10px;
+	width: 16px;
+	height: 20px;
 	position: absolute;
-	left: 1px;
-	bottom: -5px;
-	border-right: 2px solid #666;
-	border-bottom: 2px solid #666;
-	background: #fff;
-	transform: rotate(45deg);
-}
-
-.talk-bookmark.is-added span,
-.talk-bookmark.is-added span::after {
-	background: #7ec7ff;
+	background: #000;
+	clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
 }
 
 .talk-word-pronunciation,
 .talk-word-translation {
-	margin: 18px 0 0;
-	color: #666;
-	font-size: 20px;
+	margin: 15px 0 0;
+	padding: 0 16px;
+	color: #515151;
+	font: 16px 'Inter Regular';
 }
 
 .talk-word-example {
-	margin: 20px 0 0;
-	font-size: 20px;
+	padding: 0 16px;
+	margin: 10px 0 0;
+	font: 16px 'Inter';
 }
 
 .talk-word-example-translation {
+	padding: 0 16px;
 	margin: 10px 0 0;
-	color: #666;
-	font-size: 20px;
+	color: #515151;
+	font: 16px 'Inter Regular';
+}
+
+.talk-controls {
+	position: absolute;
+	right: 29.5px;
+	bottom: 45px;
+	left: 29.5px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.talk-control {
+	width: 66px;
+	height: 66px;
+	padding: 0;
+	display: grid;
+	place-items: center;
+	border: 0;
+	border-radius: 50%;
+	background: #fff;
+	cursor: pointer;
+}
+
+.talk-control img {
+	width: 31px;
+	object-fit: contain;
+}
+
+.talk-control--voice {
+	width: 78px;
+	height: 78px;
+	touch-action: none;
+}
+
+.talk-control--voice img {
+	width: 24px;
+}
+
+.talk-control--voice.is-speaking {
+	background: linear-gradient(180deg, #7EC7FF 5.17%, #ADFFDA 99.95%);
+	transform: scale(.96);
+}
+
+.talk-control-hint {
+	position: absolute;
+	right: 0;
+	bottom: -23.5px;
+	left: 0;
+	text-align: center;
+	font: 12px 'Inter Regular';
+}
+
+.talk-typing {
+	position: absolute;
+	right: 20px;
+	bottom: 38px;
+	left: 20px;
+	display: grid;
+	grid-template-columns: 1fr auto auto;
+	align-items: center;
+	gap: 8px;
+	padding: 8px;
+	border-radius: 999px;
+	background: #fff;
+	box-shadow: 0 8px 28px rgba(0, 0, 0, .24);
+}
+
+.talk-typing input {
+	min-width: 0;
+	height: 44px;
+	padding: 0 14px;
+	border: 0;
+	outline: 0;
+	background: transparent;
+	color: #111;
+	font: 16px 'Inter Regular';
+}
+
+.talk-typing > button {
+	height: 42px;
+	padding: 0 16px;
+	border: 0;
+	border-radius: 999px;
+	background: linear-gradient(180deg, #7EC7FF 5.17%, #ADFFDA 99.95%);
+	color: #111;
+	font: 14px 'Inter', sans-serif;
+	cursor: pointer;
+}
+
+.talk-typing > .talk-typing-close {
+	width: 36px;
+	padding: 0;
+	background: #eee;
+	font-size: 23px;
+}
+
+.talk-typing:focus-within {
+	outline: 2px solid #8de7ed;
+	outline-offset: 3px;
 }
 
 @keyframes talk-word-sheet-in {
 	from { transform: translate(-50%, 100%); }
 	to { transform: translate(-50%, 0); }
-}
-
-@media (max-width: 380px) {
-	.talk-content { min-height: calc(100svh - 74px); padding: 18px 20px; }
-	.talk-video { height: 225px; }
-	.talk-bubble { font-size: 16px; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-	.talk-word-sheet { animation: none; }
 }

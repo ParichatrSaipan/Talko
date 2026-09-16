@@ -1,14 +1,22 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import type { FormEvent } from 'react'
+import { flushSync } from 'react-dom'
 import './Talk.css'
 import character from '../../assets/Character_Orange.svg'
 import ButtonFinish from './ButtonFinish.component'
 import Header from '../../Header/Header.Component'
 import type { MenuDestination } from '../../Hamburger/Menu'
 import soundIcon from '../../assets/icon_sound.svg'
+import translateIcon from '../../assets/icon_Translate.svg'
+import typingIcon from '../../assets/icon_Typing.svg'
+import voiceIcon from '../../assets/icon_Voice.svg'
+import hintIcon from '../../assets/icon_Hit.svg'
+import saveIcon from '../../assets/icon_Save.svg'
 
 type TalkProps = {
 	onBack: () => void
 	onFinish: () => void
+	isConversationFinished?: boolean
 	onMenuNavigate?: (destination: MenuDestination) => void
 }
 
@@ -35,18 +43,33 @@ const words: Record<string, WordInfo> = {
 	tutor: { word: 'Tutor', pronunciation: '/ˈtuː.tər/', translation: 'ครูสอนพิเศษ', example: 'Can you help me with this task?', exampleTranslation: 'คุณช่วยฉันเกี่ยวกับงานนี้ได้ไหม' },
 }
 
-function Talk({ onBack, onFinish, onMenuNavigate }: TalkProps) {
+function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate }: TalkProps) {
 	const [selectedWord, setSelectedWord] = useState<WordInfo | null>(null)
 	const [savedWords, setSavedWords] = useState<Set<string>>(new Set())
+	const [isTranslated, setIsTranslated] = useState(false)
+	const [isSpeaking, setIsSpeaking] = useState(false)
+	const [isTyping, setIsTyping] = useState(false)
+	const [typedMessage, setTypedMessage] = useState('')
+	const [sentMessages, setSentMessages] = useState<string[]>([])
+	const [isFinishedByMessage, setIsFinishedByMessage] = useState(false)
+	const [isWordSoundPlayed, setIsWordSoundPlayed] = useState(false)
+	const typingInputRef = useRef<HTMLInputElement>(null)
 
 	function selectWord(key: keyof typeof words) {
 		setSelectedWord(words[key])
+		setIsWordSoundPlayed(false)
 	}
 
-	function playWord(word: string) {
-		if (!('speechSynthesis' in window)) return
+	function playWord(word: string, onEnd?: () => void) {
+		if (!('speechSynthesis' in window)) {
+			onEnd?.()
+			return
+		}
 		window.speechSynthesis.cancel()
-		window.speechSynthesis.speak(new SpeechSynthesisUtterance(word))
+		const utterance = new SpeechSynthesisUtterance(word)
+		utterance.onend = () => onEnd?.()
+		utterance.onerror = () => onEnd?.()
+		window.speechSynthesis.speak(utterance)
 	}
 
 	function toggleSavedWord(word: string) {
@@ -56,6 +79,21 @@ function Talk({ onBack, onFinish, onMenuNavigate }: TalkProps) {
 			else next.add(word)
 			return next
 		})
+	}
+
+	function handleTypedMessage(event: FormEvent<HTMLFormElement>) {
+		event.preventDefault()
+		const message = typedMessage.trim()
+		if (!message) return
+		setSentMessages((current) => [...current, message])
+		if (message.toLowerCase() === 'hi') setIsFinishedByMessage(true)
+		setTypedMessage('')
+		setIsTyping(false)
+	}
+
+	function openKeyboard() {
+		flushSync(() => setIsTyping(true))
+		typingInputRef.current?.focus()
 	}
 
 	return (
@@ -81,19 +119,27 @@ function Talk({ onBack, onFinish, onMenuNavigate }: TalkProps) {
 					<button className="talk-word-token" type="button" onClick={() => selectWord('personal')}>personal</button>{' '}
 					<button className="talk-word-token" type="button" onClick={() => selectWord('ai')}>AI</button>{' '}
 					<button className="talk-word-token" type="button" onClick={() => selectWord('tutor')}>tutor</button>
+					{isTranslated && <p className="talk-sentence-translation">ยินดีต้อนรับสู่ Talko! ฉันชื่อ Talko และฉันคือครู AI ส่วนตัวของคุณ</p>}
 					<div className="talk-bubble-tools">
 						<button type="button" onClick={() => playWord('Welcome to Talko! My name is Talko and I’m your personal AI tutor.')} aria-label="Play pronunciation"><img src={soundIcon} alt="" /></button>
-						<button type="button" onClick={() => selectWord('your')} aria-label="Open translation">文A</button>
+						<button type="button" onClick={() => setIsTranslated(!isTranslated)} aria-pressed={isTranslated} aria-label="Translate sentence"><img src={translateIcon} alt="" /></button>
 					</div>
 				</div>
+				{sentMessages.length > 0 && (
+					<div className="talk-user-messages" aria-live="polite">
+						{sentMessages.map((message, index) => (
+							<p key={`${message}-${index}`}>{message}</p>
+						))}
+					</div>
+				)}
 				{selectedWord && (
 					<section className="talk-word-sheet" role="dialog" aria-modal="true" aria-label={`${selectedWord.word} vocabulary details`}>
 						<button className="talk-word-close" type="button" onClick={() => setSelectedWord(null)} aria-label="Close vocabulary">×</button>
 						<div className="talk-word-heading">
 							<h2>{selectedWord.word}</h2>
 							<div className="talk-word-actions">
-								<button className="talk-word-sound" type="button" onClick={() => playWord(selectedWord.word)} aria-label={`Play ${selectedWord.word}`}><img src={soundIcon} alt="" /></button>
-								<button className={`talk-bookmark${savedWords.has(selectedWord.word) ? ' is-added' : ''}`} type="button" onClick={() => toggleSavedWord(selectedWord.word)} aria-label="Save word"><span aria-hidden="true" /></button>
+								<button className={`talk-word-sound${isWordSoundPlayed ? ' is-played' : ''}`} type="button" onClick={() => { setIsWordSoundPlayed(true); playWord(selectedWord.word, () => setIsWordSoundPlayed(false)) }} aria-label={`Play ${selectedWord.word}`}><img src={soundIcon} alt="" /></button>
+								<button className={`talk-bookmark${savedWords.has(selectedWord.word) ? ' is-added' : ''}`} type="button" onClick={() => toggleSavedWord(selectedWord.word)} aria-label="Save word"><img src={saveIcon} alt="" /></button>
 							</div>
 						</div>
 						<p className="talk-word-pronunciation">{selectedWord.pronunciation}</p>
@@ -102,7 +148,47 @@ function Talk({ onBack, onFinish, onMenuNavigate }: TalkProps) {
 						<p className="talk-word-example-translation">{selectedWord.exampleTranslation}</p>
 					</section>
 				)}
-				<ButtonFinish onFinish={onFinish} />
+				{isConversationFinished || isFinishedByMessage ? (
+					<ButtonFinish onFinish={onFinish} />
+				) : isTyping ? (
+					<form className="talk-typing" onSubmit={handleTypedMessage}>
+						<input
+							type="text"
+							value={typedMessage}
+							onChange={(event) => setTypedMessage(event.target.value)}
+							placeholder="Type your response..."
+							aria-label="Type your response"
+							inputMode="text"
+							enterKeyHint="send"
+							ref={typingInputRef}
+						/>
+						<button type="submit" aria-label="Send response">Send</button>
+						<button className="talk-typing-close" type="button" onClick={() => setIsTyping(false)} aria-label="Close keyboard">×</button>
+					</form>
+				) : (
+					<div className="talk-controls">
+						<button className="talk-control talk-control--typing" type="button" onClick={openKeyboard} aria-label="Type a response"><img src={typingIcon} alt="" /></button>
+						<button
+							className={`talk-control talk-control--voice${isSpeaking ? ' is-speaking' : ''}`}
+							type="button"
+							onPointerDown={() => setIsSpeaking(true)}
+							onPointerUp={() => setIsSpeaking(false)}
+							onPointerCancel={() => setIsSpeaking(false)}
+							onPointerLeave={() => setIsSpeaking(false)}
+							onKeyDown={(event) => {
+								if (event.key === 'Enter' || event.key === ' ') setIsSpeaking(true)
+							}}
+							onKeyUp={(event) => {
+								if (event.key === 'Enter' || event.key === ' ') setIsSpeaking(false)
+							}}
+							aria-label="Hold to speak"
+						>
+							<img src={voiceIcon} alt="" />
+						</button>
+						<button className="talk-control" type="button" aria-label="Conversation help"><img src={hintIcon} alt="" /></button>
+						<span className="talk-control-hint">{isSpeaking ? 'Listening...' : 'Hold to speak'}</span>
+					</div>
+				)}
 			</section>
 		</main>
 	)

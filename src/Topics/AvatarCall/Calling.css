@@ -2,7 +2,7 @@
 	min-height: 100svh;
 	position: relative;
 	overflow: hidden;
-	background: linear-gradient(180deg, #75c9f5 0%, #a8f7d8 100%);
+	background: linear-gradient(180deg, #7EC7FF 5.17%, #ADFFDA 99.95%);
 	color: #000;
 	font-family: 'Inter', sans-serif;
 	text-align: center;
@@ -10,20 +10,20 @@
 
 .call-page h1 {
 	margin: 0;
-	padding-top: 125px;
-	font: 34px 'Inter Bold', sans-serif;
+	padding-top: 131px;
+	font: 36px 'Inter Bold';
 }
 
 .call-character {
-	width: min(82vw, 305px);
+	width: 322px;
 	height: auto;
-	margin-top: 70px;
+	margin-top: 75px;
 }
 
 .call-actions {
 	position: absolute;
 	right: 30px;
-	bottom: 115px;
+	bottom: 123px;
 	left: 30px;
 	display: flex;
 	align-items: center;
@@ -31,30 +31,20 @@
 }
 
 .call-action {
-	width: 84px;
-	height: 84px;
+	width: 87px;
+	height: 87px;
+	padding: 27.5px 26.5px;
 	position: relative;
 	border: 0;
 	border-radius: 50%;
 	background: #fff;
-	box-shadow: 0 8px 18px rgba(0, 0, 0, .1);
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.10);
 	cursor: pointer;
-	transition: background-color .15s ease;
-}
-
-.call-action.is-pressed {
-	background: #9d9d9d;
 }
 
 .call-icon {
-	width: 32px;
-	height: 32px;
+	width: 33px;
+	height: 33px;
 	display: block;
 	object-fit: contain;
-}
-
-@media (max-width: 380px) {
-	.call-page h1 { font-size: 30px; }
-	.call-character { margin-top: 60px; }
-	.call-actions { bottom: 95px; }
 }
