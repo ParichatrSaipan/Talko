@@ -2,6 +2,8 @@ import { useState } from 'react'
 import type { ReactNode } from 'react'
 import Menu from '../Hamburger/Menu'
 import type { MenuDestination } from '../Hamburger/Menu'
+import webIcon from '../assets/icon_Web.svg'
+import talkoLogo from '../assets/icon_Talko.svg'
 import './Header.Component.css'
 
 type HeaderProps = {
@@ -15,9 +17,11 @@ function Header({ action, onMenuNavigate }: HeaderProps) {
 	return (
 		<>
 			<header className="app-header">
-				<div className="app-header-brand">
-					<span className="app-header-mark" aria-hidden="true"><i /><i /></span>
-					<span>Talko</span>
+				<div className="app-header-brand" aria-label="Talko">
+					<span className="app-header-mark" aria-hidden="true">
+						<img className="app-header-web-icon" src={webIcon} alt="" />
+						<img className="app-header-talko-logo" src={talkoLogo} alt="" />
+					</span>
 				</div>
 
 				{action ?? (

@@ -21,7 +21,6 @@ function ButtonFinish({ onFinish }: ButtonFinishProps) {
 					color: #000;
 					font: inherit;
 					font-size: 20px;
-					cursor: pointer;
 					box-shadow: 0 12px 28px rgba(74, 199, 223, .18);
 					animation: talk-finish-pop .45s cubic-bezier(.2, .9, .3, 1.25) both;
 				}

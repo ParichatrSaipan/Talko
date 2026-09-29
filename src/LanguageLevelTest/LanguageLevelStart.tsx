@@ -1,7 +1,7 @@
-import characterYellow from '../assets/character_Yellow_Check.svg'
+import characterYellow from '../assets/Character_Yellow_Check.svg'
 import '../Font/Fonts.css'
 import '../QuestionPage/QuestionPage.Coponent.css'
-import './LanguageLevel.css'
+import './LanguageLevelTest.css'
 import Header from '../Header/Header.Component'
 import type { MenuDestination } from '../Hamburger/Menu'
 

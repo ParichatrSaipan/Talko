@@ -1,6 +1,6 @@
 import characterResult from '../assets/Character_Result.svg'
 import '../Font/Fonts.css'
-import './LanguageLevel.css'
+import './LanguageLevelTest.css'
 
 function LevelTestResult({ onContinue }: { onContinue: () => void }) {
 	return (

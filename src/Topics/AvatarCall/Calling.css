@@ -1,7 +1,10 @@
 .call-page {
 	min-height: 100svh;
-	position: relative;
-	overflow: hidden;
+	padding: 76px 18px;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	background: linear-gradient(180deg, #7EC7FF 5.17%, #ADFFDA 99.95%);
 	color: #000;
 	font-family: 'Inter', sans-serif;
@@ -9,22 +12,64 @@
 }
 
 .call-page h1 {
-	margin: 0;
-	padding-top: 131px;
+	margin: 0 0 48px;
 	font: 36px 'Inter Bold';
 }
 
+.call-practice-card {
+	width: 100%;
+	max-width: 336px;
+	min-height: 468px;
+	padding: 31px 18px;
+	box-sizing: border-box;
+	position: relative;
+	overflow: hidden;
+	border: 2px solid rgba(255, 255, 255, .65);
+	border-radius: 10px;
+	background: rgba(255, 255, 255, .48);
+	box-shadow: 0 0 10px rgba(255, 255, 255, .35);
+	text-align: left;
+}
+
+.call-practice-copy {
+	position: relative;
+	z-index: 2;
+}
+
+.call-practice-card h2 {
+	margin: 0;
+	font: 24px 'Inter Bold';
+}
+
+.call-practice-card p {
+	margin: 1px 0 31px;
+	font: 12px 'Inter Regular';
+}
+
+.call-practice-card ul {
+	margin: 0;
+	padding-left: 21px;
+	display: grid;
+	gap: 20px;
+}
+
+.call-practice-card li {
+	padding-left: 1px;
+	font: 14px/1.25 'Inter Regular';
+}
+
 .call-character {
-	width: 322px;
+	width: 258px;
 	height: auto;
-	margin-top: 75px;
+	position: absolute;
+	right: -2px;
+	bottom: -37px;
+	z-index: 1;
 }
 
 .call-actions {
-	position: absolute;
-	right: 30px;
-	bottom: 123px;
-	left: 30px;
+	width: min(100%, 311px);
+	margin-top: 47px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -39,7 +84,6 @@
 	border-radius: 50%;
 	background: #fff;
 	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.10);
-	cursor: pointer;
 }
 
 .call-icon {
@@ -47,4 +91,23 @@
 	height: 33px;
 	display: block;
 	object-fit: contain;
+}
+
+@media (max-width: 360px) {
+	.call-page {
+		padding: 60px 16px;
+	}
+
+	.call-page h1 {
+		margin-bottom: 36px;
+		font-size: 32px;
+	}
+
+	.call-practice-card {
+		min-height: 450px;
+	}
+
+	.call-actions {
+		margin-top: 36px;
+	}
 }

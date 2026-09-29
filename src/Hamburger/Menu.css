@@ -8,10 +8,10 @@
 }
 
 .menu-panel {
-	width: min(75%, 360px);
+	width: min(100%, 280px);
 	min-height: 100%;
 	margin-left: auto;
-	padding: 28px 16px;
+	padding: 26px 16px;
 	background: #fff;
 	color: #080808;
 	font-family: 'Inter', sans-serif;
@@ -27,8 +27,8 @@
 
 .menu-heading h2 {
 	margin: 0;
-	font-family: 'Inter Bold', 'Inter', sans-serif;
-	font-size: 18px;
+	font-family: 'Inter Bold';
+	font-size: 16px;
 }
 
 .menu-close {
@@ -39,7 +39,6 @@
 	background: transparent;
 	color: #080808;
 	font: 34px/1 'Inter Regular', sans-serif;
-	cursor: pointer;
 }
 
 .menu-navigation {
@@ -52,19 +51,24 @@
 .menu-link {
 	width: 100%;
 	min-height: 44px;
-	padding: 0 11px;
+	padding: 0 10px;
 	border: 0;
 	border-radius: 2px;
 	background: transparent;
 	color: #080808;
-	font: 16px 'Inter', sans-serif;
+	font: 14px 'Inter';
 	text-align: left;
-	cursor: pointer;
 }
 
 .menu-link:hover,
 .menu-link:focus-visible {
-	background: #e6f3fd;
+	border-radius: 2px;
+	background: rgba(126, 199, 255, 0.50);
+}
+
+.menu-link:active {
+	border-radius: 2px;
+	background: rgba(126, 199, 255, 0.50);
 }
 
 .menu-link:focus-visible {
@@ -72,14 +76,10 @@
 	outline-offset: 1px;
 }
 
-.menu-link.is-active {
-	background: #b9dcf7;
-}
-
 .menu-label {
-	margin: 38px 0 13px;
-	color: #777;
-	font: 11px 'Inter Regular', 'Inter', sans-serif;
+	margin: 36px 0 13px;
+	color: #515151;
+	font: 11px 'Inter Regular';
 }
 
 .menu-link--spaced {

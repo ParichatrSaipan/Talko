@@ -31,7 +31,11 @@ function QuestionPage({
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    onContinue?.(value)
+    const normalizedValue = value.trim()
+
+    if (!normalizedValue) return
+
+    onContinue?.(normalizedValue)
   }
 
   return (
@@ -53,8 +57,9 @@ function QuestionPage({
               placeholder={placeholder}
               value={value}
               onChange={(event) => setValue(event.target.value)}
+              required
             />
-            <button type="submit">Continue</button>
+            <button type="submit" disabled={!value.trim()}>Continue</button>
           </form>
         ) : (
           <div className="question-options">

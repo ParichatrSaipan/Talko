@@ -56,7 +56,6 @@
   border-radius: 50%;
   background: #fff;
   color: #111;
-  cursor: pointer;
 }
 
 .question-back-icon {
@@ -93,7 +92,6 @@
   background: #fff;
   color: #111;
   text-align: left;
-  cursor: pointer;
   border-radius: 20px;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.10);
 }
@@ -147,7 +145,6 @@
   height: 59px;
   border: 0;
   color: #fff;
-  cursor: pointer;
   padding: 16px 40px;
   margin-bottom: 88px;
   justify-content: center;
@@ -155,5 +152,11 @@
   border-radius: 50px;
   background: #000;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.10);
+}
+
+.name-form button:disabled {
+  background: #8a8a8a;
+  cursor: not-allowed;
+  opacity: 0.65;
 }
 

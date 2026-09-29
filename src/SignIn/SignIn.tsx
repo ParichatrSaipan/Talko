@@ -17,18 +17,13 @@ function SignIn({ onCreateAccount, onLogin }: SignInProps) {
 	return (
 		<main className="sign-in-page">
 			<section className="sign-in-card">
-				<div className="sign-in-brand">
-					<span className="brand-mark" aria-hidden="true">
-						<i />
-					</span>
-					<span>Talko</span>
-				</div>
+	
 
 				<h1>Welcome back</h1>
 				<p>Log in to continue your practice.</p>
 
 				<button className="social-button" type="button">Continue with Google</button>
-				<button className="social-button" type="button">Continue with Apple</button>
+				<button className="social-button" type="button">Continue with Facebook</button>
 
 				<div className="sign-in-divider"><span>or</span></div>
 

@@ -1,46 +1,38 @@
 .app-header {
-	height: 74px;
-	padding: 0 22px;
+	height: 72px;
+	padding: 26px 18px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	background: #fff;
 	color: #080808;
-	font-family: 'Inter', sans-serif;
+	font-family: 'Inter';
 }
 
 .app-header-brand {
 	display: flex;
 	align-items: center;
-	gap: 12px;
-	font-size: 20px;
 }
 
 .app-header-mark {
-	width: 42px;
-	height: 42px;
-	position: relative;
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.app-header-mark img {
 	display: block;
 	flex: 0 0 auto;
 }
 
-.app-header-mark i {
-	position: absolute;
-	left: 0;
-	width: 42px;
-	background: #ccd6e5;
+.app-header-web-icon {
+	width: 35px;
+	height: 40px;
 }
 
-.app-header-mark i:first-child {
-	top: 0;
-	height: 25px;
-	border-radius: 50% 50% 45% 45%;
-}
-
-.app-header-mark i:last-child {
-	bottom: 0;
-	height: 14px;
-	border-radius: 10px;
+.app-header-talko-logo {
+	width: 43px;
+	height: 12px;
 }
 
 .app-header-menu {
@@ -51,7 +43,6 @@
 	align-content: space-between;
 	border: 0;
 	background: transparent;
-	cursor: pointer;
 }
 
 .app-header-menu span {

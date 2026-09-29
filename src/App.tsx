@@ -5,15 +5,13 @@ import Age from './QuestionPage/Age'
 import Gender from './QuestionPage/Gender'
 import Name from './QuestionPage/Name'
 import Work from './QuestionPage/Work'
-import LanguageLevel from './LanguageLevel/LanguageLevel'
-import LevelTest from './LanguageLevel/LevelTest'
-import LevelTestResult from './LanguageLevel/LevelTest.Result'
+import LanguageLevel from './LanguageLevelTest/LanguageLevelStart'
+import LevelTest from './LanguageLevelTest/LevelTest'
+import LevelTestResult from './LanguageLevelTest/LevelTest.Result'
 import ChooseTopics from './Topics/ChooseTopics/ChooseTopics'
 import MainInterview from './Topics/MainTopics/MainInterview'
 import MainWork from './Topics/MainTopics/MainWork'
 import MainTravel from './Topics/MainTopics/MainTravel'
-import SceneComponent from './Topics/Scene/Scene.component'
-import type { TopicCard } from './Topics/MainTopics/MainTopics.Component'
 import CallComponent from './Topics/AvatarCall/calling'
 import Talk from './Topics/AvatarTalk/Talk'
 import AvatarResult from './Topics/AvatarResult/AvatarResult'
@@ -22,18 +20,15 @@ import MainHome from './Topics/MainHome/MainHome'
 import ProfileUser from './Profile/ProfileUser'
 import Practice from './Practice/Practice'
 import Vocab from './Vocab/Vocab'
+import CreateAccount from './CreateAccount/CreateAccount'
 
 function App() {
-  const [page, setPage] = useState<'home' | 'sign-in' | 'age' | 'gender' | 'name' | 'work' | 'language-level' | 'level-test' | 'level-result' | 'topics' | 'main-home' | 'main-topics' | 'main-work' | 'main-travel' | 'scene' | 'call' | 'talk' | 'avatar-result' | 'profile' | 'practice' | 'vocab'>('home')
-  const [sceneTitle, setSceneTitle] = useState('Introduce Yourself')
-  const [scenePracticeItems, setScenePracticeItems] = useState<string[]>([])
-  const [sceneBackPage, setSceneBackPage] = useState<'main-topics' | 'main-work' | 'main-travel'>('main-topics')
+  const [page, setPage] = useState<'home' | 'sign-in' | 'create-account' | 'age' | 'gender' | 'name' | 'work' | 'language-level' | 'level-test' | 'level-result' | 'topics' | 'main-home' | 'main-topics' | 'main-work' | 'main-travel' | 'call' | 'talk' | 'avatar-result' | 'profile' | 'practice' | 'vocab'>('home')
+  const [topicReturnPage, setTopicReturnPage] = useState<'main-topics' | 'main-work' | 'main-travel'>('main-topics')
 
-  function openScene(backPage: 'main-topics' | 'main-work' | 'main-travel', topic: TopicCard) {
-    setSceneBackPage(backPage)
-    setSceneTitle(topic.sceneTitle)
-    setScenePracticeItems(topic.practiceItems)
-    setPage('scene')
+  function startTopic(returnPage: 'main-topics' | 'main-work' | 'main-travel') {
+    setTopicReturnPage(returnPage)
+    setPage('call')
   }
 
   function navigateFromMenu(destination: MenuDestination) {
@@ -51,7 +46,11 @@ function App() {
   }
 
   if (page === 'sign-in') {
-    return <SignIn onCreateAccount={() => setPage('age')} onLogin={() => setPage('main-home')} />
+    return <SignIn onCreateAccount={() => setPage('create-account')} onLogin={() => setPage('main-home')} />
+  }
+
+  if (page === 'create-account') {
+    return <CreateAccount onCreateAccount={() => setPage('age')} />
   }
 
   if (page === 'age') {
@@ -111,23 +110,31 @@ function App() {
   }
 
   if (page === 'main-topics') {
-  return <MainInterview onTopicSelect={(topic) => openScene('main-topics', topic)} onMenuNavigate={navigateFromMenu} />
+  return <MainInterview onTopicSelect={() => startTopic('main-topics')} onMenuNavigate={navigateFromMenu} />
   }
 
   if (page === 'main-work') {
-    return <MainWork onTopicSelect={(topic) => openScene('main-work', topic)} onMenuNavigate={navigateFromMenu} />
+    return <MainWork onTopicSelect={() => startTopic('main-work')} onMenuNavigate={navigateFromMenu} />
   }
 
   if (page === 'main-travel') {
-    return <MainTravel onTopicSelect={(topic) => openScene('main-travel', topic)} onMenuNavigate={navigateFromMenu} />
-  }
-
-  if (page === 'scene') {
-    return <SceneComponent title={sceneTitle} practiceItems={scenePracticeItems} onBack={() => setPage(sceneBackPage)} onPractice={() => setPage('call')} onMenuNavigate={navigateFromMenu} />
+    return <MainTravel onTopicSelect={() => startTopic('main-travel')} onMenuNavigate={navigateFromMenu} />
   }
 
   if (page === 'call') {
-    return <CallComponent onDecline={() => setPage('scene')} onAccept={() => setPage('talk')} />
+    const characterVariant = topicReturnPage === 'main-work'
+      ? 'work'
+      : topicReturnPage === 'main-travel'
+        ? 'travel'
+        : 'interview'
+
+    return (
+      <CallComponent
+        characterVariant={characterVariant}
+        onDecline={() => setPage(topicReturnPage)}
+        onAccept={() => setPage('talk')}
+      />
+    )
   }
 
   if (page === 'talk') {
@@ -135,7 +142,7 @@ function App() {
   }
 
   if (page === 'avatar-result') {
-    return <AvatarResult onContinue={() => setPage('scene')} onMenuNavigate={navigateFromMenu} />
+    return <AvatarResult onContinue={() => setPage(topicReturnPage)} onMenuNavigate={navigateFromMenu} />
   }
 
   return <ChooseTopics onInterviewSelect={() => setPage('main-topics')} onWorkSelect={() => setPage('work')} onTravelSelect={() => setPage('main-travel')} onMenuNavigate={navigateFromMenu} />

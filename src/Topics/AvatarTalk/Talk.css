@@ -64,7 +64,6 @@
 	border: 0;
 	border-radius: 50%;
 	background: #fff;
-	cursor: pointer;
 }
 
 .talk-back::before {
@@ -142,7 +141,6 @@
 	background: transparent;
 	color: #000;
 	font: 14px 'Inter Regular';
-	cursor: pointer;
 }
 
 .talk-word-token:hover,
@@ -159,7 +157,6 @@
 	background: transparent;
 	color: #111;
 	font-size: 22px;
-	cursor: pointer;
 }
 
 .talk-bubble-tools img,
@@ -222,7 +219,6 @@
 	border: 0;
 	background: transparent;
 	font-size: 34px;
-	cursor: pointer;
 }
 
 .talk-word-heading {
@@ -321,7 +317,6 @@
 	border: 0;
 	border-radius: 50%;
 	background: #fff;
-	cursor: pointer;
 }
 
 .talk-control img {
@@ -387,7 +382,6 @@
 	background: linear-gradient(180deg, #7EC7FF 5.17%, #ADFFDA 99.95%);
 	color: #111;
 	font: 14px 'Inter', sans-serif;
-	cursor: pointer;
 }
 
 .talk-typing > .talk-typing-close {

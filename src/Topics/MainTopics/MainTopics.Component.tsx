@@ -1,4 +1,5 @@
 //หน้าหัวข้อหลักแต่ละหมวดหมู่ interview, work, travel
+import { useState } from 'react'
 import '../../Font/Fonts.css'
 import './MainTopics.Component.css'
 import interviewIcon from '../../assets/icon_Interview.svg'
@@ -9,8 +10,6 @@ import type { MenuDestination } from '../../Hamburger/Menu'
 export type TopicCard = {
 	title: string
 	description: string
-	sceneTitle: string
-	practiceItems: string[]
 	status?: string
 	statusType?: 'progress' | 'completed'
 }
@@ -18,20 +17,23 @@ export type TopicCard = {
 type MainTopicsComponentProps = {
 	title?: string
 	icon?: string
+	categories?: string[]
 	onTopicSelect?: (topic: TopicCard) => void
 	onMenuNavigate?: (destination: MenuDestination) => void
 }
 
 const topicCards: TopicCard[] = [
-	{ title: 'topics', description: 'xxxxxx', sceneTitle: 'Introduce Yourself', practiceItems: ['Understanding the situation', 'Responding naturally', 'Asking a follow-up question'], status: '10% done', statusType: 'progress' },
-	{ title: 'topics', description: 'xxxxxx', sceneTitle: 'Talk About Your Experience', practiceItems: ['Explaining your experience', 'Using useful work vocabulary', 'Answering follow-up questions'] },
-	{ title: 'topics', description: 'xxxxxx', sceneTitle: 'Describe Your Daily Work', practiceItems: ['Describing your responsibilities', 'Speaking clearly and naturally', 'Giving specific examples'] },
-	{ title: 'topics', description: 'xxxxxx', sceneTitle: 'Handle a Work Situation', practiceItems: ['Understanding the situation', 'Responding professionally', 'Asking for clarification'], status: 'completed', statusType: 'completed' },
-	{ title: 'topics', description: 'xxxxxx', sceneTitle: 'Share Your Opinion', practiceItems: ['Giving your opinion', 'Supporting your ideas', 'Responding to another opinion'], status: '50% done', statusType: 'completed' },
-	{ title: 'topics', description: 'xxxxxx', sceneTitle: 'Ask and Answer Questions', practiceItems: ['Asking clear questions', 'Responding naturally', 'Keeping the conversation going'] },
+	{ title: 'topics', description: 'xxxxxx', status: '10% done', statusType: 'progress' },
+	{ title: 'topics', description: 'xxxxxx' },
+	{ title: 'topics', description: 'xxxxxx' },
+	{ title: 'topics', description: 'xxxxxx', status: 'completed', statusType: 'completed' },
+	{ title: 'topics', description: 'xxxxxx', status: '50% done', statusType: 'completed' },
+	{ title: 'topics', description: 'xxxxxx' },
 ]
 
-function MainTopicsComponent({ title = 'Interview', icon = interviewIcon, onTopicSelect, onMenuNavigate }: MainTopicsComponentProps) {
+function MainTopicsComponent({ title = 'Interview', icon = interviewIcon, categories, onTopicSelect, onMenuNavigate }: MainTopicsComponentProps) {
+	const [activeCategory, setActiveCategory] = useState(categories?.[0] ?? '')
+
 	return (
 		<main className="main-topics-page">
 			<Header onMenuNavigate={onMenuNavigate} />
@@ -45,6 +47,21 @@ function MainTopicsComponent({ title = 'Interview', icon = interviewIcon, onTopi
             
 
 			<section className="main-topics-content">
+				{categories && (
+					<div className="main-topics-filters" aria-label={`${title} categories`}>
+						{categories.map((category) => (
+							<button
+								className={`main-topics-filter${activeCategory === category ? ' is-active' : ''}`}
+								type="button"
+								key={category}
+								aria-pressed={activeCategory === category}
+								onClick={() => setActiveCategory(category)}
+							>
+								{category}
+							</button>
+						))}
+					</div>
+				)}
 				<p className="main-topics-intro">Choose a real-life scenario to practice.</p>
 				<div className="main-topics-grid">
 					{topicCards.map((topic, index) => (

@@ -1,0 +1,85 @@
+.create-account-page {
+  width: 100%;
+  min-height: 100svh;
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.create-account-card {
+  width: min(100%, 343px); 
+  padding: 40px 20px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #7EC7FF 0%, #ADFFDA 100%);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.10);
+}
+
+.create-account-card h1 {
+  margin: 0 0 11px;
+  text-align: center;
+  font-family: 'Inter';
+  font-size: 16px;
+}
+
+.create-account-card form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.create-account-card label {
+  margin:  0 0 4px;
+  font-family: 'Inter';
+  font-size: 14px;
+}
+
+.create-account-card input {
+  display: flex;
+  height: 41px;
+  padding: 16px 20px;
+  align-items: center;/* จัดแนวเนื้อหาภายใน input ให้อยู่ตรงกลางในแนวตั้ง */
+  gap: 10px;
+  align-self: stretch; /* ทำให้ input ขยายเต็มความกว้างของ container */
+  width: 100%;
+  margin: 0 0 11px;
+  border: 2px solid transparent;
+  outline: none;
+  border-radius: 20px;
+  background: #FFF;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.10);
+  font-family: 'Inter';
+  font-size: 12px;
+}
+
+.create-account-card input:focus {
+  background:
+    linear-gradient(#fff, #fff) padding-box, /* ทำให้พื้นหลังของ input เป็นสีขาว */
+    linear-gradient(90deg, rgba(15, 126, 211, 1), rgba(4, 54, 93, 1)) border-box;
+}
+
+.create-account-card input::placeholder {
+  color: #bababa;
+}
+
+.create-account-error {
+  min-height: 17px;
+  margin: -6px 0 10px;
+  color: #9a1025;
+  font-family: 'Inter Regular';
+  font-size: 12px;
+}
+
+.create-account-card button {
+  width: 100%;
+  height: 59px;
+  margin-top: 67px;
+  border: 0;
+  border-radius: 50px;
+  background: #000;
+  color: #fff;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+  font-family: 'Inter';
+  font-size: 16px;
+}
+

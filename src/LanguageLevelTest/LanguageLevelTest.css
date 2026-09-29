@@ -41,7 +41,6 @@ font-family: 'Inter Bold';
   color: #fff;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.10);
   font: 16px 'Inter';
-  cursor: pointer;
   bottom: 0;
   margin-bottom: 88px;
 }
@@ -150,7 +149,6 @@ font-family: 'Inter Bold';
   color: #111;
   text-align: left;
   font: 16px 'Inter Regular';
-  cursor: pointer;
 }
 
 .level-test-answer.is-selected {
@@ -189,12 +187,11 @@ font-family: 'Inter Bold';
   border: 0;
   border-radius: 50px;
   font: 16px 'Inter';
-  cursor: pointer;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.10);
 }
 
 .level-test-back { background: #fff; color: #111; }
-.level-test-next { background: #000; color: #fff; }
+.level-test-next { margin-left: auto; background: #000; color: #fff; }
 
 .level-result-page {
 	position: relative;
@@ -293,7 +290,6 @@ font-family: 'Inter Bold';
   background: #000;
   color: #fff;
   font: 20px 'Inter Regular';
-  cursor: pointer;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.10);
 
 }

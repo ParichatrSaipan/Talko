@@ -48,7 +48,6 @@
   align-content: space-between;
   border: 0;
   background: transparent;
-  cursor: pointer;
 }
 
 .topics-menu span {
@@ -160,7 +159,6 @@
   background: transparent;
   color: #515151;
   font: 14px 'Inter Regular';
-  cursor: pointer;
   padding: 0 10px 10px 0;
 }
 

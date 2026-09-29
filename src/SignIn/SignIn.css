@@ -1,7 +1,5 @@
 .sign-in-page {
-  width: 100%;
   min-height: 100svh; /* Use 100svh to account for mobile browser UI */
-  padding: 16px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,7 +7,7 @@
 }
 
 .sign-in-card {
-  width: min(100%, 550px);
+  width: min(100%, 343px);
   padding: 40px 20px;
   border-radius: 20px;
   background: linear-gradient(180deg, #7EC7FF 0%, #ADFFDA 100%);
@@ -26,35 +24,19 @@
   font-size: 18px;
 }
 
-.sign-in-brand .brand-mark {
-  width: 40px;
-  height: 40px;
-  position: relative;
-}
 
-.sign-in-brand .brand-mark i {
-  position: absolute;
-  left: 0;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #ccd6e5;
-}
-
-.sign-in-brand .brand-mark i:first-child {
-  top: 0;
-}
 
 .sign-in-card h1 {
   text-align: center;
   font-family: 'Inter';
   font-size: 16px;
+  margin: 0;
  
 }
 
 .sign-in-card > p {
   font-family: 'Inter Regular';
-  margin: 10px 0 12px;
+  margin: 11px 0;
   text-align: center;
   color: #515151;
   font-size: 12px;
@@ -67,35 +49,29 @@
 
     width: 100%;
     display: flex;
-    padding: 16px 40px;
     justify-content: center;
-    align-items: center;
-   
-border-radius: 50px;
-border: 0;
-  background: #fff;
-box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.10);
-    font-size: 16px;
-    font-family: 'Inter';
+    align-items: center; 
+    border: 0;
+    background: #fff;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.10);
     }
 
 
 
-.social-button,
+
 .create-account-button,
 .submit-button {
-  cursor: pointer;
+  padding: 16px 20px;
+  border-radius: 50px;
+  font: 16px 'Inter';
 }
 
-.social-button + .social-button {
-  margin-top: 12px;
-}
 
 .sign-in-divider {
   display: flex;
   align-items: center;
   gap: 14px;
-  margin: 14px 0;
+  margin: 11px 0;
   color: #BABABA;
   font-size: 12px;
   font-family: 'Inter Regular';
@@ -111,7 +87,7 @@ box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.10);
 
 .sign-in-card form {
   display: grid;
-  gap: 7px;
+  gap: 4px;
 }
 
 .sign-in-card label {
@@ -126,21 +102,46 @@ box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.10);
 }
 
 .submit-button {
-  height: 60px;
-  margin-top: 6px;
-  border: 0;
+  height: 59px;
+  margin-top: 67px;
   background: #000;
   color: #fff;
 }
 
 .create-account-button {
-  height: 60px;
-  margin-top: 12px;
+  height: 59px;
+  margin-top: 11px;
 }
 
 #email,
 #password {
-    font-family: 'Inter';
-    font-size: 12px;
+    font: 12px 'Inter';
 }
 
+#email,
+#password {
+  border: 2px solid transparent;
+  outline: none;
+  height: 41px;
+  padding: 16px 20px;
+  border-radius: 20px;
+}
+
+#email:focus,
+#password:focus {
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(90deg, rgba(15, 126, 211, 1), rgba(4, 54, 93, 1)) border-box;
+}
+
+.social-button{
+  height: 37px;
+  font : 12px 'Inter';
+  padding: 16px 20px;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.20);
+}
+
+.social-button + .social-button {
+  margin-top: 11px;
+}
