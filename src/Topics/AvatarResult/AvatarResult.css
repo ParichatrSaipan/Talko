@@ -59,17 +59,18 @@
 }
 
 .avatar-result-content {
-	width: min(100%, 430px);
-	min-height: calc(100svh - 74px);
 	margin: 0 auto;
-	padding: 64px 16px 45px;
+	padding: 64px 16px 45px 16px;
 	display: flex;
 	flex-direction: column;
 }
 
 .avatar-result-content h1 {
 	margin: 0;
-	color: #93e7ef;
+	background: linear-gradient(180deg, #adffda 0%, #7ec7ff 100%);
+	background-clip: text;
+	-webkit-background-clip: text;
+	color: transparent;
 	font: 20px 'Inter Bold';
 	text-align: center;
 }
@@ -77,15 +78,16 @@
 .avatar-result-score {
 	width: 138px;
 	height: 138px;
+	padding: 10px;
 	margin: 18px auto 26px;
-	display: flex;
+	display: flex; /* หน้าที่ของ flex คือ จัดเรียง child element ภายใน container */
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	color: #050505;
-	border-radius: 100px;
-    background: #FFF;
-    box-shadow: 0 0 10px 0 #ADFFDA; 
+    border-radius: 100px;
+	background: #FFF;
+	box-shadow: 0 0 10px 0 #ADFFDA; 
 }
 
 .avatar-result-score strong {
@@ -165,7 +167,7 @@
 }
 
 .avatar-result-improvements {
-	padding: 18px 16px 20px;
+	padding: 16px 20px 11px;
 }
 
 .avatar-result-improvement {
@@ -177,25 +179,51 @@
 }
 
 .avatar-result-improvement + .avatar-result-improvement {
-	margin-top: 14px;
+	margin-top: 12px;
 }
 
 .avatar-result-improvement strong {
-	font-family: 'Inter Bold', 'Inter', sans-serif;
+	font: 14px 'Inter Bold';
 }
 
 .avatar-result-improvement > span:last-child {
-	font-size: 11px;
+	font: 12px 'Inter Regular';
+}
+
+.avatar-result-improvement-summary {
+	display: inline-flex;
+	align-items: center;
+	gap: 13px;
+}
+
+.avatar-result-improvement-summary i {
+	width: 8px;
+	height: 8px;
+	display: block;
+	border-right: 2.5px solid #050505;
+	border-bottom: 2.5px solid #050505;
+	transform: rotate(45deg) translateY(-2px);
+	transition: transform .2s ease;
+}
+
+.avatar-result-improvement-summary i.is-open {
+	transform: rotate(225deg) translate(-2px, -2px);
 }
 
 .avatar-result-improvement-toggle {
 	width: 100%;
-	padding: 0;
+	min-height: 35px;
+	padding: 0 12px 0 0;
 	border: 0;
+	border-radius: 4px;
 	background: transparent;
-	color: inherit;
-	font: inherit;
 	text-align: left;
+	background: rgba(217, 217, 217, 0.30);
+
+}
+
+.avatar-result-improvement-toggle[aria-expanded="true"] {
+	background: rgba(217, 217, 217, 0.30);
 }
 
 .avatar-result-alert {
@@ -204,54 +232,26 @@
 	display: grid;
 	place-items: center;
 	border-radius: 50%;
-	background: #c90913;
+	background: #A60000;
 	color: #fff;
-	font-family: 'Inter Bold', 'Inter', sans-serif;
-	font-size: 13px;
+	font-family: 'Inter Bold';
+	font-size: 12px;
 }
 
 .avatar-result-word-feedback {
-	margin: 10px 0 0 15px;
-	padding: 11px 15px 12px;
-	border-radius: 3px;
-	background: #efefef;
-	color: #626262;
-	font-family: 'Inter Regular', 'Inter', sans-serif;
-	font-size: 13px;
-}
-
-.avatar-result-word-heading {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
+	margin: 4px 0 0;
+	padding: 16px;
+	border-radius: 4px;
+    background: #F0F0F0;
+	color: #515151;
+	font-family: 'Inter Regular';
+	font-size: 12px;
 }
 
 .avatar-result-word-heading strong {
-	color: #b70b13;
-	font-family: 'Inter Bold', 'Inter', sans-serif;
-	font-size: 15px;
-}
-
-.avatar-result-word-toggle {
-	width: 26px;
-	height: 22px;
-	padding: 0;
-	display: grid;
-	place-items: center;
-	border: 0;
-	background: transparent;
-	color: #050505;
-}
-
-.avatar-result-word-toggle span {
-	color: #050505;
-	font-size: 22px;
-	line-height: .7;
-}
-
-.avatar-result-word-toggle:focus-visible {
-	outline: 2px solid #111;
-	border-radius: 4px;
+	color: #A60000;
+	font-family: 'Inter Bold';
+	font-size: 14px;
 }
 
 .avatar-result-word-feedback p {
@@ -261,19 +261,19 @@
 .avatar-result-word-feedback ul {
 	margin: 9px 0 0;
 	padding-left: 21px;
-	line-height: 1.45;
 }
 
 .avatar-result-continue {
 	width: 100%;
-	margin-top: auto;
-	padding: 18px 24px;
+	margin-top: 72px;
+	height: 59px;
+    padding: 16px 40px;
 	border: 0;
-	border-radius: 999px;
-	background: linear-gradient(100deg, #9cf2d7 0%, #71c5fb 100%);
+	border-radius: 50px;
+	background: linear-gradient(277deg, #7EC7FF 2.27%, #ADFFDA 97.66%);
+	box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.10);
 	color: #000;
-	font: inherit;
-	font-size: 17px;
+	font: 16px 'Inter';
 }
 
 .avatar-result-continue:hover { filter: brightness(1.04); }

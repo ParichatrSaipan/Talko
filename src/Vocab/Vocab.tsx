@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import Header from '../Header/Header.Component'
 import type { MenuDestination } from '../Hamburger/Menu'
 import soundIcon from '../assets/icon_sound.svg'
@@ -23,6 +23,14 @@ const vocabulary = [
 function Vocab({ onMenuNavigate }: VocabProps) {
 	const [query, setQuery] = useState('')
 	const [activeCategory, setActiveCategory] = useState<VocabularyCategory>('All')
+	const [speakingWord, setSpeakingWord] = useState<string | null>(null)
+	const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null)
+
+	useEffect(() => {
+		return () => {
+			if ('speechSynthesis' in window) window.speechSynthesis.cancel()
+		}
+	}, [])
 
 	const visibleVocabulary = useMemo(() => {
 		const normalizedQuery = query.trim().toLowerCase()
@@ -35,8 +43,30 @@ function Vocab({ onMenuNavigate }: VocabProps) {
 
 	function playWord(word: string) {
 		if (!('speechSynthesis' in window)) return
+
+		if (speakingWord === word) {
+			utteranceRef.current = null
+			window.speechSynthesis.cancel()
+			setSpeakingWord(null)
+			return
+		}
+
+		utteranceRef.current = null
 		window.speechSynthesis.cancel()
-		window.speechSynthesis.speak(new SpeechSynthesisUtterance(word))
+
+		const utterance = new SpeechSynthesisUtterance(word)
+		utteranceRef.current = utterance
+		setSpeakingWord(word)
+
+		function finishSpeaking() {
+			if (utteranceRef.current !== utterance) return
+			utteranceRef.current = null
+			setSpeakingWord(null)
+		}
+
+		utterance.onend = finishSpeaking
+		utterance.onerror = finishSpeaking
+		window.speechSynthesis.speak(utterance)
 	}
 
 	return (
@@ -67,7 +97,13 @@ function Vocab({ onMenuNavigate }: VocabProps) {
 								<p>{item.translation}</p>
 								<small>{item.context}</small>
 							</div>
-							<button className="vocab-sound" type="button" onClick={() => playWord(item.word)} aria-label={`Play ${item.word}`}>
+							<button
+								className={`vocab-sound${speakingWord === item.word ? ' is-playing' : ''}`}
+								type="button"
+								onClick={() => playWord(item.word)}
+								aria-pressed={speakingWord === item.word}
+								aria-label={`${speakingWord === item.word ? 'Stop' : 'Play'} ${item.word}`}
+							>
 								<img src={soundIcon} alt="" />
 							</button>
 						</article>

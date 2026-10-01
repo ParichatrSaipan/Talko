@@ -1,13 +1,18 @@
 import Header from '../Header/Header.Component'
 import type { MenuDestination } from '../Hamburger/Menu'
-import locationIcon from '../assets/icon_Location.svg'
-import computerIcon from '../assets/icon_Computer.svg'
+import profileIcon from '../assets/icon_Profile.svg'
+import editJobIcon from '../assets/icon_EditJob.svg'
+import { practiceItems } from '../Practice/practiceData'
+import type { PracticeItem } from '../Practice/practiceData'
 import './ProfileUser.css'
 
 type ProfileUserProps = {
+	username: string
+	role: string
 	onTravelSelect: () => void
 	onWorkSelect: () => void
 	onPracticeSelect: () => void
+	onEdit: () => void
 	onMenuNavigate?: (destination: MenuDestination) => void
 }
 
@@ -18,18 +23,24 @@ const skillProgress = [
 	{ label: 'Speaking Fluency', score: 47 },
 ]
 
-function ProfileUser({ onTravelSelect, onWorkSelect, onPracticeSelect, onMenuNavigate }: ProfileUserProps) {
+function ProfileUser({ username, role, onTravelSelect, onWorkSelect, onPracticeSelect, onEdit, onMenuNavigate }: ProfileUserProps) {
+	function selectPractice(item: PracticeItem) {
+		if (item.category === 'Travel') onTravelSelect()
+		else onWorkSelect()
+	}
+
 	return (
 		<main className="profile-page">
 			<Header onMenuNavigate={onMenuNavigate} />
 
 			<div className="profile-content">
 				<section className="profile-user" aria-label="User profile">
-					<span className="profile-avatar" aria-hidden="true"><i /><i /></span>
+					<span className="profile-avatar" aria-hidden="true"><img src={profileIcon} alt="" /></span>
 					<div>
-						<h1>Alex</h1>
-						<p>xxxxxxx@gmail.com</p>
+						<h1>{username}</h1>
+						<p>Role: {role}</p>
 					</div>
+					<button className="profile-edit" type="button" onClick={onEdit} aria-label="Edit profile"><img src={editJobIcon} alt="" /></button>
 				</section>
 
 				<section className="profile-section" aria-labelledby="skill-progress-title">
@@ -52,39 +63,23 @@ function ProfileUser({ onTravelSelect, onWorkSelect, onPracticeSelect, onMenuNav
 				<section className="profile-section profile-recent" aria-labelledby="recent-practice-title">
 					<div className="profile-section-heading">
 						<h2 id="recent-practice-title">Recent practice</h2>
-						<button type="button" onClick={onPracticeSelect} aria-label="View all practice"><span aria-hidden="true">›</span></button>
+						<button type="button" onClick={onPracticeSelect} aria-label="View all practice"><span aria-hidden="true" /></button>
 					</div>
 
 					<div className="profile-practice-list">
-						<button className="profile-practice-card" type="button" onClick={onTravelSelect}>
-							<span className="profile-practice-icon" aria-hidden="true"><img src={locationIcon} alt="" /></span>
-							<span className="profile-practice-copy">
-								<strong>Hotel Check-in</strong>
-								<small>Travel</small>
-								<span className="profile-status profile-status--progress"><i aria-hidden="true">●</i> in progress</span>
-							</span>
-							<span className="profile-practice-arrow" aria-hidden="true">›</span>
-						</button>
-
-						<button className="profile-practice-card" type="button" onClick={onTravelSelect}>
-							<span className="profile-practice-icon" aria-hidden="true"><img src={locationIcon} alt="" /></span>
-							<span className="profile-practice-copy">
-								<strong>Ordering Food</strong>
-								<small>Travel</small>
-								<span className="profile-status profile-status--completed"><i aria-hidden="true">✓</i> completed</span>
-							</span>
-							<span className="profile-practice-arrow" aria-hidden="true">›</span>
-						</button>
-
-						<button className="profile-practice-card" type="button" onClick={onWorkSelect}>
-							<span className="profile-practice-icon" aria-hidden="true"><img src={computerIcon} alt="" /></span>
-							<span className="profile-practice-copy">
-								<strong>Giving a Work Update</strong>
-								<small>Work</small>
-								<span className="profile-status profile-status--completed"><i aria-hidden="true">✓</i> completed</span>
-							</span>
-							<span className="profile-practice-arrow" aria-hidden="true">›</span>
-						</button>
+						{practiceItems.slice(0, 3).map((item) => (
+							<button className="profile-practice-card" type="button" key={item.id} onClick={() => selectPractice(item)}>
+								<span className="profile-practice-icon" aria-hidden="true"><img src={item.icon} alt="" /></span>
+								<span className="profile-practice-copy">
+									<strong>{item.title}</strong>
+									<small>{item.category}</small>
+									<span className={`profile-status profile-status--${item.status === 'in-progress' ? 'progress' : 'completed'}`}>
+										<i aria-hidden="true"><img src={item.statusIcon} alt="" /></i> {item.statusLabel}
+									</span>
+								</span>
+								<span className="profile-practice-arrow" aria-hidden="true">›</span>
+							</button>
+						))}
 					</div>
 				</section>
 			</div>

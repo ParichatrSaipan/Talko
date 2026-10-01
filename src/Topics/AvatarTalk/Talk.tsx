@@ -47,12 +47,14 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 	const [selectedWord, setSelectedWord] = useState<WordInfo | null>(null)
 	const [savedWords, setSavedWords] = useState<Set<string>>(new Set())
 	const [isTranslated, setIsTranslated] = useState(false)
+	const [isSentenceSpeaking, setIsSentenceSpeaking] = useState(false)
 	const [isSpeaking, setIsSpeaking] = useState(false)
 	const [isTyping, setIsTyping] = useState(false)
 	const [typedMessage, setTypedMessage] = useState('')
 	const [sentMessages, setSentMessages] = useState<string[]>([])
 	const [isFinishedByMessage, setIsFinishedByMessage] = useState(false)
 	const [isWordSoundPlayed, setIsWordSoundPlayed] = useState(false)
+	const [showHelpPrompt, setShowHelpPrompt] = useState(true)
 	const typingInputRef = useRef<HTMLInputElement>(null)
 
 	function selectWord(key: keyof typeof words) {
@@ -79,6 +81,20 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 			else next.add(word)
 			return next
 		})
+	}
+
+	function toggleSentencePlayback() {
+		if (isSentenceSpeaking) {
+			window.speechSynthesis?.cancel()
+			setIsSentenceSpeaking(false)
+			return
+		}
+
+		setIsSentenceSpeaking(true)
+		playWord(
+			'Welcome to Talko! My name is Talko and I’m your personal AI tutor.',
+			() => setIsSentenceSpeaking(false),
+		)
 	}
 
 	function handleTypedMessage(event: FormEvent<HTMLFormElement>) {
@@ -119,11 +135,18 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 					<button className="talk-word-token" type="button" onClick={() => selectWord('personal')}>personal</button>{' '}
 					<button className="talk-word-token" type="button" onClick={() => selectWord('ai')}>AI</button>{' '}
 					<button className="talk-word-token" type="button" onClick={() => selectWord('tutor')}>tutor</button>
-					{isTranslated && <p className="talk-sentence-translation">ยินดีต้อนรับสู่ Talko! ฉันชื่อ Talko และฉันคือครู AI ส่วนตัวของคุณ</p>}
 					<div className="talk-bubble-tools">
-						<button type="button" onClick={() => playWord('Welcome to Talko! My name is Talko and I’m your personal AI tutor.')} aria-label="Play pronunciation"><img src={soundIcon} alt="" /></button>
+						<button
+							type="button"
+							onClick={toggleSentencePlayback}
+							aria-pressed={isSentenceSpeaking}
+							aria-label={isSentenceSpeaking ? 'Stop pronunciation' : 'Play pronunciation'}
+						>
+							<img src={soundIcon} alt="" />
+						</button>
 						<button type="button" onClick={() => setIsTranslated(!isTranslated)} aria-pressed={isTranslated} aria-label="Translate sentence"><img src={translateIcon} alt="" /></button>
 					</div>
+					{isTranslated && <p className="talk-sentence-translation">ยินดีต้อนรับสู่ Talko! ฉันชื่อ Talko และฉันคือครู AI ส่วนตัวของคุณ</p>}
 				</div>
 				{sentMessages.length > 0 && (
 					<div className="talk-user-messages" aria-live="polite">
@@ -185,7 +208,10 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 						>
 							<img src={voiceIcon} alt="" />
 						</button>
-						<button className="talk-control" type="button" aria-label="Conversation help"><img src={hintIcon} alt="" /></button>
+						<div className="talk-help-control">
+							{showHelpPrompt && <span className="talk-help-prompt" role="status">Need a little help?</span>}
+							<button className="talk-control" type="button" onClick={() => setShowHelpPrompt(false)} aria-label="Conversation help"><img src={hintIcon} alt="" /></button>
+						</div>
 						<span className="talk-control-hint">{isSpeaking ? 'Listening...' : 'Hold to speak'}</span>
 					</div>
 				)}

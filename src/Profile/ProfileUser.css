@@ -11,100 +11,106 @@
 .profile-content {
 	width: min(100%, 430px);
 	margin: 0 auto;
-	padding: 25px 16px 50px;
+	padding: 27px 16px;
 }
 
 .profile-user {
 	display: flex;
 	align-items: center;
-	gap: 20px;
+	gap: 21px;
 }
 
 .profile-avatar {
-	width: 56px;
-	height: 56px;
+	width: 58px;
+	height: 58px;
 	position: relative;
-	overflow: hidden;
+	display: grid;
+	place-items: center;
 	flex: 0 0 auto;
 	border-radius: 50%;
 	background: #fff;
 }
 
-.profile-avatar i {
-	position: absolute;
-	left: 50%;
-	background: #16c7e8;
-	transform: translateX(-50%);
-}
-
-.profile-avatar i:first-child {
-	top: 10px;
-	width: 23px;
-	height: 23px;
-	border-radius: 50%;
-}
-
-.profile-avatar i:last-child {
-	bottom: -6px;
-	width: 51px;
-	height: 24px;
-	border-radius: 50% 50% 0 0;
+.profile-avatar img {
+	width: 48px;
+	height: 42px;
+	display: block;
 }
 
 .profile-user h1 {
 	margin: 0;
-	color: #8de7ed;
-	font-family: 'Inter Bold', 'Inter', sans-serif;
+	background: linear-gradient(180deg, #7EC7FF 0%, #ADFFDA 100%);
+	background-clip: text;
+	-webkit-background-clip: text;
+	color: transparent;
+	font-family: 'Inter Bold';
 	font-size: 32px;
-	line-height: 1;
 }
 
 .profile-user p {
-	margin: 6px 0 0;
-	font: 12px 'Inter Regular', 'Inter', sans-serif;
+	margin:0;
+	font: 12px 'Inter';
+}
+
+.profile-edit {
+	width: 24px;
+	height: 24px;
+	margin-left: auto;
+	padding: 0;
+	position: relative;
+	border: 0;
+	background: transparent;
+}
+
+.profile-edit img {
+	width: 24px;
+	height: 24px;
+	display: block;
+	margin: auto;
 }
 
 .profile-section {
-	margin-top: 38px;
+	margin-top: 41px;
 }
 
 .profile-section h2 {
-	margin: 0 0 9px;
-	font: 14px 'Inter', sans-serif;
+	margin: 0 ;
+	margin-bottom: 9px;
+	font: 14px 'Inter';
 }
 
 .profile-skill-card {
 	padding: 20px 16px;
-	border-radius: 19px;
+	border-radius: 20px;
 	background: #fff;
 	color: #080808;
 }
 
 .profile-skill + .profile-skill {
-	margin-top: 17px;
+	margin-top: 12px;
 }
 
 .profile-skill-label {
-	margin-bottom: 8px;
+	margin-bottom: 10px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	font-size: 13px;
+	font-size: 14px;
 }
 
 .profile-skill-label strong {
-	font-family: 'Inter Bold', 'Inter', sans-serif;
+	font-family: 'Inter Bold';
 }
 
 .profile-skill-label span {
-	font: 11px 'Inter Regular', 'Inter', sans-serif;
+	font: 12px 'Inter Regular';
 }
 
 .profile-progress {
-	height: 13px;
+	height: 14px;
 	overflow: hidden;
-	border-radius: 999px;
-	background: #ececec;
+	border-radius: 100px;
+	background: #F1F1F1;
 }
 
 .profile-progress > span {
@@ -115,27 +121,39 @@
 }
 
 .profile-recent {
-	margin-top: 34px;
+	margin-top: 36px;
 }
 
 .profile-section-heading {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	margin-bottom:4px;
+}
+
+.profile-section-heading h2 {
+	margin: 0;
 }
 
 .profile-section-heading > button {
 	width: 32px;
 	height: 32px;
 	padding: 0;
+	display: grid;
+	place-items: center;
 	border: 0;
 	background: transparent;
 	color: #fff;
 }
 
 .profile-section-heading > button span {
-	font-size: 26px;
-	line-height: 1;
+	display: block;
+	width: 11px;
+	height: 11px;
+	box-sizing: border-box;
+	border-top: 2.5px solid currentColor;
+	border-right: 2.5px solid currentColor;
+	transform: translateX(-2px) rotate(45deg);
 }
 
 .profile-section-heading > button:focus-visible {
@@ -150,14 +168,14 @@
 
 .profile-practice-card {
 	width: 100%;
-	min-height: 86px;
-	padding: 11px 14px 11px 12px;
+	min-height: 90px;
+	padding: 12px;
 	display: grid;
 	grid-template-columns: 62px 1fr auto;
 	align-items: center;
-	gap: 18px;
+	gap: 24px;
 	border: 0;
-	border-radius: 18px;
+	border-radius: 20px;
 	background: #fff;
 	color: #080808;
 	font: inherit;
@@ -168,6 +186,7 @@
 	width: 62px;
 	height: 62px;
 	position: relative;
+	padding: 10px;
 	border-radius: 8px;
 	background: #f1f1f1;
 }
@@ -190,40 +209,50 @@
 }
 
 .profile-practice-copy strong {
-	font-family: 'Inter Bold', 'Inter', sans-serif;
-	font-size: 15px;
-	line-height: 1.15;
+	font-family: 'Inter Bold';
+	font-size: 16px;
 }
 
 .profile-practice-copy small {
-	margin-top: 3px;
-	color: #666;
-	font: 12px 'Inter Regular', 'Inter', sans-serif;
+	margin-top: 4px;
+	color: #515151;
+	font: 12px 'Inter Regular';
 }
 
 .profile-status {
 	margin-top: 5px;
 	padding: 4px 7px;
-	border-radius: 999px;
-	font: 10px 'Inter Regular', 'Inter', sans-serif;
+	display: inline-flex;
+	align-items: center;
+	gap: 3px;
+	border-radius: 100px;
+	font: 10px 'Inter Regular';
 }
 
 .profile-status i {
+	display: inline-flex;
+	align-items: center;
 	font-style: normal;
 }
 
+.profile-status i img {
+	width: 12px;
+	height: 12px;
+	display: block;
+}
+
 .profile-status--progress {
-	background: #ffafb0;
-	color: #c62d35;
+	background: #FFA1A1;
+	color: #A22806;
 }
 
 .profile-status--completed {
-	background: #b7f78f;
-	color: #3d9b19;
+	background: #C3FFA1;
+	color: #3FA206;
 }
 
 .profile-practice-arrow {
-	color: #555;
+	color: #515151;
 	font-size: 28px;
 }
 

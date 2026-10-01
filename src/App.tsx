@@ -12,19 +12,22 @@ import ChooseTopics from './Topics/ChooseTopics/ChooseTopics'
 import MainInterview from './Topics/MainTopics/MainInterview'
 import MainWork from './Topics/MainTopics/MainWork'
 import MainTravel from './Topics/MainTopics/MainTravel'
-import CallComponent from './Topics/AvatarCall/calling'
+import CallComponent from './Topics/AvatarCall/Calling'
 import Talk from './Topics/AvatarTalk/Talk'
 import AvatarResult from './Topics/AvatarResult/AvatarResult'
 import type { MenuDestination } from './Hamburger/Menu'
 import MainHome from './Topics/MainHome/MainHome'
 import ProfileUser from './Profile/ProfileUser'
+import EditJob from './Profile/EditJob'
 import Practice from './Practice/Practice'
 import Vocab from './Vocab/Vocab'
 import CreateAccount from './CreateAccount/CreateAccount'
 
 function App() {
-  const [page, setPage] = useState<'home' | 'sign-in' | 'create-account' | 'age' | 'gender' | 'name' | 'work' | 'language-level' | 'level-test' | 'level-result' | 'topics' | 'main-home' | 'main-topics' | 'main-work' | 'main-travel' | 'call' | 'talk' | 'avatar-result' | 'profile' | 'practice' | 'vocab'>('home')
+  const [page, setPage] = useState<'home' | 'sign-in' | 'create-account' | 'age' | 'gender' | 'name' | 'work' | 'language-level' | 'level-test' | 'level-result' | 'topics' | 'main-home' | 'main-topics' | 'main-work' | 'main-travel' | 'call' | 'talk' | 'avatar-result' | 'profile' | 'edit-profile' | 'practice' | 'vocab'>('home')
   const [topicReturnPage, setTopicReturnPage] = useState<'main-topics' | 'main-work' | 'main-travel'>('main-topics')
+  const [profileName, setProfileName] = useState('Alex')
+  const [profileRole, setProfileRole] = useState('Engineering')
 
   function startTopic(returnPage: 'main-topics' | 'main-work' | 'main-travel') {
     setTopicReturnPage(returnPage)
@@ -98,7 +101,22 @@ function App() {
   }
 
   if (page === 'profile') {
-    return <ProfileUser onTravelSelect={() => setPage('main-travel')} onWorkSelect={() => setPage('main-work')} onPracticeSelect={() => setPage('practice')} onMenuNavigate={navigateFromMenu} />
+    return <ProfileUser username={profileName} role={profileRole} onEdit={() => setPage('edit-profile')} onTravelSelect={() => setPage('main-travel')} onWorkSelect={() => setPage('main-work')} onPracticeSelect={() => setPage('practice')} onMenuNavigate={navigateFromMenu} />
+  }
+
+  if (page === 'edit-profile') {
+    return (
+      <EditJob
+        username={profileName}
+        role={profileRole}
+        onSave={(username, role) => {
+          setProfileName(username)
+          setProfileRole(role)
+          setPage('profile')
+        }}
+        onMenuNavigate={navigateFromMenu}
+      />
+    )
   }
 
   if (page === 'practice') {

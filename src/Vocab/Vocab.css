@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400&display=swap');
+
 .vocab-page {
 	min-height: 100svh;
 	background:
@@ -10,29 +12,30 @@
 
 .vocab-content {
 	width: min(100%, 430px);
-	margin: 0 auto;
-	padding: 51px 14px 48px;
+	padding: 59px 16px 30px;
 	overflow: hidden;
 }
 
 .vocab-content h1 {
 	margin: 0;
-	font-family: 'Inter Bold', 'Inter', sans-serif;
-	font-size: 30px;
+	font-family: 'Inter Bold';
+	font-size: 32px;
 }
 
 .vocab-content h1 span {
-	color: #8de7ed;
+	background: linear-gradient(180deg, #7EC7FF 0%, #ADFFDA 100%);
+	background-clip: text;
+	-webkit-background-clip: text;
+	color: transparent;
 }
 
 .vocab-search {
-	height: 42px;
-	margin-top: 29px;
-	padding: 0 15px;
+	margin-top: 32px;
+	padding: 12px 16px;
 	display: flex;
 	align-items: center;
-	gap: 12px;
-	border-radius: 999px;
+	gap: 10px;
+	border-radius: 100px;
 	background: #fff;
 }
 
@@ -41,7 +44,7 @@
 	height: 16px;
 	position: relative;
 	flex: 0 0 auto;
-	border: 2px solid #bfc2c5;
+	border: 2px solid #BABABA;
 	border-radius: 50%;
 }
 
@@ -52,7 +55,7 @@
 	bottom: -3px;
 	width: 7px;
 	height: 2px;
-	background: #bfc2c5;
+	background: #BABABA;
 	transform: rotate(45deg);
 }
 
@@ -63,7 +66,7 @@
 	outline: 0;
 	background: transparent;
 	color: #111;
-	font: 13px 'Inter Regular', 'Inter', sans-serif;
+	font: 14px 'Inter Regular';
 }
 
 .vocab-search input::placeholder {
@@ -71,10 +74,11 @@
 }
 
 .vocab-filters {
-	margin-top: 21px;
-	padding-bottom: 2px;
+	margin-top: 24px;
+	margin-inline: -14px;
+	padding-inline: 14px;
 	display: flex;
-	gap: 9px;
+	gap: 10px;
 	overflow-x: auto;
 	scrollbar-width: none;
 }
@@ -84,58 +88,68 @@
 }
 
 .vocab-filters button {
-	min-width: 94px;
-	height: 39px;
-	padding: 0 18px;
+	min-width: 107px;
+	height: 41px;
+	box-sizing: border-box;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border: 0;
+	padding: 0 8px;
 	flex: 0 0 auto;
-	border: 1px solid #ddd;
-	border-radius: 999px;
-	background: #fff;
+	border-radius: 100px;
+	background: #FFF;
+	box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.10);
 	color: #111;
-	font: 13px 'Inter', sans-serif;
+	font: 14px 'Inter';
 }
 
 .vocab-filters button.is-active {
-	border: 2px solid #91eed8;
-	background: #72c2f5;
-	font-family: 'Inter Bold', 'Inter', sans-serif;
+	font: 16px 'Inter Bold';
+	flex: 0 0 auto;
+	border-radius: 100px;
+	border: 3px solid #ADFFDA;
+	background: #7EC7FF;
+	box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.10);
+	
 }
 
 .vocab-list {
-	margin-top: 37px;
+	margin-top: 44px;
 	display: grid;
-	gap: 16px;
+	gap: 20px;
 }
 
 .vocab-card {
-	min-height: 81px;
-	padding: 13px 21px 12px 14px;
+	min-height: 91px;
+	min-width: 343px;
+	padding: 16px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	gap: 16px;
-	border-radius: 18px;
+	border-radius: 20px;
 	background: #fff;
 	color: #080808;
 }
 
 .vocab-card h2 {
 	margin: 0;
-	font-family: 'Inter Bold', 'Inter', sans-serif;
-	font-size: 15px;
+	font: 16px 'Inter Bold';
 }
 
 .vocab-card p {
 	margin: 4px 0 0;
-	color: #666;
-	font: 12px 'Inter Regular', 'Inter', sans-serif;
+	color: #515151;
+	font-family: 'Noto Sans Thai';
+	font-size: 14px;
+	font-weight: 400;
 }
 
 .vocab-card small {
 	display: block;
-	margin-top: 2px;
-	color: #6abff5;
-	font: 11px 'Inter Regular', 'Inter', sans-serif;
+	margin-top: 4px;
+	color: #7EC7FF;
+	font: 12px 'Inter Regular';
 }
 
 .vocab-sound {
@@ -149,10 +163,15 @@
 }
 
 .vocab-sound img {
-	width: 25px;
-	height: 25px;
+	width: 24px;
+	height: 24px;
 	display: block;
 	margin: auto;
+}
+
+.vocab-sound.is-playing img {
+	filter: brightness(0);
+	transform: scale(.94);
 }
 
 .vocab-sound:focus-visible {

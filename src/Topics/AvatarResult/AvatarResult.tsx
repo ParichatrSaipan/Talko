@@ -15,7 +15,7 @@ const feedbackScores = [
 ]
 
 function AvatarResult({ onContinue, onMenuNavigate }: AvatarResultProps) {
-	const [isRepeatedWordsOpen, setIsRepeatedWordsOpen] = useState(true)
+	const [isRepeatedWordsOpen, setIsRepeatedWordsOpen] = useState(false)
 
 	return (
 		<main className="avatar-result-page">
@@ -56,7 +56,6 @@ function AvatarResult({ onContinue, onMenuNavigate }: AvatarResultProps) {
 						<div className="avatar-result-improvement">
 							<span className="avatar-result-alert" aria-hidden="true">!</span>
 							<strong>Long pauses</strong>
-							<span>3 times</span>
 						</div>
 						<button
 							className="avatar-result-improvement avatar-result-improvement-toggle"
@@ -67,20 +66,15 @@ function AvatarResult({ onContinue, onMenuNavigate }: AvatarResultProps) {
 						>
 							<span className="avatar-result-alert" aria-hidden="true">!</span>
 							<strong>Repeated words</strong>
-							<span>{isRepeatedWordsOpen ? '1 word' : '3 words'}</span>
+							<span className="avatar-result-improvement-summary">
+								<span>1 word</span>
+								<i className={isRepeatedWordsOpen ? 'is-open' : ''} aria-hidden="true" />
+							</span>
 						</button>
 						{isRepeatedWordsOpen && (
 							<div className="avatar-result-word-feedback" id="repeated-words-feedback">
 								<div className="avatar-result-word-heading">
 									<strong>Think</strong>
-									<button
-										className="avatar-result-word-toggle"
-										type="button"
-										onClick={() => setIsRepeatedWordsOpen(false)}
-										aria-label="Close repeated words feedback"
-									>
-										<span aria-hidden="true">⌄</span>
-									</button>
 								</div>
 								<p>Try this :</p>
 								<ul>

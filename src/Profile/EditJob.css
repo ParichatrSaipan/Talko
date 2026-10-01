@@ -1,0 +1,70 @@
+.edit-job-page {
+	min-height: 100svh;
+	background:
+		radial-gradient(circle at 100% 45%, rgba(33, 76, 65, .76), transparent 44%),
+		radial-gradient(circle at 0 0, #193442, transparent 38%),
+		#000;
+	color: #fff;
+	font-family: 'Inter', sans-serif;
+}
+
+.edit-job-form {
+	width: min(100%, 430px);
+	margin: 0 auto;
+	padding: 88px 36px 0;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+}
+
+.edit-job-form label {
+	margin-bottom: 9px;
+	font: 14px 'Inter';
+}
+
+.edit-job-form label:not(:first-child) {
+	margin-top: 36px;
+}
+
+.edit-job-form input {
+	width: 100%;
+	height: 41px;
+	padding: 16px 20px;
+	box-sizing: border-box;
+	border: 0;
+	border-radius: 20px;
+	outline: 0;
+	background: #fff;
+	color: #BABABA;
+	font: 12px 'Inter';
+	
+}
+
+.edit-job-form input:focus {
+	outline: 2.5px solid #ADFFDA;
+	outline-offset: 2px;
+	font: 12px 'Inter';
+	color: #000;
+}
+
+.edit-job-form button {
+	display: flex;
+	align-items: center; /*คือการจัดแนวเนื้อหาภายในปุ่มให้อยู่ตรงกลางในแนวตั้ง*/
+	justify-content: center; /*คือการจัดแนวเนื้อหาภายในปุ่มให้อยู่ตรงกลางในแนวนอน*/
+	width: 100%;
+	height: 45px;
+	margin-top: 94px;
+	padding: 16px 40px;
+	border: 0;
+	border-radius: 50px;
+	background: linear-gradient(277deg, #7EC7FF 2.27%, #ADFFDA 97.66%);
+	box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.10);
+	color: #080808;
+	font: 16px 'Inter';
+}
+
+.edit-job-form button:focus-visible {
+	outline: 3px solid #fff;
+	outline-offset: 3px;
+}
+

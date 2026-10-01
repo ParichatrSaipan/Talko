@@ -1,33 +1,32 @@
 .call-page {
 	min-height: 100svh;
-	padding: 76px 18px;
+	padding: 78px 20px 0;
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	background: linear-gradient(180deg, #7EC7FF 5.17%, #ADFFDA 99.95%);
 	color: #000;
-	font-family: 'Inter', sans-serif;
 	text-align: center;
 }
 
 .call-page h1 {
 	margin: 0 0 48px;
-	font: 36px 'Inter Bold';
+    font: 36px 'Inter ExtraBold';
 }
 
 .call-practice-card {
 	width: 100%;
-	max-width: 336px;
-	min-height: 468px;
-	padding: 31px 18px;
+	max-width: 335px;
+	min-height: 467px;
+    padding: 32px 20px 64px 20px;
 	box-sizing: border-box;
 	position: relative;
 	overflow: hidden;
-	border: 2px solid rgba(255, 255, 255, .65);
+	border: 1px solid rgba(255, 255, 255, .65);
 	border-radius: 10px;
-	background: rgba(255, 255, 255, .48);
-	box-shadow: 0 0 10px rgba(255, 255, 255, .35);
+	background: rgba(255, 255, 255, 0.40);
+	box-shadow: 0 0 20px 0 rgba(255, 255, 255, 0.80) inset, 0 0 4px 0 rgba(0, 0, 0, 0.10);
 	text-align: left;
 }
 
@@ -42,7 +41,7 @@
 }
 
 .call-practice-card p {
-	margin: 1px 0 31px;
+	margin: 27px 0;
 	font: 12px 'Inter Regular';
 }
 
@@ -50,12 +49,10 @@
 	margin: 0;
 	padding-left: 21px;
 	display: grid;
-	gap: 20px;
 }
 
 .call-practice-card li {
-	padding-left: 1px;
-	font: 14px/1.25 'Inter Regular';
+	font: 14px/34px 'Inter Regular';
 }
 
 .call-character {
@@ -93,21 +90,4 @@
 	object-fit: contain;
 }
 
-@media (max-width: 360px) {
-	.call-page {
-		padding: 60px 16px;
-	}
 
-	.call-page h1 {
-		margin-bottom: 36px;
-		font-size: 32px;
-	}
-
-	.call-practice-card {
-		min-height: 450px;
-	}
-
-	.call-actions {
-		margin-top: 36px;
-	}
-}

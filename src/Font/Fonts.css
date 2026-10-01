@@ -24,3 +24,12 @@
   line-height: normal;
   font-display: swap;
 }
+
+@font-face {
+  font-family: 'Inter ExtraBold';
+  src: url('../Font/Inter_18pt-Bold.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  line-height: normal;
+  font-display: swap;
+}

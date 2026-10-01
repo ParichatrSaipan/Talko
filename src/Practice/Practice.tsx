@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import Header from '../Header/Header.Component'
 import type { MenuDestination } from '../Hamburger/Menu'
-import locationIcon from '../assets/icon_Location.svg'
-import computerIcon from '../assets/icon_Computer.svg'
+import { practiceItems } from './practiceData'
+import type { PracticeItem, PracticeStatus } from './practiceData'
+import '../Profile/ProfileUser.css'
 import './Practice.css'
 
 type PracticeProps = {
@@ -12,17 +13,21 @@ type PracticeProps = {
 	onMenuNavigate?: (destination: MenuDestination) => void
 }
 
-type PracticeTab = 'in-progress' | 'completed'
-
 function Practice({ onBack, onTravelSelect, onWorkSelect, onMenuNavigate }: PracticeProps) {
-	const [activeTab, setActiveTab] = useState<PracticeTab>('in-progress')
+	const [activeTab, setActiveTab] = useState<PracticeStatus>('in-progress')
+	const visiblePractice = practiceItems.filter((item) => item.status === activeTab)
+
+	function selectPractice(item: PracticeItem) {
+		if (item.category === 'Travel') onTravelSelect()
+		else onWorkSelect()
+	}
 
 	return (
 		<main className="practice-page">
 			<Header onMenuNavigate={onMenuNavigate} />
 
 			<div className="practice-content">
-				<button className="practice-back" type="button" onClick={onBack} aria-label="Back to profile"><span aria-hidden="true">‹</span></button>
+				<button className="practice-back" type="button" onClick={onBack} aria-label="Back to profile"><span aria-hidden="true" /></button>
 
 				<div className="practice-tabs" role="tablist" aria-label="Practice status">
 					<button
@@ -46,39 +51,19 @@ function Practice({ onBack, onTravelSelect, onWorkSelect, onMenuNavigate }: Prac
 				</div>
 
 				<div className="practice-list" role="tabpanel">
-					{activeTab === 'in-progress' ? (
-						<button className="practice-card" type="button" onClick={onTravelSelect}>
-							<span className="practice-icon" aria-hidden="true"><img src={locationIcon} alt="" /></span>
-							<span className="practice-card-copy">
-								<strong>Hotel Check-in</strong>
-								<small>Travel</small>
-								<span className="practice-status practice-status--progress"><i aria-hidden="true">●</i> in progress</span>
+					{visiblePractice.map((item) => (
+						<button className="profile-practice-card" type="button" key={item.id} onClick={() => selectPractice(item)}>
+							<span className="profile-practice-icon" aria-hidden="true"><img src={item.icon} alt="" /></span>
+							<span className="profile-practice-copy">
+								<strong>{item.title}</strong>
+								<small>{item.category}</small>
+								<span className={`profile-status profile-status--${item.status === 'in-progress' ? 'progress' : 'completed'}`}>
+									<i aria-hidden="true"><img src={item.statusIcon} alt="" /></i> {item.statusLabel}
+								</span>
 							</span>
-							<span className="practice-card-arrow" aria-hidden="true">›</span>
+							<span className="profile-practice-arrow" aria-hidden="true">›</span>
 						</button>
-					) : (
-						<>
-							<button className="practice-card" type="button" onClick={onTravelSelect}>
-								<span className="practice-icon" aria-hidden="true"><img src={locationIcon} alt="" /></span>
-								<span className="practice-card-copy">
-									<strong>Ordering Food</strong>
-									<small>Travel</small>
-									<span className="practice-status practice-status--completed"><i aria-hidden="true">✓</i> completed</span>
-								</span>
-								<span className="practice-card-arrow" aria-hidden="true">›</span>
-							</button>
-
-							<button className="practice-card" type="button" onClick={onWorkSelect}>
-								<span className="practice-icon" aria-hidden="true"><img src={computerIcon} alt="" /></span>
-								<span className="practice-card-copy">
-									<strong>Giving a Work Update</strong>
-									<small>Work</small>
-									<span className="practice-status practice-status--completed"><i aria-hidden="true">✓</i> completed</span>
-								</span>
-								<span className="practice-card-arrow" aria-hidden="true">›</span>
-							</button>
-						</>
-					)}
+					))}
 				</div>
 			</div>
 		</main>

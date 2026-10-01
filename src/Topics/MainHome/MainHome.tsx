@@ -54,7 +54,7 @@ function MainHome({ onInterviewSelect, onWorkSelect, onTravelSelect, onMenuNavig
 						<span className="main-home-card-copy">
 							<small>Travel</small>
 							<strong>Hotel Check-in</strong>
-							<button className="main-home-card-action" type="button" onClick={onTravelSelect}>
+							<button className="main-home-card-action" type="button">
 								Continue <i aria-hidden="true">›</i>
 							</button>
 						</span>

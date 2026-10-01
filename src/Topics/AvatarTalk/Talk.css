@@ -339,6 +339,39 @@
 	transform: scale(.96);
 }
 
+.talk-help-control {
+	width: 66px;
+	height: 66px;
+	position: relative;
+	flex: 0 0 66px;
+}
+
+.talk-help-prompt {
+	position: absolute;
+	bottom: 94px;
+	left: 50%;
+	z-index: 2;
+	padding: 10px;
+	border-radius: 20px;
+	background: linear-gradient(90deg, #ADFFDA 0%, #7EC7FF 100%);
+	box-shadow: 0 6px 12px rgba(126, 199, 255, .38);
+	color: #000;
+	font: 10px 'Inter Bold';
+	white-space: nowrap;
+	transform: translateX(-50%);
+}
+
+.talk-help-prompt::after {
+	content: '';
+	position: absolute;
+	top: calc(100% - 1px);
+	left: 50%;
+	border-top: 13px solid #96E3ED;
+	border-right: 10px solid transparent;
+	border-left: 10px solid transparent;
+	transform: translateX(-50%);
+}
+
 .talk-control-hint {
 	position: absolute;
 	right: 0;
