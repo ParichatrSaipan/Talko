@@ -17,7 +17,7 @@ type ProfileUserProps = {
 }
 
 const skillProgress = [
-	{ label: 'Clarity', score: 47 },
+	{ label: 'Clarity', score: 100 },
 	{ label: 'Conversation Flow', score: 47 },
 	{ label: 'Situation', score: 47 },
 	{ label: 'Speaking Fluency', score: 47 },
@@ -53,7 +53,7 @@ function ProfileUser({ username, role, onTravelSelect, onWorkSelect, onPracticeS
 									<span>{score}%</span>
 								</div>
 								<div className="profile-progress" role="progressbar" aria-label={label} aria-valuemin={0} aria-valuemax={100} aria-valuenow={score}>
-									<span style={{ width: `${score}%` }} />
+									<span className={score === 100 ? 'is-complete' : undefined} style={{ width: `${score}%` }} />
 								</div>
 							</div>
 						))}

@@ -120,6 +120,10 @@
 	background: linear-gradient(90deg, #99f2d9, #6bbff5);
 }
 
+.profile-progress > span.is-complete {
+	background: linear-gradient(90deg, #99F2D9 0%, #6BBFF5 55%, #04365D 100%);
+}
+
 .profile-recent {
 	margin-top: 36px;
 }
