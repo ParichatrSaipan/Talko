@@ -9,9 +9,10 @@ import './Header.Component.css'
 type HeaderProps = {
 	action?: ReactNode
 	onMenuNavigate?: (destination: MenuDestination) => void
+	showMenu?: boolean
 }
 
-function Header({ action, onMenuNavigate }: HeaderProps) {
+function Header({ action, onMenuNavigate, showMenu = true }: HeaderProps) {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
 
 	return (
@@ -24,14 +25,14 @@ function Header({ action, onMenuNavigate }: HeaderProps) {
 					</span>
 				</div>
 
-				{action ?? (
+				{action ?? (showMenu ? (
 					<button className="app-header-menu" type="button" onClick={() => setIsMenuOpen(true)} aria-label="Open menu">
 						<span /><span /><span /><span />
 					</button>
-				)}
+				) : null)}
 			</header>
 
-			{!action && (
+			{!action && showMenu && (
 				<Menu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} onNavigate={onMenuNavigate} />
 			)}
 		</>

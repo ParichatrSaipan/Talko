@@ -4,7 +4,8 @@ import SignIn from './SignIn/SignIn'
 import Age from './QuestionPage/Age'
 import Gender from './QuestionPage/Gender'
 import Name from './QuestionPage/Name'
-import Work from './QuestionPage/Work'
+import Job from './QuestionPage/Job'
+import RoleInterested from './QuestionPage/RoleInterested'
 import LanguageLevel from './LanguageLevelTest/LanguageLevelStart'
 import LevelTest from './LanguageLevelTest/LevelTest'
 import LevelTestResult from './LanguageLevelTest/LevelTest.Result'
@@ -23,21 +24,99 @@ import Practice from './Practice/Practice'
 import Vocab from './Vocab/Vocab'
 import CreateAccount from './CreateAccount/CreateAccount'
 
+type Page = 'home' | 'sign-in' | 'create-account' | 'age' | 'gender' | 'name' | 'work' | 'role-interested' | 'language-level' | 'level-test' | 'level-result' | 'topics' | 'main-home' | 'main-topics' | 'main-work' | 'main-travel' | 'call' | 'talk' | 'avatar-result' | 'profile' | 'edit-profile' | 'practice' | 'vocab'
+
+const jobRoleStorageKey = 'talko.jobRole'
+const profileNameStorageKey = 'talko.profileName'
+const interviewRoleStorageKey = 'talko.interviewRoleInterest'
+
+function getStoredJobRole() {
+  try {
+    return localStorage.getItem(jobRoleStorageKey)?.trim() ?? ''
+  } catch {
+    return ''
+  }
+}
+
+function storeJobRole(role: string) {
+  try {
+    localStorage.setItem(jobRoleStorageKey, role)
+  } catch {
+    // The current session still remembers the role when storage is unavailable.
+  }
+}
+
+function getStoredProfileName() {
+  try {
+    return localStorage.getItem(profileNameStorageKey)?.trim() ?? ''
+  } catch {
+    return ''
+  }
+}
+
+function storeProfileName(name: string) {
+  try {
+    localStorage.setItem(profileNameStorageKey, name)
+  } catch {
+    // The current session still remembers the name when storage is unavailable.
+  }
+}
+
+function getStoredInterviewRole() {
+  try {
+    return localStorage.getItem(interviewRoleStorageKey)?.trim() ?? ''
+  } catch {
+    return ''
+  }
+}
+
+function storeInterviewRole(roleInterest: string) {
+  try {
+    localStorage.setItem(interviewRoleStorageKey, roleInterest)
+  } catch {
+    // The current session still remembers the role when storage is unavailable.
+  }
+}
+
 function App() {
-  const [page, setPage] = useState<'home' | 'sign-in' | 'create-account' | 'age' | 'gender' | 'name' | 'work' | 'language-level' | 'level-test' | 'level-result' | 'topics' | 'main-home' | 'main-topics' | 'main-work' | 'main-travel' | 'call' | 'talk' | 'avatar-result' | 'profile' | 'edit-profile' | 'practice' | 'vocab'>('home')
+  const [page, setPage] = useState<Page>('home')
   const [topicReturnPage, setTopicReturnPage] = useState<'main-topics' | 'main-work' | 'main-travel'>('main-topics')
-  const [profileName, setProfileName] = useState('Alex')
-  const [profileRole, setProfileRole] = useState('Engineering')
+  const [workReturnPage, setWorkReturnPage] = useState<Page>('topics')
+  const [interviewReturnPage, setInterviewReturnPage] = useState<Page>('topics')
+  const [profileName, setProfileName] = useState(() => getStoredProfileName() || 'Alex')
+  const [profileRole, setProfileRole] = useState(getStoredJobRole)
+  const [hasProvidedJob, setHasProvidedJob] = useState(() => Boolean(getStoredJobRole()))
+  const [hasProvidedInterviewRole, setHasProvidedInterviewRole] = useState(() => Boolean(getStoredInterviewRole()))
 
   function startTopic(returnPage: 'main-topics' | 'main-work' | 'main-travel') {
     setTopicReturnPage(returnPage)
     setPage('call')
   }
 
+  function openWork() {
+    if (hasProvidedJob) {
+      setPage('main-work')
+      return
+    }
+
+    setWorkReturnPage(page)
+    setPage('work')
+  }
+
+  function openInterview() {
+    if (hasProvidedInterviewRole) {
+      setPage('main-topics')
+      return
+    }
+
+    setInterviewReturnPage(page)
+    setPage('role-interested')
+  }
+
   function navigateFromMenu(destination: MenuDestination) {
     if (destination === 'home') setPage('main-home')
-    if (destination === 'interview') setPage('main-topics')
-    if (destination === 'work') setPage('main-work')
+    if (destination === 'interview') openInterview()
+    if (destination === 'work') openWork()
     if (destination === 'travel') setPage('main-travel')
     if (destination === 'vocabulary') setPage('vocab')
     if (destination === 'profile') setPage('profile')
@@ -77,11 +156,46 @@ function App() {
   }
 
   if (page === 'name') {
-    return <Name onBack={() => setPage('gender')} onContinue={() => setPage('language-level')} onMenuNavigate={navigateFromMenu} />
+    return (
+      <Name
+        onBack={() => setPage('gender')}
+        onContinue={(name) => {
+          setProfileName(name)
+          storeProfileName(name)
+          setPage('language-level')
+        }}
+        onMenuNavigate={navigateFromMenu}
+      />
+    )
   }
 
   if (page === 'work') {
-    return <Work onBack={() => setPage('topics')} onContinue={() => setPage('main-work')} onMenuNavigate={navigateFromMenu} />
+    return (
+      <Job
+        onBack={() => setPage(workReturnPage)}
+        onContinue={(role) => {
+          setProfileRole(role)
+          setHasProvidedJob(true)
+          storeJobRole(role)
+          setPage('main-work')
+        }}
+        onMenuNavigate={navigateFromMenu}
+      />
+    )
+  }
+
+  if (page === 'role-interested') {
+    return (
+      <RoleInterested
+        onBack={() => setPage(interviewReturnPage)}
+        onContinue={(roleInterest) => {
+          setHasProvidedInterviewRole(true)
+          storeInterviewRole(roleInterest)
+          setPage('main-topics')
+        }}
+        onMenuNavigate={navigateFromMenu}
+      />
+    )
   }
 
   if (page === 'language-level') {
@@ -97,11 +211,11 @@ function App() {
   }
 
   if (page === 'main-home') {
-    return <MainHome onInterviewSelect={() => setPage('main-topics')} onWorkSelect={() => setPage('main-work')} onTravelSelect={() => setPage('main-travel')} onMenuNavigate={navigateFromMenu} />
+    return <MainHome username={profileName} onInterviewSelect={openInterview} onWorkSelect={openWork} onTravelSelect={() => setPage('main-travel')} onMenuNavigate={navigateFromMenu} />
   }
 
   if (page === 'profile') {
-    return <ProfileUser username={profileName} role={profileRole} onEdit={() => setPage('edit-profile')} onTravelSelect={() => setPage('main-travel')} onWorkSelect={() => setPage('main-work')} onPracticeSelect={() => setPage('practice')} onMenuNavigate={navigateFromMenu} />
+    return <ProfileUser username={profileName} role={profileRole} onEdit={() => setPage('edit-profile')} onTravelSelect={() => setPage('main-travel')} onWorkSelect={openWork} onPracticeSelect={() => setPage('practice')} onMenuNavigate={navigateFromMenu} />
   }
 
   if (page === 'edit-profile') {
@@ -111,7 +225,12 @@ function App() {
         role={profileRole}
         onSave={(username, role) => {
           setProfileName(username)
+          storeProfileName(username)
           setProfileRole(role)
+          if (role) {
+            setHasProvidedJob(true)
+            storeJobRole(role)
+          }
           setPage('profile')
         }}
         onMenuNavigate={navigateFromMenu}
@@ -120,7 +239,7 @@ function App() {
   }
 
   if (page === 'practice') {
-    return <Practice onBack={() => setPage('profile')} onTravelSelect={() => setPage('main-travel')} onWorkSelect={() => setPage('main-work')} onMenuNavigate={navigateFromMenu} />
+    return <Practice onBack={() => setPage('profile')} onTravelSelect={() => setPage('main-travel')} onWorkSelect={openWork} onMenuNavigate={navigateFromMenu} />
   }
 
   if (page === 'vocab') {
@@ -163,7 +282,7 @@ function App() {
     return <AvatarResult onContinue={() => setPage(topicReturnPage)} onMenuNavigate={navigateFromMenu} />
   }
 
-  return <ChooseTopics onInterviewSelect={() => setPage('main-topics')} onWorkSelect={() => setPage('work')} onTravelSelect={() => setPage('main-travel')} onMenuNavigate={navigateFromMenu} />
+  return <ChooseTopics onInterviewSelect={openInterview} onWorkSelect={openWork} onTravelSelect={() => setPage('main-travel')} onMenuNavigate={navigateFromMenu} />
 }
 
 export default App

@@ -1,10 +1,18 @@
 import QuestionPage from './QuestionPage.Component'
 import type { MenuDestination } from '../Hamburger/Menu'
 
-function Work({ onBack, onContinue, onMenuNavigate }: { onBack: () => void; onContinue: () => void; onMenuNavigate?: (destination: MenuDestination) => void }) {
+type JobProps = {
+	onBack: () => void
+	onContinue: (role: string) => void
+	onMenuNavigate?: (destination: MenuDestination) => void
+}
+
+function Job({ onBack, onContinue, onMenuNavigate }: JobProps) {
 	return (
 		<QuestionPage
 			title={<>What do you do for work?</>}
+			description={<>Tell us your job or role<br />
+			so we can create questions tailored to your work.</>}
 			type="text"
 			placeholder="Enter your job or role"
 			onBack={onBack}
@@ -14,4 +22,4 @@ function Work({ onBack, onContinue, onMenuNavigate }: { onBack: () => void; onCo
 	)
 }
 
-export default Work
+export default Job

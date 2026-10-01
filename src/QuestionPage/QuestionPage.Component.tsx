@@ -6,6 +6,7 @@ import type { MenuDestination } from '../Hamburger/Menu'
 
 type QuestionPageProps = {
   title: ReactNode
+  description?: ReactNode
   onBack: () => void
   type?: 'options' | 'text'
   options?: string[]
@@ -13,11 +14,13 @@ type QuestionPageProps = {
   placeholder?: string
   onContinue?: (value: string) => void
   onMenuNavigate?: (destination: MenuDestination) => void
+  showMenu?: boolean
 }
 
 
 function QuestionPage({
   title,
+  description,
   options = [],
   onBack,
   type = 'options',
@@ -25,6 +28,7 @@ function QuestionPage({
   placeholder,
   onContinue,
   onMenuNavigate,
+  showMenu = false,
 }: QuestionPageProps) {
   const [selected, setSelected] = useState<string | null>(null)
   const [value, setValue] = useState('')
@@ -39,8 +43,8 @@ function QuestionPage({
   }
 
   return (
-    <main className="question-page">
-      <Header onMenuNavigate={onMenuNavigate} />
+    <main className={`question-page${description ? ' question-page--with-description' : ''}`}>
+      <Header onMenuNavigate={onMenuNavigate} showMenu={showMenu} />
 
       <section className="question-content">
         <button className="question-back-button" type="button" onClick={onBack} aria-label="Go back">
@@ -48,6 +52,8 @@ function QuestionPage({
         </button>
 
         <h1>{title}</h1>
+
+        {description && <p className="question-description">{description}</p>}
 
         {type === 'text' ? (
           <form className="name-form" onSubmit={handleSubmit}>

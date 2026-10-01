@@ -119,7 +119,6 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 				<button className="talk-back" type="button" onClick={onBack} aria-label="Go back" />
 				<div className="talk-video">
 					<img className="talk-avatar" src={character} alt="Talko avatar" />
-					<span className="talk-expand" aria-hidden="true">⛶</span>
 				</div>
 				<div className="talk-bubble">
 					<button className="talk-word-token" type="button" onClick={() => selectWord('welcome')}>Welcome</button>{' '}

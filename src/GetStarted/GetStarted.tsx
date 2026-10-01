@@ -21,7 +21,6 @@ function Home({ onSignIn }: { onSignIn: () => void }) {
           <h2>Welcome to Talko!</h2>
           <p>Let&apos;s talk your way to confidence.</p>
           <button className="primary-button" type="button" onClick={onSignIn}>Get Started</button>
-          <button className="secondary-button" type="button">Explore</button>
         </div>
     
     </main>
