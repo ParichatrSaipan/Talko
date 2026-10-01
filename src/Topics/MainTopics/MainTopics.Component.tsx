@@ -11,7 +11,7 @@ export type TopicCard = {
 	title: string
 	description: string
 	status?: string
-	statusType?: 'progress' | 'completed'
+	statusType?: 'progress' | 'completed' | 'working'
 }
 
 type MainTopicsComponentProps = {
@@ -27,7 +27,7 @@ const topicCards: TopicCard[] = [
 	{ title: 'topics', description: 'xxxxxx' },
 	{ title: 'topics', description: 'xxxxxx' },
 	{ title: 'topics', description: 'xxxxxx', status: 'completed', statusType: 'completed' },
-	{ title: 'topics', description: 'xxxxxx', status: '50% done', statusType: 'completed' },
+	{ title: 'topics', description: 'xxxxxx', status: '50% done', statusType: 'working' },
 	{ title: 'topics', description: 'xxxxxx' },
 ]
 

@@ -175,7 +175,7 @@
 	background: #fff;
 	box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.10);
 	color: #070707;
-	font: 14px 'Inter';
+	font: 14px'Inter';
 	text-align: center;
 }
 
@@ -258,4 +258,8 @@
 	color: #3FA206;
 }
 
+.main-topic-status--working {
+	background: #ffde89;
+	color: #C66607;
+}
 
