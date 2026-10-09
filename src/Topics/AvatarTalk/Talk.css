@@ -77,28 +77,218 @@
 }
 
 .talk-video {
-	height: 183px;
+	width: 100%;
+	max-width: 480px;
+	aspect-ratio: 1.8 / 1;
+	height: auto;
+	min-height: 183px;
 	margin-top: 10px;
 	position: relative;
 	overflow: hidden;
-	border-radius: 20px;
-	background: #d6d6d6 url('../../assets/image_main.svg') center / cover;
+	border-radius: 24px;
+	background: #d6d6d6 url('../../assets/bg_blue.svg') center / cover;
+}
+
+.talk-video--idle,
+.talk-video--listening,
+.talk-video--thinking,
+.talk-video--speaking {
+	animation: none;
 }
 
 .talk-video::after {
 	content: '';
 	position: absolute;
 	inset: 0;
-	background: rgba(255, 255, 255, .38);
+	pointer-events: none;
+	background: linear-gradient(90deg, rgba(80, 169, 255, .12), rgba(255, 190, 113, .08));
+}
+
+.talk-turn-prompt {
+	position: absolute;
+	top: 18px;
+	left: 50%;
+	z-index: 7;
+	transform: translateX(-50%);
+	padding: 8px 16px;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, .92);
+	color: #111;
+	font: 14px 'Inter Medium';
+	box-shadow: 0 8px 20px rgba(0, 0, 0, .12);
+	animation: talk-turn-prompt-in .2s ease-out both;
 }
 
 .talk-avatar {
 	width: 190px;
+	height: 207px;
 	position: absolute;
-	bottom: -18px;
+	bottom: -13px;
 	left: 50%;
 	z-index: 1;
 	transform: translateX(-50%);
+	transform-origin: 50% 100%;
+	animation: talk-avatar-float 4.2s cubic-bezier(.45, 0, .55, 1) infinite;
+	will-change: transform;
+}
+
+.talk-avatar__part,
+.talk-avatar__face {
+	display: block;
+	position: absolute;
+	user-select: none;
+	pointer-events: none;
+}
+
+.talk-avatar__part {
+	background-image: linear-gradient(135deg, #B7ECFF 28%, #2076FD 100%);
+	background-repeat: no-repeat;
+	background-size: 190px 207px;
+	-webkit-mask-image: var(--talk-avatar-mask);
+	-webkit-mask-position: center;
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-size: contain;
+	mask-image: var(--talk-avatar-mask);
+	mask-position: center;
+	mask-repeat: no-repeat;
+	mask-size: contain;
+}
+
+.talk-avatar__body {
+	width: 112px;
+	height: 99px;
+	top: 48px;
+	left: 39px;
+	z-index: 4;
+	background-position: -39px -48px;
+}
+
+.talk-avatar__ear {
+	width: 20px;
+	height: 43px;
+	top: 19px;
+	z-index: 1;
+	transform-origin: 50% 100%;
+}
+
+.talk-avatar__ear--left {
+	left: 69px;
+	background-position: -69px -19px;
+	transform: rotate(-12deg);
+	animation: talk-left-ear 3.2s ease-in-out infinite;
+}
+
+.talk-avatar__ear--right {
+	left: 88px;
+	background-position: -88px -19px;
+	transform: rotate(-25deg);
+	animation: talk-right-ear 3.2s ease-in-out infinite;
+}
+
+.talk-avatar__leg {
+	width: 22px;
+	height: 132px;
+	top: 118px;
+	z-index: 2;
+	transform-origin: 50% 0;
+	animation: talk-leg-follow 4.2s cubic-bezier(.45, 0, .55, 1) infinite;
+	will-change: transform;
+}
+
+.talk-avatar__leg--left {
+	left: 70px;
+	background-position: -60px -118px;
+}
+
+.talk-avatar__leg--right {
+	right: 70px;
+	background-position: -108px -118px;
+}
+
+.talk-avatar__arm {
+	width: 58px;
+	height: 57px;
+	top: 88px;
+	z-index: 3;
+	transform-origin: 50% 15%;
+}
+
+.talk-avatar__arm--left {
+	left: 5px;
+	background-position: -5px -88px;
+	animation: talk-left-arm 2.2s ease-in-out infinite;
+}
+
+.talk-avatar__arm--right {
+	right: 5px;
+	background-position: -127px -88px;
+	animation: talk-right-arm 2.2s ease-in-out infinite;
+}
+
+.talk-avatar__eyes {
+	width: 48px;
+	height: 31px;
+	position: absolute;
+	top: 69px;
+	left: 71px;
+	z-index: 5;
+}
+
+.talk-avatar__eyes .talk-avatar__face { width: 100%; }
+
+.talk-avatar__eyes-closed {
+	opacity: 0;
+	animation: talk-avatar-eyes-closed 4.8s infinite;
+}
+
+.talk-avatar__eyes-open { animation: talk-avatar-eyes-open 4.8s infinite; }
+
+.talk-avatar__mouth {
+	width: 63px;
+	height: 30px;
+	position: absolute;
+	top: 99px;
+	left: 64px;
+	z-index: 5;
+}
+
+.talk-avatar__mouth .talk-avatar__face {
+	top: 50%;
+	left: 50%;
+	width: auto;
+	max-width: 100%;
+	height: auto;
+	transform: translate(-50%, -50%);
+	transform-origin: center;
+	transition: opacity .14s ease-in-out;
+	will-change: opacity, transform;
+}
+
+.talk-avatar__mouth-closed,
+.talk-avatar__mouth-open,
+.talk-avatar__mouth-open-alt { width: 61px !important; }
+.talk-avatar__mouth-open,
+.talk-avatar__mouth-open-alt { opacity: 0; }
+
+.talk-video--speaking .talk-avatar__mouth-closed { opacity: 0; }
+
+.talk-video--speaking .talk-avatar__mouth-open {
+	opacity: 1;
+	animation: talk-avatar-mouth-wide .64s cubic-bezier(.45, 0, .55, 1) infinite;
+}
+
+.talk-video--speaking .talk-avatar__mouth-open-alt {
+	animation: talk-avatar-mouth-narrow .64s cubic-bezier(.45, 0, .55, 1) infinite;
+}
+
+.talk-video--listening {
+	outline: 2px solid #adffda;
+	outline-offset: -2px;
+}
+
+.talk-video--speaking {
+	outline: 2px solid #7ec7ff;
+	outline-offset: -2px;
 }
 
 .talk-bubble {
@@ -424,4 +614,107 @@
 @keyframes talk-word-sheet-in {
 	from { transform: translate(-50%, 100%); }
 	to { transform: translate(-50%, 0); }
+}
+
+@keyframes talk-avatar-float {
+	0%, 100% { transform: translateX(-50%) translateY(0) rotate(-1.2deg); }
+	50% { transform: translateX(-50%) translateY(-3px) rotate(1.2deg); }
+}
+
+@keyframes talk-turn-prompt-in {
+	from { opacity: 0; transform: translate(-50%, -6px); }
+	to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes talk-leg-follow {
+	0%, 100% { transform: translate(-1px, 0) rotate(-1.2deg); }
+	50% { transform: translate(1px, -3px) rotate(1.2deg); }
+}
+
+@keyframes talk-left-arm {
+	0%, 100% { transform: rotate(0); }
+	50% { transform: rotate(-5deg) translateY(-2px); }
+}
+
+@keyframes talk-right-arm {
+	0%, 100% { transform: rotate(0); }
+	50% { transform: rotate(5deg) translateY(-2px); }
+}
+
+@keyframes talk-left-ear {
+	0%, 100% { transform: rotate(-12deg); }
+	50% { transform: rotate(-8deg); }
+}
+
+@keyframes talk-right-ear {
+	0%, 100% { transform: rotate(-25deg); }
+	50% { transform: rotate(-20deg); }
+}
+
+@keyframes talk-avatar-eyes-open {
+	0%, 43%, 47%, 100% { opacity: 1; }
+	44%, 46% { opacity: 0; }
+}
+
+@keyframes talk-avatar-eyes-closed {
+	0%, 43%, 47%, 100% { opacity: 0; }
+	44%, 46% { opacity: 1; }
+}
+
+@keyframes talk-avatar-mouth-wide {
+	0%, 38% {
+		opacity: 1;
+		transform: translate(-50%, -50%) scale(1, .94);
+	}
+	50%, 88% {
+		opacity: 0;
+		transform: translate(-50%, -50%) scale(1, 1.02);
+	}
+	100% {
+		opacity: 1;
+		transform: translate(-50%, -50%) scale(1, .94);
+	}
+}
+
+@keyframes talk-avatar-mouth-narrow {
+	0%, 38% {
+		opacity: 0;
+		transform: translate(-50%, -50%) scale(1, .92);
+	}
+	50%, 88% {
+		opacity: 1;
+		transform: translate(-50%, -50%) scale(1, 1);
+	}
+	100% {
+		opacity: 0;
+		transform: translate(-50%, -50%) scale(1, .92);
+	}
+}
+/* ทำ animation สำหรับการแสดงคำใหม่ */
+@keyframes talk-idle-scene {
+	0%, 100% { filter: brightness(1); }
+	50% { filter: brightness(1.025); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.talk-video--idle,
+	.talk-video--listening,
+	.talk-video--thinking,
+	.talk-video--speaking {
+		animation: none;
+	}
+
+	.talk-avatar,
+	.talk-avatar__ear,
+	.talk-avatar__leg,
+	.talk-avatar__arm,
+	.talk-avatar__face {
+		animation: none;
+	}
+
+	.talk-avatar__eyes-open { opacity: 1; }
+	.talk-avatar__eyes-closed { opacity: 0; }
+	.talk-video--speaking .talk-avatar__mouth-open { opacity: 1; }
+	.talk-video--speaking .talk-avatar__mouth-open-alt { opacity: 0; }
+	.talk-turn-prompt { animation: none; }
 }

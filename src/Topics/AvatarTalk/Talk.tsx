@@ -1,11 +1,12 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { flushSync } from 'react-dom'
 import './Talk.css'
-import character from '../../assets/Character_Orange.svg'
 import ButtonFinish from './ButtonFinish.component'
 import Header from '../../Header/Header.Component'
 import type { MenuDestination } from '../../Hamburger/Menu'
+import TalkAvatar from './TalkAvatar'
+import type { TalkState } from './TalkState'
 import soundIcon from '../../assets/icon_sound.svg'
 import translateIcon from '../../assets/icon_Translate.svg'
 import typingIcon from '../../assets/icon_Typing.svg'
@@ -28,6 +29,8 @@ type WordInfo = {
 	exampleTranslation: string
 }
 
+const TALK_BUBBLE_SPEECH = 'Welcome to Talko! My name is Talko and I’m your personal AI tutor.'
+
 const words: Record<string, WordInfo> = {
 	welcome: { word: 'Welcome', pronunciation: '/ˈwel.kəm/', translation: 'ยินดีต้อนรับ', example: 'Welcome to our English class.', exampleTranslation: 'ยินดีต้อนรับสู่ชั้นเรียนภาษาอังกฤษของเรา' },
 	to: { word: 'To', pronunciation: '/tuː/', translation: 'ไปยัง, ถึง', example: 'I am going to school.', exampleTranslation: 'ฉันกำลังไปโรงเรียน' },
@@ -49,6 +52,8 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 	const [isTranslated, setIsTranslated] = useState(false)
 	const [isSentenceSpeaking, setIsSentenceSpeaking] = useState(false)
 	const [isSpeaking, setIsSpeaking] = useState(false)
+	const [isAwaitingReply, setIsAwaitingReply] = useState(false)
+	const [showYourTurn, setShowYourTurn] = useState(false)
 	const [isTyping, setIsTyping] = useState(false)
 	const [typedMessage, setTypedMessage] = useState('')
 	const [sentMessages, setSentMessages] = useState<string[]>([])
@@ -56,6 +61,27 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 	const [isWordSoundPlayed, setIsWordSoundPlayed] = useState(false)
 	const [showHelpPrompt, setShowHelpPrompt] = useState(true)
 	const typingInputRef = useRef<HTMLInputElement>(null)
+	const yourTurnTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+	const avatarState: TalkState = isSentenceSpeaking
+		? 'speaking'
+		: isSpeaking || isAwaitingReply
+			? 'listening'
+			: 'idle'
+
+	useEffect(() => () => {
+		if (yourTurnTimerRef.current) clearTimeout(yourTurnTimerRef.current)
+	}, [])
+
+	function beginListening() {
+		setIsSentenceSpeaking(false)
+		setIsAwaitingReply(true)
+		setShowYourTurn(true)
+		if (yourTurnTimerRef.current) clearTimeout(yourTurnTimerRef.current)
+		yourTurnTimerRef.current = setTimeout(() => {
+			setShowYourTurn(false)
+			yourTurnTimerRef.current = null
+		}, 1600)
+	}
 
 	function selectWord(key: keyof typeof words) {
 		setSelectedWord(words[key])
@@ -90,10 +116,16 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 			return
 		}
 
+		setIsAwaitingReply(false)
+		setShowYourTurn(false)
+		if (yourTurnTimerRef.current) {
+			clearTimeout(yourTurnTimerRef.current)
+			yourTurnTimerRef.current = null
+		}
 		setIsSentenceSpeaking(true)
 		playWord(
-			'Welcome to Talko! My name is Talko and I’m your personal AI tutor.',
-			() => setIsSentenceSpeaking(false),
+			TALK_BUBBLE_SPEECH,
+			beginListening,
 		)
 	}
 
@@ -117,10 +149,8 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 			<Header onMenuNavigate={onMenuNavigate} />
 			<section className="talk-content">
 				<button className="talk-back" type="button" onClick={onBack} aria-label="Go back" />
-				<div className="talk-video">
-					<img className="talk-avatar" src={character} alt="Talko avatar" />
-				</div>
-				<div className="talk-bubble">
+				<TalkAvatar state={avatarState} statusMessage={showYourTurn ? 'Your turn' : undefined} />
+				<div className="talk-bubble" aria-label={TALK_BUBBLE_SPEECH}>
 					<button className="talk-word-token" type="button" onClick={() => selectWord('welcome')}>Welcome</button>{' '}
 					<button className="talk-word-token" type="button" onClick={() => selectWord('to')}>to</button>{' '}
 					<button className="talk-word-token" type="button" onClick={() => selectWord('talko')}>Talko</button>!<br />

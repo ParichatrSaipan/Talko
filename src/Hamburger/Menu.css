@@ -60,6 +60,7 @@
 	text-align: left;
 }
 
+.menu-link.is-active,
 .menu-link:hover,
 .menu-link:focus-visible {
 	border-radius: 2px;

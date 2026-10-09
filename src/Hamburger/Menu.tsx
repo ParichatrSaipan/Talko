@@ -1,4 +1,5 @@
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
+import { MenuSelection } from './MenuSelection'
 import './Menu.css'
 
 export type MenuDestination = 'home' | 'interview' | 'work' | 'travel' | 'vocabulary' | 'profile' | 'logout'
@@ -16,6 +17,8 @@ const practiceItems: Array<{ label: string; destination: MenuDestination }> = [
 ]
 
 function Menu({ isOpen, onClose, onNavigate }: MenuProps) {
+	const activeDestination = useContext(MenuSelection)
+
 	useEffect(() => {
 		if (!isOpen) return
 
@@ -43,17 +46,17 @@ function Menu({ isOpen, onClose, onNavigate }: MenuProps) {
 				</div>
 
 				<nav className="menu-navigation" aria-label="Main navigation">
-					<button className="menu-link is-active" type="button" onClick={() => navigate('home')}>Home</button>
+					<button className={`menu-link${activeDestination === 'home' ? ' is-active' : ''}`} type="button" aria-current={activeDestination === 'home' ? 'page' : undefined} onClick={() => navigate('home')}>Home</button>
 
 					<p className="menu-label">Practice</p>
 					{practiceItems.map((item) => (
-						<button className="menu-link" type="button" key={item.destination} onClick={() => navigate(item.destination)}>
+						<button className={`menu-link${activeDestination === item.destination ? ' is-active' : ''}`} type="button" key={item.destination} aria-current={activeDestination === item.destination ? 'page' : undefined} onClick={() => navigate(item.destination)}>
 							{item.label}
 						</button>
 					))}
 
-					<button className="menu-link menu-link--spaced" type="button" onClick={() => navigate('vocabulary')}>Vocabulary</button>
-					<button className="menu-link" type="button" onClick={() => navigate('profile')}>Profile</button>
+					<button className={`menu-link menu-link--spaced${activeDestination === 'vocabulary' ? ' is-active' : ''}`} type="button" aria-current={activeDestination === 'vocabulary' ? 'page' : undefined} onClick={() => navigate('vocabulary')}>Vocabulary</button>
+					<button className={`menu-link${activeDestination === 'profile' ? ' is-active' : ''}`} type="button" aria-current={activeDestination === 'profile' ? 'page' : undefined} onClick={() => navigate('profile')}>Profile</button>
 					<button className="menu-link menu-logout" type="button" onClick={() => navigate('logout')}>Log out</button>
 				</nav>
 			</aside>

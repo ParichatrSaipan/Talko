@@ -1,6 +1,6 @@
-import orangeCharacter from '../../assets/Character_Orange.svg'
 import purpleCharacter from '../../assets/Character_Purple.svg'
 import yellowCharacter from '../../assets/Character_Yellow.svg'
+import OrangeCharacter from '../AvatarTalk/OrangeCharacter'
 import crossIcon from '../../assets/icon_cross.svg'
 import phoneIcon from '../../assets/icon_Phone.svg'
 import './Calling.css'
@@ -26,13 +26,6 @@ function CallComponent({
 	practiceItems = defaultPracticeItems,
 	characterVariant = 'work',
 }: CallComponentProps) {
-	const characterImages = {
-		work: orangeCharacter,
-		interview: purpleCharacter,
-		travel: yellowCharacter,
-	}
-	const characterImage = characterImages[characterVariant]
-
 	return (
 		<main className="call-page">
 			<h1>Talko is calling...</h1>
@@ -45,11 +38,15 @@ function CallComponent({
 						{practiceItems.map((item) => <li key={item}>{item}</li>)}
 					</ul>
 				</div>
-				<img
-					className={`call-character call-character--${characterVariant}`}
-					src={characterImage}
-					alt=""
-				/>
+				{characterVariant === 'work' ? (
+					<OrangeCharacter className={`call-character call-character--${characterVariant}`} />
+				) : (
+					<img
+						className={`call-character call-character--${characterVariant}`}
+						src={characterVariant === 'interview' ? purpleCharacter : yellowCharacter}
+						alt=""
+					/>
+				)}
 			</section>
 
 			<div className="call-actions">

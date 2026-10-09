@@ -17,6 +17,7 @@ import CallComponent from './Topics/AvatarCall/Calling'
 import Talk from './Topics/AvatarTalk/Talk'
 import AvatarResult from './Topics/AvatarResult/AvatarResult'
 import type { MenuDestination } from './Hamburger/Menu'
+import { MenuSelection } from './Hamburger/MenuSelection'
 import MainHome from './Topics/MainHome/MainHome'
 import ProfileUser from './Profile/ProfileUser'
 import EditJob from './Profile/EditJob'
@@ -27,8 +28,6 @@ import CreateAccount from './CreateAccount/CreateAccount'
 type Page = 'home' | 'sign-in' | 'create-account' | 'age' | 'gender' | 'name' | 'work' | 'role-interested' | 'language-level' | 'level-test' | 'level-result' | 'topics' | 'main-home' | 'main-topics' | 'main-work' | 'main-travel' | 'call' | 'talk' | 'avatar-result' | 'profile' | 'edit-profile' | 'practice' | 'vocab'
 
 const jobRoleStorageKey = 'talko.jobRole'
-const profileNameStorageKey = 'talko.profileName'
-const interviewRoleStorageKey = 'talko.interviewRoleInterest'
 
 function getStoredJobRole() {
   try {
@@ -42,40 +41,21 @@ function storeJobRole(role: string) {
   try {
     localStorage.setItem(jobRoleStorageKey, role)
   } catch {
-    // The current session still remembers the role when storage is unavailable.
+    // Keep the role available in the current session when storage is unavailable.
   }
 }
 
-function getStoredProfileName() {
-  try {
-    return localStorage.getItem(profileNameStorageKey)?.trim() ?? ''
-  } catch {
-    return ''
+function getActiveMenuDestination(page: Page, topicReturnPage: 'main-topics' | 'main-work' | 'main-travel'): MenuDestination | null {
+  if (page === 'main-home' || page === 'topics') return 'home'
+  if (page === 'role-interested' || page === 'main-topics') return 'interview'
+  if (page === 'work' || page === 'main-work') return 'work'
+  if (page === 'main-travel') return 'travel'
+  if (page === 'vocab') return 'vocabulary'
+  if (page === 'profile' || page === 'edit-profile' || page === 'practice') return 'profile'
+  if (page === 'call' || page === 'talk' || page === 'avatar-result') {
+    return topicReturnPage === 'main-work' ? 'work' : topicReturnPage === 'main-travel' ? 'travel' : 'interview'
   }
-}
-
-function storeProfileName(name: string) {
-  try {
-    localStorage.setItem(profileNameStorageKey, name)
-  } catch {
-    // The current session still remembers the name when storage is unavailable.
-  }
-}
-
-function getStoredInterviewRole() {
-  try {
-    return localStorage.getItem(interviewRoleStorageKey)?.trim() ?? ''
-  } catch {
-    return ''
-  }
-}
-
-function storeInterviewRole(roleInterest: string) {
-  try {
-    localStorage.setItem(interviewRoleStorageKey, roleInterest)
-  } catch {
-    // The current session still remembers the role when storage is unavailable.
-  }
+  return null
 }
 
 function App() {
@@ -83,10 +63,10 @@ function App() {
   const [topicReturnPage, setTopicReturnPage] = useState<'main-topics' | 'main-work' | 'main-travel'>('main-topics')
   const [workReturnPage, setWorkReturnPage] = useState<Page>('topics')
   const [interviewReturnPage, setInterviewReturnPage] = useState<Page>('topics')
-  const [profileName, setProfileName] = useState(() => getStoredProfileName() || 'Alex')
+  const [profileName, setProfileName] = useState('Alex')
   const [profileRole, setProfileRole] = useState(getStoredJobRole)
-  const [hasProvidedJob, setHasProvidedJob] = useState(() => Boolean(getStoredJobRole()))
-  const [hasProvidedInterviewRole, setHasProvidedInterviewRole] = useState(() => Boolean(getStoredInterviewRole()))
+  const [interviewRole, setInterviewRole] = useState('')
+  const [hasProvidedInterviewRole, setHasProvidedInterviewRole] = useState(false)
 
   function startTopic(returnPage: 'main-topics' | 'main-work' | 'main-travel') {
     setTopicReturnPage(returnPage)
@@ -94,7 +74,7 @@ function App() {
   }
 
   function openWork() {
-    if (hasProvidedJob) {
+    if (profileRole.trim()) {
       setPage('main-work')
       return
     }
@@ -123,6 +103,7 @@ function App() {
     if (destination === 'logout') setPage('home')
   }
 
+  function renderPage() {
   if (page === 'home') {
     return <Home onSignIn={() => setPage('sign-in')} />
   }
@@ -161,7 +142,6 @@ function App() {
         onBack={() => setPage('gender')}
         onContinue={(name) => {
           setProfileName(name)
-          storeProfileName(name)
           setPage('language-level')
         }}
         onMenuNavigate={navigateFromMenu}
@@ -175,7 +155,6 @@ function App() {
         onBack={() => setPage(workReturnPage)}
         onContinue={(role) => {
           setProfileRole(role)
-          setHasProvidedJob(true)
           storeJobRole(role)
           setPage('main-work')
         }}
@@ -189,8 +168,8 @@ function App() {
       <RoleInterested
         onBack={() => setPage(interviewReturnPage)}
         onContinue={(roleInterest) => {
+          setInterviewRole(roleInterest)
           setHasProvidedInterviewRole(true)
-          storeInterviewRole(roleInterest)
           setPage('main-topics')
         }}
         onMenuNavigate={navigateFromMenu}
@@ -223,13 +202,14 @@ function App() {
       <EditJob
         username={profileName}
         role={profileRole}
-        onSave={(username, role) => {
+        roleInterest={interviewRole}
+        onSave={(username, role, roleInterest) => {
           setProfileName(username)
-          storeProfileName(username)
           setProfileRole(role)
-          if (role) {
-            setHasProvidedJob(true)
-            storeJobRole(role)
+          if (role) storeJobRole(role)
+          setInterviewRole(roleInterest)
+          if (roleInterest) {
+            setHasProvidedInterviewRole(true)
           }
           setPage('profile')
         }}
@@ -283,6 +263,13 @@ function App() {
   }
 
   return <ChooseTopics onInterviewSelect={openInterview} onWorkSelect={openWork} onTravelSelect={() => setPage('main-travel')} onMenuNavigate={navigateFromMenu} />
+  }
+
+  return (
+    <MenuSelection.Provider value={getActiveMenuDestination(page, topicReturnPage)}>
+      {renderPage()}
+    </MenuSelection.Provider>
+  )
 }
 
 export default App
