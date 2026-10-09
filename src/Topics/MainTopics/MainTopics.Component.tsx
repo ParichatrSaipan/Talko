@@ -10,6 +10,8 @@ import type { MenuDestination } from '../../Hamburger/Menu'
 export type TopicCard = {
 	title: string
 	description: string
+	image?: string
+	category?: string
 	status?: string
 	statusType?: 'progress' | 'completed' | 'working'
 }
@@ -18,6 +20,7 @@ type MainTopicsComponentProps = {
 	title?: string
 	icon?: string
 	categories?: string[]
+	topics?: TopicCard[]
 	onTopicSelect?: (topic: TopicCard) => void
 	onMenuNavigate?: (destination: MenuDestination) => void
 }
@@ -31,8 +34,11 @@ const topicCards: TopicCard[] = [
 	{ title: 'topics', description: 'xxxxxx' },
 ]
 
-function MainTopicsComponent({ title = 'Interview', icon = interviewIcon, categories, onTopicSelect, onMenuNavigate }: MainTopicsComponentProps) {
+function MainTopicsComponent({ title = 'Interview', icon = interviewIcon, categories, topics = topicCards, onTopicSelect, onMenuNavigate }: MainTopicsComponentProps) {
 	const [activeCategory, setActiveCategory] = useState(categories?.[0] ?? '')
+	const visibleTopics = !categories || activeCategory === 'All'
+		? topics
+		: topics.filter((topic) => topic.category === activeCategory)
 
 	return (
 		<main className="main-topics-page">
@@ -64,7 +70,7 @@ function MainTopicsComponent({ title = 'Interview', icon = interviewIcon, catego
 				)}
 				<p className="main-topics-intro">Choose a real-life scenario to practice.</p>
 				<div className="main-topics-grid">
-					{topicCards.map((topic, index) => (
+					{visibleTopics.map((topic, index) => (
 						<article
 							className="main-topic-card"
 							key={`${topic.title}-${index}`}
@@ -72,7 +78,7 @@ function MainTopicsComponent({ title = 'Interview', icon = interviewIcon, catego
 							role={onTopicSelect ? 'button' : undefined}
 							tabIndex={onTopicSelect ? 0 : undefined}
 						>
-							<img className="main-topic-card-image" src={mainImage} alt="" />
+							<img className="main-topic-card-image" src={topic.image ?? mainImage} alt="" />
 							<div className="main-topic-card-copy">
 								<h2>{topic.title}</h2>
 								<p>{topic.description}</p>

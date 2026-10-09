@@ -225,12 +225,12 @@
 }
 
 .main-topic-card-copy {
-	padding: 14px 0 0 0;
+	padding: 22px 0 0 0;
 }
 
 .main-topic-card h2 {
 	margin: 0 0 2px;
-	font: 16px 'Inter Bold';
+	font: 14px 'Inter Bold';
 }
 
 .main-topic-card p {

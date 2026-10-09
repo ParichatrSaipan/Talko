@@ -28,7 +28,12 @@ function CallComponent({
 }: CallComponentProps) {
 	return (
 		<main className="call-page">
-			<h1>Talko is calling...</h1>
+			<h1 aria-label="Talko is calling...">
+				Talko is calling
+				<span className="calling-dots" aria-hidden="true">
+					<span>.</span><span>.</span><span>.</span>
+				</span>
+			</h1>
 
 			<section className="call-practice-card">
 				<div className="call-practice-copy">
@@ -38,12 +43,12 @@ function CallComponent({
 						{practiceItems.map((item) => <li key={item}>{item}</li>)}
 					</ul>
 				</div>
-				{characterVariant === 'work' ? (
+				{characterVariant === 'interview' ? (
 					<OrangeCharacter className={`call-character call-character--${characterVariant}`} />
 				) : (
 					<img
 						className={`call-character call-character--${characterVariant}`}
-						src={characterVariant === 'interview' ? purpleCharacter : yellowCharacter}
+						src={characterVariant === 'work' ? purpleCharacter : yellowCharacter}
 						alt=""
 					/>
 				)}

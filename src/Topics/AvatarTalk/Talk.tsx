@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { flushSync } from 'react-dom'
 import './Talk.css'
@@ -13,12 +13,15 @@ import typingIcon from '../../assets/icon_Typing.svg'
 import voiceIcon from '../../assets/icon_Voice.svg'
 import hintIcon from '../../assets/icon_Hit.svg'
 import saveIcon from '../../assets/icon_Save.svg'
+import { getSavedVocabulary, removeVocabularyItem, saveVocabularyItem } from '../../Vocab/vocabularyStorage'
+import type { SavedVocabularyCategory } from '../../Vocab/vocabularyStorage'
 
 type TalkProps = {
 	onBack: () => void
 	onFinish: () => void
 	isConversationFinished?: boolean
 	onMenuNavigate?: (destination: MenuDestination) => void
+	variant?: 'default' | 'work' | 'interview'
 }
 
 type WordInfo = {
@@ -46,41 +49,35 @@ const words: Record<string, WordInfo> = {
 	tutor: { word: 'Tutor', pronunciation: '/ˈtuː.tər/', translation: 'ครูสอนพิเศษ', example: 'Can you help me with this task?', exampleTranslation: 'คุณช่วยฉันเกี่ยวกับงานนี้ได้ไหม' },
 }
 
-function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate }: TalkProps) {
+function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate, variant = 'default' }: TalkProps) {
 	const [selectedWord, setSelectedWord] = useState<WordInfo | null>(null)
-	const [savedWords, setSavedWords] = useState<Set<string>>(new Set())
+	const [savedWords, setSavedWords] = useState<Set<string>>(
+		() => new Set(getSavedVocabulary().map((item) => item.word)),
+	)
 	const [isTranslated, setIsTranslated] = useState(false)
-	const [isSentenceSpeaking, setIsSentenceSpeaking] = useState(false)
+	const [isSentencePlaybackActive, setIsSentencePlaybackActive] = useState(false)
 	const [isSpeaking, setIsSpeaking] = useState(false)
 	const [isAwaitingReply, setIsAwaitingReply] = useState(false)
-	const [showYourTurn, setShowYourTurn] = useState(false)
 	const [isTyping, setIsTyping] = useState(false)
 	const [typedMessage, setTypedMessage] = useState('')
 	const [sentMessages, setSentMessages] = useState<string[]>([])
 	const [isFinishedByMessage, setIsFinishedByMessage] = useState(false)
 	const [isWordSoundPlayed, setIsWordSoundPlayed] = useState(false)
 	const [showHelpPrompt, setShowHelpPrompt] = useState(true)
+	const [isHelpVisible, setIsHelpVisible] = useState(false)
 	const typingInputRef = useRef<HTMLInputElement>(null)
-	const yourTurnTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-	const avatarState: TalkState = isSentenceSpeaking
+	const sentencePlaybackButtonRef = useRef<HTMLButtonElement>(null)
+	const speechRequestRef = useRef(0)
+	const avatarState: TalkState = isSentencePlaybackActive
 		? 'speaking'
 		: isSpeaking || isAwaitingReply
 			? 'listening'
 			: 'idle'
 
-	useEffect(() => () => {
-		if (yourTurnTimerRef.current) clearTimeout(yourTurnTimerRef.current)
-	}, [])
-
 	function beginListening() {
-		setIsSentenceSpeaking(false)
+		setIsSentencePlaybackActive(false)
 		setIsAwaitingReply(true)
-		setShowYourTurn(true)
-		if (yourTurnTimerRef.current) clearTimeout(yourTurnTimerRef.current)
-		yourTurnTimerRef.current = setTimeout(() => {
-			setShowYourTurn(false)
-			yourTurnTimerRef.current = null
-		}, 1600)
+		sentencePlaybackButtonRef.current?.blur()
 	}
 
 	function selectWord(key: keyof typeof words) {
@@ -89,40 +86,56 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 	}
 
 	function playWord(word: string, onEnd?: () => void) {
+		const requestId = ++speechRequestRef.current
 		if (!('speechSynthesis' in window)) {
 			onEnd?.()
 			return
 		}
 		window.speechSynthesis.cancel()
 		const utterance = new SpeechSynthesisUtterance(word)
-		utterance.onend = () => onEnd?.()
-		utterance.onerror = () => onEnd?.()
+		const finish = () => {
+			if (speechRequestRef.current === requestId) onEnd?.()
+		}
+		utterance.onend = finish
+		utterance.onerror = finish
 		window.speechSynthesis.speak(utterance)
 	}
 
-	function toggleSavedWord(word: string) {
+	function toggleSavedWord(wordInfo: WordInfo) {
 		setSavedWords((current) => {
 			const next = new Set(current)
-			if (next.has(word)) next.delete(word)
-			else next.add(word)
+			if (next.has(wordInfo.word)) {
+				next.delete(wordInfo.word)
+				removeVocabularyItem(wordInfo.word)
+			} else {
+				const category: SavedVocabularyCategory = variant === 'work'
+					? 'Work'
+					: variant === 'interview'
+						? 'Interview'
+						: 'Travel'
+				next.add(wordInfo.word)
+				saveVocabularyItem({
+					word: wordInfo.word,
+					translation: wordInfo.translation,
+					context: `${category} · Conversation`,
+					categories: [category],
+				})
+			}
 			return next
 		})
 	}
 
 	function toggleSentencePlayback() {
-		if (isSentenceSpeaking) {
+		if (isSentencePlaybackActive) {
+			speechRequestRef.current += 1
 			window.speechSynthesis?.cancel()
-			setIsSentenceSpeaking(false)
+			setIsSentencePlaybackActive(false)
+			sentencePlaybackButtonRef.current?.blur()
 			return
 		}
 
 		setIsAwaitingReply(false)
-		setShowYourTurn(false)
-		if (yourTurnTimerRef.current) {
-			clearTimeout(yourTurnTimerRef.current)
-			yourTurnTimerRef.current = null
-		}
-		setIsSentenceSpeaking(true)
+		setIsSentencePlaybackActive(true)
 		playWord(
 			TALK_BUBBLE_SPEECH,
 			beginListening,
@@ -148,8 +161,10 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 		<main className="talk-page">
 			<Header onMenuNavigate={onMenuNavigate} />
 			<section className="talk-content">
-				<button className="talk-back" type="button" onClick={onBack} aria-label="Go back" />
-				<TalkAvatar state={avatarState} statusMessage={showYourTurn ? 'Your turn' : undefined} />
+				<div className="talk-stage">
+					<button className="talk-back" type="button" onClick={onBack} aria-label="Go back" />
+					<TalkAvatar state={avatarState} variant={variant} />
+				</div>
 				<div className="talk-bubble" aria-label={TALK_BUBBLE_SPEECH}>
 					<button className="talk-word-token" type="button" onClick={() => selectWord('welcome')}>Welcome</button>{' '}
 					<button className="talk-word-token" type="button" onClick={() => selectWord('to')}>to</button>{' '}
@@ -166,10 +181,11 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 					<button className="talk-word-token" type="button" onClick={() => selectWord('tutor')}>tutor</button>
 					<div className="talk-bubble-tools">
 						<button
+							ref={sentencePlaybackButtonRef}
 							type="button"
 							onClick={toggleSentencePlayback}
-							aria-pressed={isSentenceSpeaking}
-							aria-label={isSentenceSpeaking ? 'Stop pronunciation' : 'Play pronunciation'}
+							aria-pressed={isSentencePlaybackActive}
+							aria-label={isSentencePlaybackActive ? 'Stop pronunciation' : 'Play pronunciation'}
 						>
 							<img src={soundIcon} alt="" />
 						</button>
@@ -184,6 +200,40 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 						))}
 					</div>
 				)}
+				{isHelpVisible && (
+					<div className="talk-help-messages" role="status" aria-label="Conversation suggestions">
+						<p className="talk-help-user-message talk-help-user-message--intro">Need a little help.</p>
+						<div className="talk-help-card">
+							<p>Think in Thai first. What do you want to tell?</p>
+							<div className="talk-help-card-tools" aria-hidden="true">
+								<img src={soundIcon} alt="" />
+								<img src={translateIcon} alt="" />
+							</div>
+						</div>
+						<p className="talk-help-user-message">เคยทำแอปตอนมหาลัย รับผิดชอบ UX/UI</p>
+						<div className="talk-help-card talk-help-card--suggestions">
+							<p>Useful words:</p>
+							<ul>
+								<li>university project</li>
+								<li>responsible for</li>
+								<li>UX/UI design</li>
+							</ul>
+							<p>Try starting with:</p>
+							<strong>“One project I’m proud of is...”</strong>
+							<div className="talk-help-card-tools" aria-hidden="true">
+								<img src={soundIcon} alt="" />
+								<img src={translateIcon} alt="" />
+							</div>
+						</div>
+						<div className="talk-help-card">
+							<p>Try answering yourself!</p>
+							<div className="talk-help-card-tools" aria-hidden="true">
+								<img src={soundIcon} alt="" />
+								<img src={translateIcon} alt="" />
+							</div>
+						</div>
+					</div>
+				)}
 				{selectedWord && (
 					<section className="talk-word-sheet" role="dialog" aria-modal="true" aria-label={`${selectedWord.word} vocabulary details`}>
 						<button className="talk-word-close" type="button" onClick={() => setSelectedWord(null)} aria-label="Close vocabulary">×</button>
@@ -191,7 +241,15 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 							<h2>{selectedWord.word}</h2>
 							<div className="talk-word-actions">
 								<button className={`talk-word-sound${isWordSoundPlayed ? ' is-played' : ''}`} type="button" onClick={() => { setIsWordSoundPlayed(true); playWord(selectedWord.word, () => setIsWordSoundPlayed(false)) }} aria-label={`Play ${selectedWord.word}`}><img src={soundIcon} alt="" /></button>
-								<button className={`talk-bookmark${savedWords.has(selectedWord.word) ? ' is-added' : ''}`} type="button" onClick={() => toggleSavedWord(selectedWord.word)} aria-label="Save word"><img src={saveIcon} alt="" /></button>
+								<button
+									className={`talk-bookmark${savedWords.has(selectedWord.word) ? ' is-added' : ''}`}
+									type="button"
+									onClick={() => toggleSavedWord(selectedWord)}
+									aria-pressed={savedWords.has(selectedWord.word)}
+									aria-label={savedWords.has(selectedWord.word) ? 'Remove saved word' : 'Save word'}
+								>
+									<img src={saveIcon} alt="" />
+								</button>
 							</div>
 						</div>
 						<p className="talk-word-pronunciation">{selectedWord.pronunciation}</p>
@@ -239,7 +297,18 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 						</button>
 						<div className="talk-help-control">
 							{showHelpPrompt && <span className="talk-help-prompt" role="status">Need a little help?</span>}
-							<button className="talk-control" type="button" onClick={() => setShowHelpPrompt(false)} aria-label="Conversation help"><img src={hintIcon} alt="" /></button>
+							<button
+								className="talk-control"
+								type="button"
+								onClick={() => {
+									setShowHelpPrompt(false)
+									setIsHelpVisible((isVisible) => !isVisible)
+								}}
+								aria-pressed={isHelpVisible}
+								aria-label={isHelpVisible ? 'Hide conversation help' : 'Show conversation help'}
+							>
+								<img src={hintIcon} alt="" />
+							</button>
 						</div>
 						<span className="talk-control-hint">{isSpeaking ? 'Listening...' : 'Hold to speak'}</span>
 					</div>

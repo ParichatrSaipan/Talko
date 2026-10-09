@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import Header from '../Header/Header.Component'
 import type { MenuDestination } from '../Hamburger/Menu'
 import soundIcon from '../assets/icon_sound.svg'
+import { getSavedVocabulary } from './vocabularyStorage'
 import './Vocab.css'
 
 type VocabProps = {
@@ -12,7 +13,7 @@ type VocabularyCategory = 'All' | 'Interview' | 'Work' | 'Travel'
 
 const categories: VocabularyCategory[] = ['All', 'Interview', 'Work', 'Travel']
 
-const vocabulary = [
+const defaultVocabulary = [
 	{ word: 'reservation', translation: 'การจอง', context: 'Travel · Hotel Check-in', categories: ['Travel'] },
 	{ word: 'follow-up', translation: 'คำถามต่อเนื่อง', context: 'Work · Interview', categories: ['Work', 'Interview'] },
 	{ word: 'deadline', translation: 'กำหนดเวลา', context: 'Work · Asking for Clarification', categories: ['Work'] },
@@ -24,7 +25,15 @@ function Vocab({ onMenuNavigate }: VocabProps) {
 	const [query, setQuery] = useState('')
 	const [activeCategory, setActiveCategory] = useState<VocabularyCategory>('All')
 	const [speakingWord, setSpeakingWord] = useState<string | null>(null)
+	const [savedVocabulary] = useState(getSavedVocabulary)
 	const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null)
+	const vocabulary = useMemo(() => {
+		const savedWords = new Set(savedVocabulary.map((item) => item.word.trim().toLowerCase()))
+		return [
+			...savedVocabulary,
+			...defaultVocabulary.filter((item) => !savedWords.has(item.word.trim().toLowerCase())),
+		]
+	}, [savedVocabulary])
 
 	useEffect(() => {
 		return () => {
@@ -39,7 +48,7 @@ function Vocab({ onMenuNavigate }: VocabProps) {
 			const matchesQuery = !normalizedQuery || `${item.word} ${item.translation} ${item.context}`.toLowerCase().includes(normalizedQuery)
 			return matchesCategory && matchesQuery
 		})
-	}, [activeCategory, query])
+	}, [activeCategory, query, vocabulary])
 
 	function playWord(word: string) {
 		if (!('speechSynthesis' in window)) return

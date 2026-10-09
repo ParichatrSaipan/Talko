@@ -139,7 +139,7 @@
 	margin: 0;
 }
 
-.profile-section-heading > button {
+.profile-section-arrow {
 	width: 32px;
 	height: 32px;
 	padding: 0;
@@ -150,7 +150,7 @@
 	color: #fff;
 }
 
-.profile-section-heading > button span {
+.profile-section-arrow i {
 	display: block;
 	width: 11px;
 	height: 11px;
@@ -160,7 +160,7 @@
 	transform: translateX(-2px) rotate(45deg);
 }
 
-.profile-section-heading > button:focus-visible {
+.profile-section-arrow:focus-visible {
 	outline: 2px solid #8de7ed;
 	border-radius: 4px;
 }
@@ -260,9 +260,6 @@
 	font-size: 28px;
 }
 
-.profile-practice-card:hover {
-	filter: brightness(.97);
-}
 
 .profile-practice-card:focus-visible {
 	outline: 3px solid #8de7ed;

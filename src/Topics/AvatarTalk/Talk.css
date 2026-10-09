@@ -5,6 +5,12 @@
 	font-family: 'Inter', sans-serif;
 }
 
+.talk-page > .app-header {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+}
+
 .talk-header {
 	height: 88px;
 	padding: 0 26px;
@@ -54,8 +60,17 @@
 
 .talk-content {
 	min-height: calc(100svh - 74px);
-	padding: 24px 16px;
+	padding: 24px 16px 190px;
 	position: relative;
+}
+
+.talk-stage {
+	margin: -24px -16px 0;
+	padding: 24px 16px 0;
+	position: sticky;
+	top: 72px;
+	z-index: 3;
+	background: radial-gradient(circle at 80% 45%, #182c2b 0, #050707 48%, #000 80%);
 }
 
 .talk-back {
@@ -87,6 +102,14 @@
 	overflow: hidden;
 	border-radius: 24px;
 	background: #d6d6d6 url('../../assets/bg_blue.svg') center / cover;
+}
+
+.talk-video--work {
+	background: url('../../assets/bg_Purple.svg') center / cover;
+}
+
+.talk-video--interview {
+	background: #d6d6d6 url('../../assets/bg_Orange.svg') center / cover;
 }
 
 .talk-video--idle,
@@ -152,6 +175,14 @@
 	mask-position: center;
 	mask-repeat: no-repeat;
 	mask-size: contain;
+}
+
+.talk-avatar--work .talk-avatar__part {
+	background-image: linear-gradient(135deg, #ECC9E7 18%, #D6A5D2 100%);
+}
+
+.talk-avatar--interview .talk-avatar__part {
+	background-image: linear-gradient(135deg, #FFDFCA 18%, #F16E1E 100%);
 }
 
 .talk-avatar__body {
@@ -236,12 +267,58 @@
 
 .talk-avatar__eyes .talk-avatar__face { width: 100%; }
 
+.talk-avatar--interview .talk-avatar__eyes .talk-avatar__face { width: 55px; }
+
+.talk-avatar--interview .talk-avatar__eyes-open {
+	animation: talk-orange-eyes-open 4.8s ease-in-out infinite;
+}
+
 .talk-avatar__eyes-closed {
 	opacity: 0;
 	animation: talk-avatar-eyes-closed 4.8s infinite;
 }
 
 .talk-avatar__eyes-open { animation: talk-avatar-eyes-open 4.8s infinite; }
+
+.talk-avatar--interview .talk-avatar__eyes {
+	top: 72px;
+	width: 49px;
+	height: 17px;
+}
+
+.talk-avatar--interview .talk-avatar__eyes-closed {
+	transform: rotate(180deg);
+	animation: talk-orange-eyes-closed 4.8s ease-in-out infinite;
+}
+
+.talk-video--speaking .talk-avatar--interview .talk-avatar__eyes-open {
+	opacity: 0;
+	animation: none;
+}
+
+.talk-video--speaking .talk-avatar--interview .talk-avatar__eyes-closed {
+	opacity: 1;
+	transform: rotate(180deg);
+	animation: none;
+}
+
+.talk-avatar--work .talk-avatar__eyes {
+	top: 80px;
+    left: 65px;
+    width: 48px;
+}
+
+.talk-avatar--work .talk-avatar__eyes .talk-avatar__face {
+	width: 60px;
+}
+
+.talk-avatar--work .talk-avatar__eyes-open {
+	animation: talk-purple-eyes-open 4.8s ease-in-out infinite;
+}
+
+.talk-avatar--work .talk-avatar__eyes-closed {
+	animation: talk-purple-eyes-closed 4.8s ease-in-out infinite;
+}
 
 .talk-avatar__mouth {
 	width: 63px;
@@ -260,7 +337,6 @@
 	height: auto;
 	transform: translate(-50%, -50%);
 	transform-origin: center;
-	transition: opacity .14s ease-in-out;
 	will-change: opacity, transform;
 }
 
@@ -270,30 +346,44 @@
 .talk-avatar__mouth-open,
 .talk-avatar__mouth-open-alt { opacity: 0; }
 
+.talk-avatar__mouth--interview {
+	top: 90px;
+	left: 70px;
+	transform: rotate(-7deg);
+}
+
+.talk-avatar__mouth--work {
+  width: 63px;
+  height: 30px;
+  top: 95px;
+  left: 64px;
+  z-index: 5;
+}
+
+
+
+
+.talk-avatar__mouth--interview .talk-avatar__mouth-orange-line {
+	width: 52px !important;
+}
+
 .talk-video--speaking .talk-avatar__mouth-closed { opacity: 0; }
 
 .talk-video--speaking .talk-avatar__mouth-open {
 	opacity: 1;
-	animation: talk-avatar-mouth-wide .64s cubic-bezier(.45, 0, .55, 1) infinite;
+	animation: talk-avatar-mouth-wide .52s ease-in-out infinite;
 }
 
 .talk-video--speaking .talk-avatar__mouth-open-alt {
-	animation: talk-avatar-mouth-narrow .64s cubic-bezier(.45, 0, .55, 1) infinite;
+	animation: talk-avatar-mouth-narrow .52s ease-in-out infinite;
 }
 
-.talk-video--listening {
-	outline: 2px solid #adffda;
-	outline-offset: -2px;
-}
 
-.talk-video--speaking {
-	outline: 2px solid #7ec7ff;
-	outline-offset: -2px;
-}
+
 
 .talk-bubble {
 	max-width: 280px;
-	margin-top: 22px;
+	margin: 24px 0;
 	padding: 16px;
 	border-radius: 24px;
 	background: #fff;
@@ -360,12 +450,12 @@
 }
 
 .talk-user-messages {
-	margin-top: 16px;
+	margin: 16px 0;
 	display: grid;
 	justify-items: end;
 	gap: 10px;
 }
-
+	
 .talk-user-messages p {
 	max-width: 78%;
 	margin: 0;
@@ -375,6 +465,71 @@
 	color: #080808;
 	font: 16px/1.35 'Inter Regular', 'Inter', sans-serif;
 	overflow-wrap: anywhere;
+}
+
+.talk-help-messages {
+	width: 100%;
+	margin: 10px 0px;
+	color: #111;
+}
+
+.talk-help-card {
+	width: min(100%, 230px);
+	padding:16px;
+	margin: 24px 0;
+	border-radius: 20px;
+	background: #fff;
+	box-shadow: 0 5px 18px rgba(0, 0, 0, .12);
+	font: 13px 'Inter Regular';
+}
+
+.talk-help-user-message {
+	max-width: 230px;
+	margin: 10px 0;
+	padding: 16px;
+	justify-self: end;
+	border-radius: 20px;
+	background: linear-gradient(135deg, #ADFFDA, #7EC7FF);
+	color: #080808;
+	font: 14px 'Inter Regular';
+	overflow-wrap: anywhere;
+}
+
+
+
+.talk-help-card p {
+	margin: 0;
+}
+
+.talk-help-card--suggestions p + ul {
+	margin-top: 8px;
+}
+
+.talk-help-card ul {
+	margin: 0 0 12px;
+	padding-left: 18px;
+	color: #168bd2;
+	font-family: 'Inter Bold';
+}
+
+.talk-help-card strong {
+	display: block;
+	margin-top: 8px;
+	color: #168bd2;
+	font-family: 'Inter Bold';
+}
+
+.talk-help-card-tools {
+	margin-top: 10px;
+	display: flex;
+	align-items: center;
+	gap: 20px;
+}
+
+.talk-help-card-tools img {
+	width: 16px;
+	height: 16px;
+	opacity: .55;
 }
 
 .talk-word-sheet {
@@ -481,13 +636,16 @@
 }
 
 .talk-controls {
-	position: absolute;
-	right: 29.5px;
-	bottom: 45px;
-	left: 29.5px;
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 6;
+	padding: 20px 29.5px 45px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	background: #000;
 }
 
 .talk-control {
@@ -557,7 +715,7 @@
 .talk-control-hint {
 	position: absolute;
 	right: 0;
-	bottom: -23.5px;
+	bottom: 17px;
 	left: 0;
 	text-align: center;
 	font: 12px 'Inter Regular';
@@ -661,33 +819,77 @@
 	44%, 46% { opacity: 1; }
 }
 
-@keyframes talk-avatar-mouth-wide {
-	0%, 38% {
+@keyframes talk-orange-eyes-open {
+	0%, 40%, 50%, 100% {
 		opacity: 1;
-		transform: translate(-50%, -50%) scale(1, .94);
+		transform: scaleY(1);
 	}
-	50%, 88% {
+	43%, 47% {
 		opacity: 0;
-		transform: translate(-50%, -50%) scale(1, 1.02);
+		transform: scaleY(.7);
+	}
+}
+
+@keyframes talk-orange-eyes-closed {
+	0%, 40%, 50%, 100% {
+		opacity: 0;
+		transform: rotate(180deg) scaleY(.7);
+	}
+	43%, 47% {
+		opacity: 1;
+		transform: rotate(180deg) scaleY(1);
+	}
+}
+
+@keyframes talk-purple-eyes-open {
+	0%, 40%, 50%, 100% {
+		opacity: 1;
+		transform: scaleY(1);
+	}
+	43%, 47% {
+		opacity: 0;
+		transform: scaleY(.45);
+	}
+}
+
+@keyframes talk-purple-eyes-closed {
+	0%, 40%, 50%, 100% {
+		opacity: 0;
+		transform: scaleY(1);
+	}
+	43%, 47% {
+		opacity: 1;
+		transform: scaleY(.45);
+	}
+}
+
+@keyframes talk-avatar-mouth-wide {
+	0%, 24% {
+		opacity: 1;
+		transform: translate(-50%, -50%) scale(1, .96);
+	}
+	50%, 74% {
+		opacity: 0;
+		transform: translate(-50%, -50%) scale(1, 1);
 	}
 	100% {
 		opacity: 1;
-		transform: translate(-50%, -50%) scale(1, .94);
+		transform: translate(-50%, -50%) scale(1, .96);
 	}
 }
 
 @keyframes talk-avatar-mouth-narrow {
-	0%, 38% {
+	0%, 24% {
 		opacity: 0;
-		transform: translate(-50%, -50%) scale(1, .92);
+		transform: translate(-50%, -50%) scale(1, .96);
 	}
-	50%, 88% {
+	50%, 74% {
 		opacity: 1;
 		transform: translate(-50%, -50%) scale(1, 1);
 	}
 	100% {
 		opacity: 0;
-		transform: translate(-50%, -50%) scale(1, .92);
+		transform: translate(-50%, -50%) scale(1, .96);
 	}
 }
 /* ทำ animation สำหรับการแสดงคำใหม่ */

@@ -28,6 +28,7 @@ import CreateAccount from './CreateAccount/CreateAccount'
 type Page = 'home' | 'sign-in' | 'create-account' | 'age' | 'gender' | 'name' | 'work' | 'role-interested' | 'language-level' | 'level-test' | 'level-result' | 'topics' | 'main-home' | 'main-topics' | 'main-work' | 'main-travel' | 'call' | 'talk' | 'avatar-result' | 'profile' | 'edit-profile' | 'practice' | 'vocab'
 
 const jobRoleStorageKey = 'talko.jobRole'
+const interviewRoleStorageKey = 'talko.interviewRole'
 
 function getStoredJobRole() {
   try {
@@ -39,7 +40,25 @@ function getStoredJobRole() {
 
 function storeJobRole(role: string) {
   try {
-    localStorage.setItem(jobRoleStorageKey, role)
+    if (role.trim()) localStorage.setItem(jobRoleStorageKey, role)
+    else localStorage.removeItem(jobRoleStorageKey)
+  } catch {
+    // Keep the role available in the current session when storage is unavailable.
+  }
+}
+
+function getStoredInterviewRole() {
+  try {
+    return localStorage.getItem(interviewRoleStorageKey)?.trim() ?? ''
+  } catch {
+    return ''
+  }
+}
+
+function storeInterviewRole(role: string) {
+  try {
+    if (role.trim()) localStorage.setItem(interviewRoleStorageKey, role)
+    else localStorage.removeItem(interviewRoleStorageKey)
   } catch {
     // Keep the role available in the current session when storage is unavailable.
   }
@@ -61,12 +80,9 @@ function getActiveMenuDestination(page: Page, topicReturnPage: 'main-topics' | '
 function App() {
   const [page, setPage] = useState<Page>('home')
   const [topicReturnPage, setTopicReturnPage] = useState<'main-topics' | 'main-work' | 'main-travel'>('main-topics')
-  const [workReturnPage, setWorkReturnPage] = useState<Page>('topics')
-  const [interviewReturnPage, setInterviewReturnPage] = useState<Page>('topics')
   const [profileName, setProfileName] = useState('Alex')
   const [profileRole, setProfileRole] = useState(getStoredJobRole)
-  const [interviewRole, setInterviewRole] = useState('')
-  const [hasProvidedInterviewRole, setHasProvidedInterviewRole] = useState(false)
+  const [interviewRole, setInterviewRole] = useState(getStoredInterviewRole)
 
   function startTopic(returnPage: 'main-topics' | 'main-work' | 'main-travel') {
     setTopicReturnPage(returnPage)
@@ -79,17 +95,15 @@ function App() {
       return
     }
 
-    setWorkReturnPage(page)
     setPage('work')
   }
 
   function openInterview() {
-    if (hasProvidedInterviewRole) {
+    if (interviewRole.trim()) {
       setPage('main-topics')
       return
     }
 
-    setInterviewReturnPage(page)
     setPage('role-interested')
   }
 
@@ -100,7 +114,13 @@ function App() {
     if (destination === 'travel') setPage('main-travel')
     if (destination === 'vocabulary') setPage('vocab')
     if (destination === 'profile') setPage('profile')
-    if (destination === 'logout') setPage('home')
+    if (destination === 'logout') {
+      setProfileRole('')
+      storeJobRole('')
+      setInterviewRole('')
+      storeInterviewRole('')
+      setPage('home')
+    }
   }
 
   function renderPage() {
@@ -152,7 +172,7 @@ function App() {
   if (page === 'work') {
     return (
       <Job
-        onBack={() => setPage(workReturnPage)}
+        onBack={() => setPage('main-home')}
         onContinue={(role) => {
           setProfileRole(role)
           storeJobRole(role)
@@ -166,10 +186,10 @@ function App() {
   if (page === 'role-interested') {
     return (
       <RoleInterested
-        onBack={() => setPage(interviewReturnPage)}
+        onBack={() => setPage('main-home')}
         onContinue={(roleInterest) => {
           setInterviewRole(roleInterest)
-          setHasProvidedInterviewRole(true)
+          storeInterviewRole(roleInterest)
           setPage('main-topics')
         }}
         onMenuNavigate={navigateFromMenu}
@@ -194,7 +214,7 @@ function App() {
   }
 
   if (page === 'profile') {
-    return <ProfileUser username={profileName} role={profileRole} onEdit={() => setPage('edit-profile')} onTravelSelect={() => setPage('main-travel')} onWorkSelect={openWork} onPracticeSelect={() => setPage('practice')} onMenuNavigate={navigateFromMenu} />
+    return <ProfileUser username={profileName} role={profileRole} roleInterest={interviewRole} onPracticeSelect={() => setPage('practice')} onEdit={() => setPage('edit-profile')} onMenuNavigate={navigateFromMenu} />
   }
 
   if (page === 'edit-profile') {
@@ -206,11 +226,9 @@ function App() {
         onSave={(username, role, roleInterest) => {
           setProfileName(username)
           setProfileRole(role)
-          if (role) storeJobRole(role)
+          storeJobRole(role)
           setInterviewRole(roleInterest)
-          if (roleInterest) {
-            setHasProvidedInterviewRole(true)
-          }
+          storeInterviewRole(roleInterest)
           setPage('profile')
         }}
         onMenuNavigate={navigateFromMenu}
@@ -255,7 +273,14 @@ function App() {
   }
 
   if (page === 'talk') {
-    return <Talk onBack={() => setPage('call')} onFinish={() => setPage('avatar-result')} onMenuNavigate={navigateFromMenu} />
+    return (
+      <Talk
+        variant={topicReturnPage === 'main-work' ? 'work' : topicReturnPage === 'main-topics' ? 'interview' : 'default'}
+        onBack={() => setPage('call')}
+        onFinish={() => setPage('avatar-result')}
+        onMenuNavigate={navigateFromMenu}
+      />
+    )
   }
 
   if (page === 'avatar-result') {

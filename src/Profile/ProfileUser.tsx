@@ -3,14 +3,12 @@ import type { MenuDestination } from '../Hamburger/Menu'
 import profileIcon from '../assets/icon_Profile.svg'
 import editJobIcon from '../assets/icon_EditJob.svg'
 import { practiceItems } from '../Practice/practiceData'
-import type { PracticeItem } from '../Practice/practiceData'
 import './ProfileUser.css'
 
 type ProfileUserProps = {
 	username: string
 	role: string
-	onTravelSelect: () => void
-	onWorkSelect: () => void
+	roleInterest: string
 	onPracticeSelect: () => void
 	onEdit: () => void
 	onMenuNavigate?: (destination: MenuDestination) => void
@@ -23,12 +21,7 @@ const skillProgress = [
 	{ label: 'Speaking Fluency', score: 47 },
 ]
 
-function ProfileUser({ username, role, onTravelSelect, onWorkSelect, onPracticeSelect, onEdit, onMenuNavigate }: ProfileUserProps) {
-	function selectPractice(item: PracticeItem) {
-		if (item.category === 'Travel') onTravelSelect()
-		else onWorkSelect()
-	}
-
+function ProfileUser({ username, role, roleInterest, onPracticeSelect, onEdit, onMenuNavigate }: ProfileUserProps) {
 	return (
 		<main className="profile-page">
 			<Header onMenuNavigate={onMenuNavigate} />
@@ -39,6 +32,7 @@ function ProfileUser({ username, role, onTravelSelect, onWorkSelect, onPracticeS
 					<div>
 						<h1>{username}</h1>
 						<p>Role: {role}</p>
+						<p>Role of Interest: {roleInterest}</p>
 					</div>
 					<button className="profile-edit" type="button" onClick={onEdit} aria-label="Edit profile"><img src={editJobIcon} alt="" /></button>
 				</section>
@@ -63,12 +57,12 @@ function ProfileUser({ username, role, onTravelSelect, onWorkSelect, onPracticeS
 				<section className="profile-section profile-recent" aria-labelledby="recent-practice-title">
 					<div className="profile-section-heading">
 						<h2 id="recent-practice-title">Recent practice</h2>
-						<button type="button" onClick={onPracticeSelect} aria-label="View all practice"><span aria-hidden="true" /></button>
+						<button className="profile-section-arrow" type="button" onClick={onPracticeSelect} aria-label="View all practice"><i aria-hidden="true" /></button>
 					</div>
 
 					<div className="profile-practice-list">
 						{practiceItems.slice(0, 3).map((item) => (
-							<button className="profile-practice-card" type="button" key={item.id} onClick={() => selectPractice(item)}>
+							<article className="profile-practice-card" key={item.id}>
 								<span className="profile-practice-icon" aria-hidden="true"><img src={item.icon} alt="" /></span>
 								<span className="profile-practice-copy">
 									<strong>{item.title}</strong>
@@ -78,7 +72,7 @@ function ProfileUser({ username, role, onTravelSelect, onWorkSelect, onPracticeS
 									</span>
 								</span>
 								<span className="profile-practice-arrow" aria-hidden="true">›</span>
-							</button>
+							</article>
 						))}
 					</div>
 				</section>

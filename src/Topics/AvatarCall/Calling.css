@@ -15,6 +15,40 @@
     font: 36px 'Inter ExtraBold';
 }
 
+.calling-dots {
+	display: inline-flex;
+}
+
+.calling-dots span {
+	display: inline-block;
+	color: rgba(0, 0, 0, .22);
+	animation: calling-dot-color 1.2s ease-in-out infinite;
+}
+
+.calling-dots span:nth-child(2) {
+	animation-delay: .2s;
+}
+
+.calling-dots span:nth-child(3) {
+	animation-delay: .4s;
+}
+
+@keyframes calling-dot-color {
+	0%, 60%, 100% {
+		color: rgba(0, 0, 0, .22);
+	}
+	30% {
+		color: #000;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.calling-dots span {
+		animation: none;
+		color: #000;
+	}
+}
+
 .call-practice-card {
 	width: 100%;
 	max-width: 335px;
@@ -25,7 +59,7 @@
 	overflow: hidden;
 	border: 1px solid rgba(255, 255, 255, .65);
 	border-radius: 10px;
-	background: rgba(255, 255, 255, 0.40);
+	background: rgba(255, 255, 255, 0.70);
 	box-shadow: 0 0 20px 0 rgba(255, 255, 255, 0.80) inset, 0 0 4px 0 rgba(0, 0, 0, 0.10);
 	text-align: left;
 }
@@ -92,6 +126,33 @@
 	border-radius: 50%;
 	background: #fff;
 	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.10);
+	animation: call-action-pulse 2.4s ease-in-out infinite;
+	transform-origin: center;
+}
+
+.call-action--accept {
+	animation-delay: .3s;
+}
+
+.call-action--decline {
+	animation: none;
+}
+
+@keyframes call-action-pulse {
+	0%, 100% {
+		transform: scale(1);
+		box-shadow: 0 4px 20px rgba(0, 0, 0, .10);
+	}
+	50% {
+		transform: scale(1.09);
+		box-shadow: 0 7px 26px rgba(0, 0, 0, .16);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.call-action {
+		animation: none;
+	}
 }
 
 .call-icon {
