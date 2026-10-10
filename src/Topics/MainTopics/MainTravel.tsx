@@ -9,6 +9,7 @@ import findingItemImage from '../../assets/ImageScene/Finding an Item.svg'
 import askingPriceImage from '../../assets/ImageScene/Asking About the Price.svg'
 import askingDirectionsImage from '../../assets/ImageScene/Asking for Directions.svg'
 import publicTransportationImage from '../../assets/ImageScene/Using Public Transportation.svg'
+import { callingPracticeItems } from '../AvatarCall/callingPracticeData'
 import MainTopicsComponent from './MainTopics.Component'
 import type { TopicCard } from './MainTopics.Component'
 import type { MenuDestination } from '../../Hamburger/Menu'
@@ -16,16 +17,16 @@ import type { MenuDestination } from '../../Hamburger/Menu'
 const travelCategories = ['All', 'Airport', 'Hotel', 'Food & Drinks', 'Shopping', 'Getting Around']
 
 const travelTopics: TopicCard[] = [
-	{ title: 'Airport Check-in', description: '', image: airportCheckInImage, category: 'Airport', status: '10% done', statusType: 'progress' },
-	{ title: 'Flight Delay', description: '', image: flightDelayImage, category: 'Airport' },
-	{ title: 'Hotel Check-in', description: '', image: hotelCheckInImage, category: 'Hotel' },
-	{ title: 'Room Problems', description: '', image: roomProblemsImage, category: 'Hotel', status: 'completed', statusType: 'completed' },
-	{ title: 'Ordering Food', description: '', image: orderingFoodImage, category: 'Food & Drinks', status: '50% done', statusType: 'working' },
-	{ title: 'Asking for the Bill', description: '', image: askingForBillImage, category: 'Food & Drinks' },
-	{ title: 'Finding an Item', description: '', image: findingItemImage, category: 'Shopping' },
-	{ title: 'Asking About the Price', description: '', image: askingPriceImage, category: 'Shopping' },
-	{ title: 'Asking for Directions', description: '', image: askingDirectionsImage, category: 'Getting Around' },
-	{ title: 'Using Public Transportation', description: '', image: publicTransportationImage, category: 'Getting Around' },
+	{ title: 'Airport Check-in', description: '', image: airportCheckInImage, category: 'Airport', status: '10% done', statusType: 'progress', practiceItems: callingPracticeItems['Airport Check-in'] },
+	{ title: 'Flight Delay', description: '', image: flightDelayImage, category: 'Airport', practiceItems: callingPracticeItems['Flight Delay'] },
+	{ title: 'Hotel Check-in', description: '', image: hotelCheckInImage, category: 'Hotel', practiceItems: callingPracticeItems['Hotel Check-in'] },
+	{ title: 'Room Problems', description: '', image: roomProblemsImage, category: 'Hotel', status: 'completed', statusType: 'completed', practiceItems: callingPracticeItems['Room Problems'] },
+	{ title: 'Ordering Food', description: '', image: orderingFoodImage, category: 'Food & Drinks', status: '50% done', statusType: 'working', practiceItems: callingPracticeItems['Ordering Food'] },
+	{ title: 'Asking for the Bill', description: '', image: askingForBillImage, category: 'Food & Drinks', practiceItems: callingPracticeItems['Asking for the Bill'] },
+	{ title: 'Finding an Item', description: '', image: findingItemImage, category: 'Shopping', practiceItems: callingPracticeItems['Finding an Item'] },
+	{ title: 'Asking About the Price', description: '', image: askingPriceImage, category: 'Shopping', practiceItems: callingPracticeItems['Asking About the Price'] },
+	{ title: 'Asking for Directions', description: '', image: askingDirectionsImage, category: 'Getting Around', practiceItems: callingPracticeItems['Asking for Directions'] },
+	{ title: 'Using Public Transportation', description: '', image: publicTransportationImage, category: 'Getting Around', practiceItems: callingPracticeItems['Using Public Transportation'] },
 ]
 
 type MainTravelProps = {

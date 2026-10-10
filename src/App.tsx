@@ -24,6 +24,7 @@ import EditJob from './Profile/EditJob'
 import Practice from './Practice/Practice'
 import Vocab from './Vocab/Vocab'
 import CreateAccount from './CreateAccount/CreateAccount'
+import type { TopicCard } from './Topics/MainTopics/MainTopics.Component'
 
 type Page = 'home' | 'sign-in' | 'create-account' | 'age' | 'gender' | 'name' | 'work' | 'role-interested' | 'language-level' | 'level-test' | 'level-result' | 'topics' | 'main-home' | 'main-topics' | 'main-work' | 'main-travel' | 'call' | 'talk' | 'avatar-result' | 'profile' | 'edit-profile' | 'practice' | 'vocab'
 
@@ -80,12 +81,14 @@ function getActiveMenuDestination(page: Page, topicReturnPage: 'main-topics' | '
 function App() {
   const [page, setPage] = useState<Page>('home')
   const [topicReturnPage, setTopicReturnPage] = useState<'main-topics' | 'main-work' | 'main-travel'>('main-topics')
+  const [selectedTopic, setSelectedTopic] = useState<TopicCard | null>(null)
   const [profileName, setProfileName] = useState('Alex')
   const [profileRole, setProfileRole] = useState(getStoredJobRole)
   const [interviewRole, setInterviewRole] = useState(getStoredInterviewRole)
 
-  function startTopic(returnPage: 'main-topics' | 'main-work' | 'main-travel') {
+  function startTopic(returnPage: 'main-topics' | 'main-work' | 'main-travel', topic: TopicCard) {
     setTopicReturnPage(returnPage)
+    setSelectedTopic(topic)
     setPage('call')
   }
 
@@ -245,15 +248,15 @@ function App() {
   }
 
   if (page === 'main-topics') {
-  return <MainInterview onTopicSelect={() => startTopic('main-topics')} onMenuNavigate={navigateFromMenu} />
+  return <MainInterview onTopicSelect={(topic) => startTopic('main-topics', topic)} onMenuNavigate={navigateFromMenu} />
   }
 
   if (page === 'main-work') {
-    return <MainWork onTopicSelect={() => startTopic('main-work')} onMenuNavigate={navigateFromMenu} />
+    return <MainWork onTopicSelect={(topic) => startTopic('main-work', topic)} onMenuNavigate={navigateFromMenu} />
   }
 
   if (page === 'main-travel') {
-    return <MainTravel onTopicSelect={() => startTopic('main-travel')} onMenuNavigate={navigateFromMenu} />
+    return <MainTravel onTopicSelect={(topic) => startTopic('main-travel', topic)} onMenuNavigate={navigateFromMenu} />
   }
 
   if (page === 'call') {
@@ -266,6 +269,8 @@ function App() {
     return (
       <CallComponent
         characterVariant={characterVariant}
+        title={selectedTopic?.title}
+        practiceItems={selectedTopic?.practiceItems}
         onDecline={() => setPage(topicReturnPage)}
         onAccept={() => setPage('talk')}
       />

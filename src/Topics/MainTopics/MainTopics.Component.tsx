@@ -12,6 +12,7 @@ export type TopicCard = {
 	description: string
 	image?: string
 	category?: string
+	practiceItems?: string[]
 	status?: string
 	statusType?: 'progress' | 'completed' | 'working'
 }
