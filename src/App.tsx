@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { supabase } from './lib/supabase'
 import Home from './GetStarted/GetStarted'
 import SignIn from './SignIn/SignIn'
 import Age from './QuestionPage/Age'
@@ -86,6 +87,20 @@ function App() {
   const [profileRole, setProfileRole] = useState(getStoredJobRole)
   const [interviewRole, setInterviewRole] = useState(getStoredInterviewRole)
 
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      if (data.session) setPage('main-home')
+    })
+    const { data: sub } = supabase.auth.onAuthStateChange((event, newSession) => {
+      if (newSession) {
+        setPage((current) => (current === 'home' || current === 'sign-in' ? 'main-home' : current))
+      } else if (event === 'SIGNED_OUT') {
+        setPage('home')
+      }
+    })
+    return () => sub.subscription.unsubscribe()
+  }, [])
+
   function startTopic(returnPage: 'main-topics' | 'main-work' | 'main-travel', topic: TopicCard) {
     setTopicReturnPage(returnPage)
     setSelectedTopic(topic)
@@ -122,6 +137,7 @@ function App() {
       storeJobRole('')
       setInterviewRole('')
       storeInterviewRole('')
+      supabase.auth.signOut()
       setPage('home')
     }
   }
