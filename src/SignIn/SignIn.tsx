@@ -1,4 +1,5 @@
 //หน้าล็อกอิน
+import { useState } from 'react'
 import type { FormEvent } from 'react'
 import './SignIn.css'
 import '../Font/Fonts.css'
@@ -10,8 +11,21 @@ type SignInProps = {
 }
 
 function SignIn({ onCreateAccount, onLogin }: SignInProps) {
-	function handleSubmit(event: FormEvent<HTMLFormElement>) {
+	const [email, setEmail] = useState('')
+	const [password, setPassword] = useState('')
+	const [error, setError] = useState('')
+	const [loading, setLoading] = useState(false)
+
+	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault()
+		setError('')
+		setLoading(true)
+		const { error: signInError } = await supabase.auth.signInWithPassword({ email, password })
+		setLoading(false)
+		if (signInError) {
+			setError(signInError.message)
+			return
+		}
 		onLogin()
 	}
 
@@ -44,11 +58,13 @@ function SignIn({ onCreateAccount, onLogin }: SignInProps) {
 
 				<form onSubmit={handleSubmit}>
 					<label htmlFor="email">Email</label>
-					<input id="email" type="email" placeholder="Enter your name" />
+					<input id="email" type="email" placeholder="Enter your email" value={email} onChange={(event) => setEmail(event.target.value)} required />
 					<label htmlFor="password">Password</label>
-					<input id="password" type="password" placeholder="***********" />
+					<input id="password" type="password" placeholder="***********" value={password} onChange={(event) => setPassword(event.target.value)} required />
 
-					<button className="submit-button" type="submit">Log in</button>
+					{error && <p className="sign-in-error" role="alert">{error}</p>}
+
+					<button className="submit-button" type="submit" disabled={loading}>{loading ? 'Logging in...' : 'Log in'}</button>
 				</form>
 
 				<button className="create-account-button" type="button" onClick={onCreateAccount}>Create account</button>

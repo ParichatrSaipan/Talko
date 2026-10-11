@@ -1,3 +1,5 @@
+import { supabase } from '../lib/supabase'
+
 const BASE_URL = "http://127.0.0.1:8000"
 
 export type ChatMode = "free" | "scenario"
@@ -17,6 +19,7 @@ export type ChatRequest = {
 
 export type ChatResponse = {
   reply: string
+  finished?: boolean
 }
 
 export type WordInfo = {
@@ -35,10 +38,16 @@ export type Scenario = {
   level: string
 }
 
+async function authHeaders(): Promise<Record<string, string>> {
+  const { data } = await supabase.auth.getSession()
+  const token = data.session?.access_token
+  return token ? { Authorization: `Bearer ${token}` } : {}
+}
+
 export async function sendChat(req: ChatRequest): Promise<ChatResponse> {
   const res = await fetch(`${BASE_URL}/chat`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", ...(await authHeaders()) },
     body: JSON.stringify(req),
   })
   if (!res.ok) throw new Error(`Chat request failed: ${res.status}`)
@@ -46,13 +55,17 @@ export async function sendChat(req: ChatRequest): Promise<ChatResponse> {
 }
 
 export async function getWord(word: string): Promise<WordInfo> {
-  const res = await fetch(`${BASE_URL}/word/${encodeURIComponent(word)}`)
+  const res = await fetch(`${BASE_URL}/word/${encodeURIComponent(word)}`, {
+    headers: { ...(await authHeaders()) },
+  })
   if (!res.ok) throw new Error(`Word request failed: ${res.status}`)
   return res.json()
 }
 
 export async function getScenarios(): Promise<Scenario[]> {
-  const res = await fetch(`${BASE_URL}/scenarios`)
+  const res = await fetch(`${BASE_URL}/scenarios`, {
+    headers: { ...(await authHeaders()) },
+  })
   if (!res.ok) throw new Error(`Scenarios request failed: ${res.status}`)
   return res.json()
 }

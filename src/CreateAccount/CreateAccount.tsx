@@ -2,17 +2,21 @@ import { useState } from 'react'
 import type { FormEvent } from 'react'
 import './CreateAccount.css'
 import '../Font/Fonts.css'
+import { supabase } from '../lib/supabase'
 
 type CreateAccountProps = {
   onCreateAccount: () => void
 }
 
 function CreateAccount({ onCreateAccount }: CreateAccountProps) {
+  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmedPassword, setConfirmedPassword] = useState('')
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
     if (password !== confirmedPassword) {
@@ -21,6 +25,19 @@ function CreateAccount({ onCreateAccount }: CreateAccountProps) {
     }
 
     setError('')
+    setLoading(true)
+    const { error: signUpError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { username } },
+    })
+    setLoading(false)
+
+    if (signUpError) {
+      setError(signUpError.message)
+      return
+    }
+
     onCreateAccount()
   }
 
@@ -37,6 +54,8 @@ function CreateAccount({ onCreateAccount }: CreateAccountProps) {
             type="text"
             placeholder="Enter your name"
             autoComplete="username"
+            value={username}
+            onChange={(event) => setUsername(event.target.value)}
             required
           />
 
@@ -47,6 +66,8 @@ function CreateAccount({ onCreateAccount }: CreateAccountProps) {
             type="email"
             placeholder="Enter your email"
             autoComplete="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
             required
           />
 
@@ -85,7 +106,7 @@ function CreateAccount({ onCreateAccount }: CreateAccountProps) {
             {error}
           </p>
 
-          <button type="submit">Create account</button>
+          <button type="submit" disabled={loading}>{loading ? 'Creating...' : 'Create account'}</button>
         </form>
       </section>
     </main>
