@@ -69,7 +69,7 @@ function MainTopicsComponent({ title = 'Interview', icon = interviewIcon, catego
 						))}
 					</div>
 				)}
-				<p className="main-topics-intro">Choose a real-life scenario to practice.</p>
+				<p className="main-topics-intro">Pick a Scenario.</p>
 				<div className="main-topics-grid">
 					{visibleTopics.map((topic, index) => (
 						<article

@@ -31,8 +31,8 @@ function ProfileUser({ username, role, roleInterest, onPracticeSelect, onEdit, o
 					<span className="profile-avatar" aria-hidden="true"><img src={profileIcon} alt="" /></span>
 					<div>
 						<h1>{username}</h1>
-						<p>Role: {role}</p>
-						<p>Role of Interest: {roleInterest}</p>
+						<p>Role: <span className="profile-role">{role}</span></p>
+						<p>Role You're Interested In: <span className="profile-role">{roleInterest}</span></p>
 					</div>
 					<button className="profile-edit" type="button" onClick={onEdit} aria-label="Edit profile"><img src={editJobIcon} alt="" /></button>
 				</section>

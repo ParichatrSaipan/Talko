@@ -14,7 +14,7 @@ import ChooseTopics from './Topics/ChooseTopics/ChooseTopics'
 import MainInterview from './Topics/MainTopics/MainInterview'
 import MainWork from './Topics/MainTopics/MainWork'
 import MainTravel from './Topics/MainTopics/MainTravel'
-import CallComponent from './Topics/AvatarCall/Calling'
+import CallComponent from './Topics/AvatarCall/calling'
 import Talk from './Topics/AvatarTalk/Talk'
 import AvatarResult from './Topics/AvatarResult/AvatarResult'
 import type { MenuDestination } from './Hamburger/Menu'
@@ -28,6 +28,41 @@ import CreateAccount from './CreateAccount/CreateAccount'
 import type { TopicCard } from './Topics/MainTopics/MainTopics.Component'
 
 type Page = 'home' | 'sign-in' | 'create-account' | 'age' | 'gender' | 'name' | 'work' | 'role-interested' | 'language-level' | 'level-test' | 'level-result' | 'topics' | 'main-home' | 'main-topics' | 'main-work' | 'main-travel' | 'call' | 'talk' | 'avatar-result' | 'profile' | 'edit-profile' | 'practice' | 'vocab'
+
+const pagePaths: Record<Page, string> = {
+  home: '/get-started',
+  'sign-in': '/sign-in',
+  'create-account': '/create-account',
+  age: '/onboarding/age',
+  gender: '/onboarding/gender',
+  name: '/onboarding/name',
+  work: '/work/setup',
+  'role-interested': '/interview/role',
+  'language-level': '/level',
+  'level-test': '/level/test',
+  'level-result': '/level/result',
+  topics: '/topics',
+  'main-home': '/home',
+  'main-topics': '/interview',
+  'main-work': '/work',
+  'main-travel': '/travel',
+  call: '/call',
+  talk: '/talk',
+  'avatar-result': '/result',
+  profile: '/profile',
+  'edit-profile': '/profile/edit',
+  practice: '/practice',
+  vocab: '/vocabulary',
+}
+
+const pagesByPath = Object.fromEntries(
+  Object.entries(pagePaths).map(([page, path]) => [path, page as Page]),
+) as Record<string, Page>
+
+function getPageFromPath(pathname = window.location.pathname): Page {
+  const normalizedPath = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname
+  return pagesByPath[normalizedPath] ?? 'home'
+}
 
 const jobRoleStorageKey = 'talko.jobRole'
 const interviewRoleStorageKey = 'talko.interviewRole'
@@ -80,7 +115,7 @@ function getActiveMenuDestination(page: Page, topicReturnPage: 'main-topics' | '
 }
 
 function App() {
-  const [page, setPage] = useState<Page>('home')
+  const [page, setPage] = useState<Page>(getPageFromPath)
   const [topicReturnPage, setTopicReturnPage] = useState<'main-topics' | 'main-work' | 'main-travel'>('main-topics')
   const [selectedTopic, setSelectedTopic] = useState<TopicCard | null>(null)
   const [profileName, setProfileName] = useState('Alex')
@@ -88,8 +123,26 @@ function App() {
   const [interviewRole, setInterviewRole] = useState(getStoredInterviewRole)
 
   useEffect(() => {
+    function handlePopState() {
+      setPage(getPageFromPath())
+    }
+
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [])
+
+  useEffect(() => {
+    const nextPath = pagePaths[page]
+    if (window.location.pathname !== nextPath) {
+      window.history.pushState({ page }, '', nextPath)
+    }
+  }, [page])
+
+  useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) setPage('main-home')
+      if (data.session) {
+        setPage((current) => (current === 'home' || current === 'sign-in' ? 'main-home' : current))
+      }
     })
     const { data: sub } = supabase.auth.onAuthStateChange((event, newSession) => {
       if (newSession) {

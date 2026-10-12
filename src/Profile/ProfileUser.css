@@ -52,6 +52,10 @@
 	font: 12px 'Inter';
 }
 
+.profile-role {
+	color: #7EC7FF;
+}
+
 .profile-edit {
 	width: 24px;
 	height: 24px;

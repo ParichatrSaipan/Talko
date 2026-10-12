@@ -62,12 +62,99 @@
   color: #bababa;
 }
 
+.create-password-field {
+  position: relative;
+}
+
+.create-password-field input {
+  padding-right: 48px;
+}
+
+.create-account-card .create-password-toggle {
+  position: absolute;
+  top: 0;
+  right: 3px;
+  width: 41px;
+  height: 41px;
+  margin: 0;
+  padding: 10px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #515151;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.create-password-toggle svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.create-password-toggle:focus-visible {
+  outline: 2px solid #0f7ed3;
+  outline-offset: -4px;
+}
+
+.create-password-requirements {
+  position: relative;
+  margin: -5px 0 17px;
+  color: #515151;
+  font-family: 'Inter Regular';
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+
+
+.create-password-requirements.is-invalid {
+  color: #515151;
+}
+
+.create-password-requirements.is-invalid::before {
+  background: #515151;
+}
+
+.create-confirm-password-error {
+	position: relative;
+  margin: -5px 0 10px;
+	padding-left: 20px;
+  color: #A60000;
+  font-family: 'Inter Regular';
+  font-size: 10px;
+}
+
+.create-confirm-password-error::before {
+	content: '!';
+	position: absolute;
+	top: 1px;
+	left: 2px;
+	width: 12px;
+	height: 12px;
+	display: grid;
+	place-items: center;
+	border-radius: 50%;
+	background: #A60000;
+	color: #fff;
+	font-family: Arial, sans-serif;
+	font-size: 9px;
+	font-weight: 700;
+
+}
+
 .create-account-error {
   min-height: 17px;
   margin: -6px 0 10px;
-  color: #9a1025;
+  color: #515151;
   font-family: 'Inter Regular';
-  font-size: 12px;
+  font-size: 10px;
 }
 
 .create-account-card button {
@@ -81,5 +168,10 @@
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
   font-family: 'Inter';
   font-size: 16px;
+}
+
+.create-account-card button[type='submit']:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
 }
 

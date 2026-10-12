@@ -744,7 +744,7 @@
 	outline: 0;
 	background: transparent;
 	color: #111;
-	font: 16px 'Inter Regular';
+	font: 12px 'Inter Regular';
 }
 
 .talk-typing > button {
@@ -757,16 +757,24 @@
 	font: 14px 'Inter', sans-serif;
 }
 
+.talk-typing > .talk-typing-send {
+	width: 44px;
+	height: 44px;
+	padding: 0;
+	background: transparent;
+}
+
+.talk-typing-send img {
+	width: 44px;
+	height: 44px;
+	display: block;
+}
+
 .talk-typing > .talk-typing-close {
 	width: 36px;
 	padding: 0;
 	background: #eee;
 	font-size: 23px;
-}
-
-.talk-typing:focus-within {
-	outline: 2px solid #8de7ed;
-	outline-offset: 3px;
 }
 
 @keyframes talk-word-sheet-in {

@@ -52,12 +52,23 @@
 	width: 100%;
 	min-height: 44px;
 	padding: 0 10px;
+	display: flex;
+	align-items: center;
+	gap: 14px;
 	border: 0;
 	border-radius: 2px;
 	background: transparent;
 	color: #080808;
 	font: 14px 'Inter';
 	text-align: left;
+}
+
+.menu-link-icon {
+	width: 20px;
+	height: 20px;
+	flex: 0 0 20px;
+	display: block;
+	object-fit: contain;
 }
 
 .menu-link.is-active,
@@ -80,7 +91,7 @@
 .menu-label {
 	margin: 36px 0 13px;
 	color: #515151;
-	font: 11px 'Inter Regular';
+	font: 14px 'Inter Regular';
 }
 
 .menu-link--spaced {

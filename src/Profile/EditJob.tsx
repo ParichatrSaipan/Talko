@@ -47,7 +47,7 @@ function EditJob({ username, role, roleInterest, onSave, onMenuNavigate }: EditJ
 					onChange={(event) => setNextRole(event.target.value)}
 				/>
 
-				<label htmlFor="edit-role-interest">Role of Interest</label>
+				<label htmlFor="edit-role-interest">Role You're Interested In</label>
 				<input
 					id="edit-role-interest"
 					type="text"

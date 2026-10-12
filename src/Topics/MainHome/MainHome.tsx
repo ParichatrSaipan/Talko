@@ -32,7 +32,7 @@ function MainHome({ username, onInterviewSelect, onWorkSelect, onTravelSelect, o
 			<Header onMenuNavigate={onMenuNavigate} />
 
 			<div className="main-home-content">
-				<h1>Welcome back, <span>{username}</span></h1>
+				<h1>Let’s Talk, <span>{username}!</span></h1>
 
 				<section className="main-home-section" aria-labelledby="progress-title">
 					<h2 id="progress-title">Your progress</h2>

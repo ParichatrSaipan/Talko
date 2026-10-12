@@ -48,8 +48,8 @@ function SignIn({ onCreateAccount, onLogin }: SignInProps) {
 			<section className="sign-in-card">
 	
 
-				<h1>Welcome back</h1>
-				<p>Log in to continue your practice.</p>
+				<h1>Welcome to talko</h1>
+				<p>Log in to get started.</p>
 
 				<button className="social-button" type="button" onClick={handleGoogle}>Continue with Google</button>
 				<button className="social-button" type="button" onClick={handleFacebook}>Continue with Facebook</button>

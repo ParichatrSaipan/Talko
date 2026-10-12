@@ -1,5 +1,9 @@
 import { useContext, useEffect } from 'react'
 import { MenuSelection } from './MenuSelection'
+import homeIcon from '../assets/icon_Home.svg'
+import vocabularyIcon from '../assets/icon_Vocabulary.svg'
+import profileIcon from '../assets/icon_Profile_menu.svg'
+import logoutIcon from '../assets/icon_Log_out.svg'
 import './Menu.css'
 
 export type MenuDestination = 'home' | 'interview' | 'work' | 'travel' | 'vocabulary' | 'profile' | 'logout'
@@ -15,6 +19,10 @@ const practiceItems: Array<{ label: string; destination: MenuDestination }> = [
 	{ label: 'Work', destination: 'work' },
 	{ label: 'Travel', destination: 'travel' },
 ]
+
+function MenuIcon({ src }: { src: string }) {
+	return <img className="menu-link-icon" src={src} alt="" aria-hidden="true" />
+}
 
 function Menu({ isOpen, onClose, onNavigate }: MenuProps) {
 	const activeDestination = useContext(MenuSelection)
@@ -46,7 +54,7 @@ function Menu({ isOpen, onClose, onNavigate }: MenuProps) {
 				</div>
 
 				<nav className="menu-navigation" aria-label="Main navigation">
-					<button className={`menu-link${activeDestination === 'home' ? ' is-active' : ''}`} type="button" aria-current={activeDestination === 'home' ? 'page' : undefined} onClick={() => navigate('home')}>Home</button>
+					<button className={`menu-link${activeDestination === 'home' ? ' is-active' : ''}`} type="button" aria-current={activeDestination === 'home' ? 'page' : undefined} onClick={() => navigate('home')}><MenuIcon src={homeIcon} /><span>Home</span></button>
 
 					<p className="menu-label">Practice</p>
 					{practiceItems.map((item) => (
@@ -55,9 +63,9 @@ function Menu({ isOpen, onClose, onNavigate }: MenuProps) {
 						</button>
 					))}
 
-					<button className={`menu-link menu-link--spaced${activeDestination === 'vocabulary' ? ' is-active' : ''}`} type="button" aria-current={activeDestination === 'vocabulary' ? 'page' : undefined} onClick={() => navigate('vocabulary')}>Vocabulary</button>
-					<button className={`menu-link${activeDestination === 'profile' ? ' is-active' : ''}`} type="button" aria-current={activeDestination === 'profile' ? 'page' : undefined} onClick={() => navigate('profile')}>Profile</button>
-					<button className="menu-link menu-logout" type="button" onClick={() => navigate('logout')}>Log out</button>
+					<button className={`menu-link menu-link--spaced${activeDestination === 'vocabulary' ? ' is-active' : ''}`} type="button" aria-current={activeDestination === 'vocabulary' ? 'page' : undefined} onClick={() => navigate('vocabulary')}><MenuIcon src={vocabularyIcon} /><span>Vocabulary</span></button>
+					<button className={`menu-link${activeDestination === 'profile' ? ' is-active' : ''}`} type="button" aria-current={activeDestination === 'profile' ? 'page' : undefined} onClick={() => navigate('profile')}><MenuIcon src={profileIcon} /><span>Profile</span></button>
+					<button className="menu-link menu-logout" type="button" onClick={() => navigate('logout')}><MenuIcon src={logoutIcon} /><span>Log out</span></button>
 				</nav>
 			</aside>
 		</div>

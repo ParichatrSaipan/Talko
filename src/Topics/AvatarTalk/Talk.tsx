@@ -13,6 +13,7 @@ import typingIcon from '../../assets/icon_Typing.svg'
 import voiceIcon from '../../assets/icon_Voice.svg'
 import hintIcon from '../../assets/icon_Hit.svg'
 import saveIcon from '../../assets/icon_Save.svg'
+import sendIcon from '../../assets/icon_Send.svg'
 import { getSavedVocabulary, removeVocabularyItem, saveVocabularyItem } from '../../Vocab/vocabularyStorage'
 import type { SavedVocabularyCategory } from '../../Vocab/vocabularyStorage'
 
@@ -266,13 +267,13 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 							type="text"
 							value={typedMessage}
 							onChange={(event) => setTypedMessage(event.target.value)}
-							placeholder="Type your response..."
+							placeholder="Type your answer"
 							aria-label="Type your response"
 							inputMode="text"
 							enterKeyHint="send"
 							ref={typingInputRef}
 						/>
-						<button type="submit" aria-label="Send response">Send</button>
+						<button className="talk-typing-send" type="submit" aria-label="Send response"><img src={sendIcon} alt="" /></button>
 						<button className="talk-typing-close" type="button" onClick={() => setIsTyping(false)} aria-label="Close keyboard">×</button>
 					</form>
 				) : (
