@@ -2,7 +2,6 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: 'Inter';
 }
 
 .main-home-page {
@@ -21,6 +20,8 @@
 
 .main-home-content h1 {
 	margin: 0 0 20px;
+	font-family: 'Inter Bold';
+
 	font-weight: 700;
 	font-size: 32px;
 }
@@ -35,6 +36,8 @@
  .main-home-section h2 {
 	margin: 0 0 9px;
 	font-size: 14px;
+	font-family: 'Inter';
+
 	font-weight: 500;
 }
 
@@ -58,6 +61,8 @@
 .main-home-stat strong {
 	margin-bottom: 6px;
 	color: #7EC7FF;
+	font-family: 'Inter Bold';
+
 	font-weight: 700;
 	font-size: 20px;
 }
@@ -141,6 +146,8 @@
 
 .main-home-card-copy > strong {
 	margin-top: 17px;
+	font-family: 'Inter Bold';
+
 	font-weight: 700;
 	font-size: 20px;
 }
@@ -229,6 +236,8 @@
 }
 
 .main-home-practice-links strong {
+	font-family: 'Inter Bold';
+
 	font-weight: 700;
 	font-size: 16px;
 }

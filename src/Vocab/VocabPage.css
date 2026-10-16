@@ -4,11 +4,14 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: 'Inter';
 }
 
 .vocab-page {
-	min-height: 100svh;
+	height: 100svh;
+	height: 100dvh;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
 	background:
 		radial-gradient(circle at 100% 48%, rgba(34, 76, 65, .78), transparent 44%),
 		radial-gradient(circle at 0 0, #1b3544, transparent 39%),
@@ -16,14 +19,30 @@
 	color: #fff;
 }
 
+.vocab-page > .app-header {
+	flex: 0 0 auto;
+}
+
 .vocab-content {
 	width: min(100%, 430px);
+	min-height: 0;
 	padding: 59px 16px 30px;
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
 	overflow: hidden;
+}
+
+.vocab-content > h1,
+.vocab-search,
+.vocab-filters {
+	flex: 0 0 auto;
 }
 
 .vocab-content h1 {
 	margin: 0;
+	font-family: 'Inter Bold';
+
 	font-weight: 700;
 	font-size: 32px;
 }
@@ -112,6 +131,8 @@
 
 .vocab-filters button.is-active {
 	font-size: 16px;
+	font-family: 'Inter Bold';
+
 	font-weight: 700;
 	flex: 0 0 auto;
 	border-radius: 100px;
@@ -122,9 +143,22 @@
 }
 
 .vocab-list {
-	margin-top: 44px;
+	min-height: 0;
+	padding-bottom: 90px;
+	margin-top: 24px;
 	display: grid;
+	flex: 1 1 auto;
+	align-content: start;
 	gap: 20px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	overscroll-behavior: contain;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: none;
+}
+
+.vocab-list::-webkit-scrollbar {
+	display: none;
 }
 
 .vocab-card {
@@ -142,6 +176,8 @@
 .vocab-card h2 {
 	margin: 0;
 	font-size: 16px;
+	font-family: 'Inter Bold';
+
 	font-weight: 700;
 }
 

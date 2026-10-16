@@ -2,7 +2,6 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: 'Inter';
 }
 .profile-page {
 	min-height: 100svh;
@@ -48,6 +47,8 @@
 	background-clip: text;
 	-webkit-background-clip: text;
 	color: transparent;
+	font-family: 'Inter Bold';
+
 	font-weight: 700;
 	font-size: 32px;
 }
@@ -55,6 +56,8 @@
 .profile-user p {
 	margin:0;
 	font-size: 12px;
+	font-family: 'Inter';
+
 	font-weight: 500;
 }
 
@@ -87,6 +90,8 @@
 	margin: 0 ;
 	margin-bottom: 9px;
 	font-size: 14px;
+	font-family: 'Inter';
+
 	font-weight: 500;
 }
 
@@ -110,11 +115,15 @@
 }
 
 .profile-skill-label strong {
+	font-family: 'Inter Bold';
+
 	font-weight: 700;
 }
 
 .profile-skill-label span {
 	font-size: 12px;
+	font-family: 'Inter Regular';
+
 	font-weight: 400;
 }
 
@@ -149,6 +158,8 @@
 
 .profile-section-heading h2 {
 	margin: 0;
+	font-family: 'Inter';
+
 	font-weight: 500;
 }
 
@@ -226,6 +237,8 @@
 }
 
 .profile-practice-copy strong {
+	font-family: 'Inter Bold';
+
 	font-weight: 700;
 	font-size: 16px;
 }
@@ -234,6 +247,8 @@
 	margin-top: 4px;
 	color: #515151;
 	font-size: 12px;
+	font-family: 'Inter Regular';
+
 	font-weight: 400;
 }
 
@@ -245,6 +260,8 @@
 	gap: 3px;
 	border-radius: 100px;
 	font-size: 10px;
+	font-family: 'Inter Regular';
+
 	font-weight: 400;
 }
 

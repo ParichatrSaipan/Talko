@@ -3,7 +3,6 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: 'Inter';
 }
 
 
@@ -17,6 +16,14 @@ body,
 body {
 	margin: 0;
 	background: #000;
+	font-family: 'Inter';
+}
+
+button,
+input,
+select,
+textarea {
+	font-family: inherit;
 }
 
 

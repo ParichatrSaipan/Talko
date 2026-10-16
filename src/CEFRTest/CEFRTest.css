@@ -3,7 +3,6 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: 'Inter';
 }
 
 .language-level-content {
@@ -13,6 +12,8 @@
 }
 
 .language-level-content h1 {
+  font-family: 'Inter Bold';
+
   font-weight: 700;
   font-size: 24px;
 }
@@ -20,6 +21,8 @@
 .language-level-content > p {
   margin: 20px 0 0;
   color: #515151;
+  font-family: 'Inter Regular';
+
   font-weight: 400;
   font-size: 12px;
 }
@@ -101,6 +104,8 @@
   display: flex;
   justify-content: space-between; /*คือการจัดวางให้ label อยู่ด้านซ้ายและขวา*/
   font-size: 12px;
+  font-family: 'Inter Regular';
+
   font-weight: 400;
 }
 
@@ -129,6 +134,8 @@
   color: #fff;
   text-align: center;
   font-size: 20px;
+  font-family: 'Inter Regular';
+
   font-weight: 400;
 }
 
@@ -157,6 +164,8 @@
   color: #111;
   text-align: left;
   font-size: 16px;
+  font-family: 'Inter Regular';
+
   font-weight: 400;
 }
 
@@ -226,6 +235,8 @@
   z-index: 1;
   color: #000;
   font-size: 46px;
+  font-family: 'Inter ExtraBold';
+
   font-weight: 800;
   transform: translateX(-50%);
 }
@@ -245,12 +256,16 @@
   margin: 0;
   color: #515151;
   font-size: 12px;
+  font-family: 'Inter Regular';
+
   font-weight: 400;
 }
 
 .level-result-content h1 {
   margin: 10px 0;
   font-size: 20px;
+  font-family: 'Inter Bold';
+
   font-weight: 700;
 }
 
@@ -258,6 +273,8 @@
   margin: 0 0 20px;
   color: #515151;
   font-size: 12px;
+  font-family: 'Inter Regular';
+
   font-weight: 400;
 }
 
@@ -274,6 +291,8 @@
   margin: 0 0 10px;
   color: #0ea5e9e8;
   font-size: 14px;
+  font-family: 'Inter Bold';
+
   font-weight: 700;
 }
 
@@ -283,6 +302,8 @@
   list-style-position: inside; /*เพื่อให้ bullet อยู่ด้านในของ list item*/
   color: #515151;
   font-size: 14px;
+  font-family: 'Inter Regular';
+
   font-weight: 400;
 }
 
@@ -304,6 +325,8 @@
   background: #000;
   color: #fff;
   font-size: 20px;
+  font-family: 'Inter Regular';
+
   font-weight: 400;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.10);
 

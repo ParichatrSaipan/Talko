@@ -3,7 +3,6 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: 'Inter';
 }
 
 .home-page {
@@ -71,6 +70,8 @@
 .login-button {
   width: 82px;
   height: 38px;
+  font-family: 'Inter Regular';
+
   font-weight: 400;
   font-size: 12px
 }
@@ -85,6 +86,8 @@
 .hero-copy h1 {
   display: block;
   margin: 0;
+  font-family: 'Inter Bold';
+
   font-weight: 700;
   font-size: 40px;
   padding: 53px 0 0;
@@ -102,6 +105,8 @@
 .hero-copy p {
   margin: 20px 0 0;
   font-size: 16px;
+  font-family: 'Inter';
+
   font-weight: 500;
 
 }
@@ -136,11 +141,15 @@
   display: block;
   margin: 0 0 10px;
   font-size: 20px;
+  font-family: 'Inter Bold';
+
   font-weight: 700;
   unicode-bidi: normal;
 }
 
 .welcome-panel p {
+  font-family: 'Inter Regular';
+
   font-weight: 400;
   font-size: 12px;
 }

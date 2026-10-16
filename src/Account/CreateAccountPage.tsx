@@ -55,12 +55,14 @@ function CreateAccountPage({ onCreateAccount }: CreateAccountPageProps) {
     onCreateAccount()
   }
 
-  const passwordIsInvalid = password.length > 0 && !meetsPasswordRequirements(password)
+  const passwordMeetsRequirements = meetsPasswordRequirements(password)
+  const passwordNeedsRequirements = !passwordMeetsRequirements
+  const passwordIsInvalid = password.length > 0 && passwordNeedsRequirements
   const passwordsDoNotMatch = confirmedPassword.length > 0 && password !== confirmedPassword
   const formIsComplete = Boolean(
     username.trim()
     && email.trim()
-    && meetsPasswordRequirements(password)
+    && passwordMeetsRequirements
     && confirmedPassword
     && password === confirmedPassword,
   )
@@ -104,7 +106,7 @@ function CreateAccountPage({ onCreateAccount }: CreateAccountPageProps) {
               placeholder="***********"
               autoComplete="new-password"
               value={password}
-              aria-describedby={passwordIsInvalid ? 'create-password-requirements' : undefined}
+              aria-describedby={passwordNeedsRequirements ? 'create-password-requirements' : undefined}
               aria-invalid={passwordIsInvalid}
               onChange={(event) => {
                 setPassword(event.target.value)
@@ -132,8 +134,8 @@ function CreateAccountPage({ onCreateAccount }: CreateAccountPageProps) {
             </button>
           </div>
 
-          {passwordIsInvalid && (
-            <p className="create-password-requirements is-invalid" id="create-password-requirements" role="alert">
+          {passwordNeedsRequirements && (
+            <p className={`create-password-requirements${passwordIsInvalid ? ' is-invalid' : ''}`} id="create-password-requirements">
               {passwordRequirementText}
             </p>
           )}

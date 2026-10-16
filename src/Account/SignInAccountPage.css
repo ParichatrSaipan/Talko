@@ -2,7 +2,6 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: 'Inter';
 }
 
 .sign-in-page {
@@ -27,11 +26,15 @@
 .sign-in-card h1 {
   text-align: center;
   font-size: 16px;
+  font-family: 'Inter';
+
   font-weight: 500;
  
 }
 
 .sign-in-card > p {
+  font-family: 'Inter Regular';
+
   font-weight: 400;
   margin: 11px 0;
   text-align: center;
@@ -75,6 +78,8 @@
   margin: 11px 0;
   color: #BABABA;
   font-size: 12px;
+  font-family: 'Inter Regular';
+
   font-weight: 400;
 }
 
@@ -112,6 +117,7 @@
   font-size: 10px;
   text-decoration: underline;
   cursor: pointer;
+  
 }
 
 
@@ -126,6 +132,9 @@
 .create-account-button {
   height: 59px;
   margin-top: 11px;
+  font-family: 'Inter';
+
+  font-weight: 500;
 }
 
 #email,

@@ -2,7 +2,6 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: 'Inter';
 }
 
 .call-page {
@@ -20,6 +19,8 @@
 .call-page h1 {
 	margin: 0 0 48px;
     font-size: 36px;
+	font-family: 'Inter ExtraBold';
+
 	font-weight: 900;
 }
 
@@ -80,12 +81,16 @@
 .call-practice-card h2 {
 	margin: 0;
 	font-size: 20px;
+	font-family: 'Inter Bold';
+
 	font-weight: 700;
 }
 
 .call-practice-card p {
 	margin: 27px 0;
 	font-size: 12px;
+	font-family: 'Inter Regular';
+
 	font-weight: 400;
 }
 

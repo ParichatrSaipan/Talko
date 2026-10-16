@@ -2,7 +2,6 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: 'Inter';
 }
 
 .menu-overlay {
@@ -33,6 +32,8 @@
 
 .menu-heading h2 {
 	margin: 0;
+	font-family: 'Inter Bold';
+
 	font-weight: 700;
 	font-size: 16px;
 }
@@ -44,6 +45,8 @@
 	border: 0;
 	background: transparent;
 	color: #080808;
+	font-family: 'Inter Regular';
+
 	font-weight: 400;
 	font-size: 34px 
 	
@@ -67,14 +70,15 @@
 	border-radius: 2px;
 	background: transparent;
 	color: #080808;
+	font-family: 'Inter';
+
 	font-weight: 500;
 	font-size: 14px;
 	text-align: left;
 }
 
 .menu-link-icon {
-	width: 20px;
-	height: 20px;
+	width: 24px;
 	flex: 0 0 20px;
 	display: block;
 	object-fit: contain;
@@ -101,6 +105,8 @@
 	margin: 36px 0 13px;
 	color: #515151;
 	font-size: 14px;
+	font-family: 'Inter Regular';
+
 	font-weight: 400;
 }
 

@@ -2,7 +2,6 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: 'Inter';
 }
 
 .avatar-result-page {
@@ -79,6 +78,7 @@
 	-webkit-background-clip: text;
 	color: transparent;
 	font-size: 20px;
+	font-family: 'Inter Bold';
 	font-weight: 700;
 	text-align: center;
 }
@@ -99,7 +99,7 @@
 }
 
 .avatar-result-score strong {
-	font-family: 'Inter';
+	font-family: 'Inter Bold';
 	font-weight: 700;
 	font-size: 40px;
 	-webkit-text-stroke: 0.6px currentColor
@@ -108,6 +108,7 @@
 .avatar-result-score span {
     color: #BABABA;
 	font-size: 14px;
+	font-family: 'Inter';
 	font-weight: 500;
 }
 
@@ -115,7 +116,7 @@
 	margin: 0 0 32px;
 	padding: 20px 16px;
 	color: #080808;
-	font-family: 'Inter';
+	font-family: 'Inter Bold';
 	font-weight: 700;
 	font-size: 16px;
 	text-align: center;
@@ -131,6 +132,7 @@
 .avatar-result-section h2 {
 	margin: 0 0 9px;
 	font-size: 14px;
+	font-family: 'Inter';
 	font-weight: 500;
 }
 
@@ -157,7 +159,7 @@
 }
 
 .avatar-result-metric-label strong {
-	font-family: 'Inter';
+	font-family: 'Inter Bold';
 	font-weight: 700;
 }
 
@@ -197,11 +199,13 @@
 
 .avatar-result-improvement strong {
 	font-size: 14px;
+	font-family: 'Inter Bold';
 	font-weight: 700;
 }
 
 .avatar-result-improvement > span:last-child {
 	font-size: 12px;
+	font-family: 'Inter Regular';
 	font-weight: 400;
 }
 
@@ -248,7 +252,7 @@
 	border-radius: 50%;
 	background: #A60000;
 	color: #fff;
-	font-family: 'Inter';
+	font-family: 'Inter Bold';
 	font-weight: 700;
 	font-size: 12px;
 }
@@ -259,14 +263,14 @@
 	border-radius: 4px;
     background: #F0F0F0;
 	color: #515151;
-	font-family: 'Inter';
+	font-family: 'Inter Regular';
 	font-weight: 400;
 	font-size: 12px;
 }
 
 .avatar-result-word-heading strong {
 	color: #A60000;
-	font-family: 'Inter';
+	font-family: 'Inter Bold';
 	font-weight: 700;
 	font-size: 14px;
 }
@@ -291,6 +295,7 @@
 	box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.10);
 	color: #000;
 	font-size: 16px;
+	font-family: 'Inter';
 	font-weight: 500;
 }
 
