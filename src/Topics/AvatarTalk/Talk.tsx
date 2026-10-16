@@ -82,6 +82,9 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 	}
 
 	function selectWord(key: keyof typeof words) {
+		setIsSpeaking(false)
+		setIsAwaitingReply(false)
+		setIsTyping(false)
 		setSelectedWord(words[key])
 		setIsWordSoundPlayed(false)
 	}
@@ -192,7 +195,7 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 						</button>
 						<button type="button" onClick={() => setIsTranslated(!isTranslated)} aria-pressed={isTranslated} aria-label="Translate sentence"><img src={translateIcon} alt="" /></button>
 					</div>
-					{isTranslated && <p className="talk-sentence-translation">ยินดีต้อนรับสู่ Talko! ฉันชื่อ Talko และฉันคือครู AI ส่วนตัวของคุณ</p>}
+					{isTranslated && <p className="talk-sentence-translation" lang="th">ยินดีต้อนรับสู่ Talko! ฉันชื่อ Talko และฉันคือครู AI ส่วนตัวของคุณ</p>}
 				</div>
 				{sentMessages.length > 0 && (
 					<div className="talk-user-messages" aria-live="polite">
@@ -211,7 +214,7 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 								<img src={translateIcon} alt="" />
 							</div>
 						</div>
-						<p className="talk-help-user-message">เคยทำแอปตอนมหาลัย รับผิดชอบ UX/UI</p>
+						<p className="talk-help-user-message" lang="th">เคยทำแอปตอนมหาลัย รับผิดชอบ UX/UI</p>
 						<div className="talk-help-card talk-help-card--suggestions">
 							<p>Useful words:</p>
 							<ul>
@@ -254,12 +257,12 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 							</div>
 						</div>
 						<p className="talk-word-pronunciation">{selectedWord.pronunciation}</p>
-						<p className="talk-word-translation">{selectedWord.translation}</p>
+						<p className="talk-word-translation" lang="th">{selectedWord.translation}</p>
 						<p className="talk-word-example">{selectedWord.example}</p>
-						<p className="talk-word-example-translation">{selectedWord.exampleTranslation}</p>
+						<p className="talk-word-example-translation" lang="th">{selectedWord.exampleTranslation}</p>
 					</section>
 				)}
-				{isConversationFinished || isFinishedByMessage ? (
+				{!selectedWord && (isConversationFinished || isFinishedByMessage ? (
 					<ButtonFinish onFinish={onFinish} />
 				) : isTyping ? (
 					<form className="talk-typing" onSubmit={handleTypedMessage}>
@@ -313,7 +316,7 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 						</div>
 						<span className="talk-control-hint">{isSpeaking ? 'Listening...' : 'Hold to speak'}</span>
 					</div>
-				)}
+				))}
 			</section>
 		</main>
 	)

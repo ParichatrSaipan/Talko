@@ -1,0 +1,164 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Inter';
+}
+
+.sign-in-page {
+  min-height: 100svh; /* Use 100svh to account for mobile browser UI */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.sign-in-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+
+
+.sign-in-card h1 {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+ 
+}
+
+.sign-in-card > p {
+  font-weight: 400;
+  margin: 11px 0;
+  text-align: center;
+  color: #515151;
+  font-size: 12px;
+}
+.sign-in-card input::placeholder {
+  color: #BABABA;
+  opacity: 1;
+}
+
+.social-button,
+.create-account-button,
+.submit-button,
+.sign-in-card input {
+
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    border: 0;
+    background: #fff;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.10);
+    }
+
+
+
+
+.create-account-button,
+.submit-button {
+  padding: 16px 20px;
+  border-radius: 50px;
+  font-size: 16px;
+}
+
+
+.sign-in-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 11px 0;
+  color: #BABABA;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.sign-in-divider::before,
+.sign-in-divider::after {
+  content: '';
+  height: 1px;
+  flex: 1;
+  background: #BABABA;
+}
+
+.sign-in-card form {
+  display: grid;
+  gap: 4px;
+}
+
+.sign-in-card label {
+  font-size: 14px;
+}
+
+
+
+.sign-in-card input + label {
+  margin-top: 9px;
+}
+
+.forgot-password-button {
+  width: fit-content;
+  margin-top: 4px;
+  padding: 0;
+  justify-self: end;
+  border: 0;
+  background: transparent;
+  color: #A60000;
+  font-size: 10px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+
+
+.submit-button {
+  height: 59px;
+  margin-top: 67px;
+  background: #000;
+  color: #fff;
+}
+
+.create-account-button {
+  height: 59px;
+  margin-top: 11px;
+}
+
+#email,
+#password {
+  font-size: 12px;
+  
+}
+
+#email,
+#password {
+  border: 2px solid transparent;
+  outline: none;
+  height: 41px;
+  padding: 16px 20px;
+  border-radius: 20px;
+}
+
+#email:focus,
+#password:focus {
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(90deg, rgba(15, 126, 211, 1), rgba(4, 54, 93, 1)) border-box;
+}
+
+.social-button{
+  height: 37px;
+  font-size: 12px;
+  padding: 16px 20px;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.20);
+}
+
+.social-button + .social-button {
+  margin-top: 11px;
+}
+

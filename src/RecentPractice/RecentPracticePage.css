@@ -1,0 +1,84 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Inter';
+}
+
+.practice-page {
+	min-height: 100svh;
+	background:
+		radial-gradient(circle at 0 100%, rgba(36, 80, 68, .82), transparent 48%),
+		radial-gradient(circle at 0 0, #1a3444, transparent 40%),
+		#000;
+	
+}
+
+.practice-content {
+	width: min(100%, 430px);
+	margin: 0 auto;
+	padding: 18px 15px 40px;
+}
+
+.practice-back {
+	width: 34px;
+	height: 34px;
+	padding: 0;
+	display: grid;
+	place-items: center;
+	border: 0;
+	border-radius: 50%;
+	background: #fff;
+	color: #080808;
+}
+
+.practice-back span {
+	width: 11px;
+	height: 11px;
+	box-sizing: border-box;
+	border-left: 3px solid currentColor;
+	border-bottom: 3px solid currentColor;
+	transform: translateX(2px) rotate(45deg);
+}
+
+.practice-tabs {
+	margin-top: 14px;
+	display: flex;
+	gap: 8px;
+}
+
+.practice-tabs button {
+	height: 41px;
+	min-width: 107px;
+	padding: 10px 8px;
+	justify-content: center;
+	align-items: center;
+	border: 2.5px solid transparent;
+	border-radius: 100px;
+	background: #FFF;
+	box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.10);
+	color: #080808;
+	font-size: 14px;
+}
+
+.practice-tabs button.is-active {
+	border: 2.5px solid #ADFFDA;
+	background: #7EC7FF;
+	font-size: 16px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+}
+
+.practice-list {
+	margin-top: 23px;
+	display: grid;
+	gap: 10px;
+}
+
+.practice-back:focus-visible,
+.practice-tabs button:focus-visible {
+	outline: 3px solid #8de7ed;
+	outline-offset: 3px;
+}

@@ -5,8 +5,8 @@ import skillsImage from '../../assets/ImageScene/Skills & Strengths.svg'
 import challengesImage from '../../assets/ImageScene/Challenges & Weaknesses.svg'
 import motivationImage from '../../assets/ImageScene/Motivation & Career Goals.svg'
 import askInterviewerImage from '../../assets/ImageScene/Ask the Interviewer.svg'
-import { callingPracticeItems } from '../AvatarCall/callingPracticeData'
-import MainTopicsComponent from './MainTopics.Component'
+import { callingPracticeItems } from '../AvatarCall/CallingIntroduceData'
+import MainTopics from './MainTopics.Component'
 import type { TopicCard } from './MainTopics.Component'
 import type { MenuDestination } from '../../Hamburger/Menu'
 
@@ -25,7 +25,16 @@ const interviewTopics: TopicCard[] = [
 ]
 
 function MainInterview({ onTopicSelect, onMenuNavigate }: MainInterviewProps) {
-	return <MainTopicsComponent title="Interview" icon={interviewIcon} topics={interviewTopics} onTopicSelect={onTopicSelect} onMenuNavigate={onMenuNavigate} />
+	return (
+		<MainTopics
+			title="Interview"
+			icon={interviewIcon}
+			variant="interview"
+			topics={interviewTopics}
+			onTopicSelect={onTopicSelect}
+			onMenuNavigate={onMenuNavigate}
+		/>
+	)
 }
 
 export default MainInterview

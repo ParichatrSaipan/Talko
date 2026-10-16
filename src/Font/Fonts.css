@@ -1,35 +1,31 @@
 @font-face {
-  font-family: 'Inter Regular';
-  src: url('../Font/Inter_18pt-Regular.ttf') format('truetype');
+  font-family: 'Inter';
+  src: url('./Inter_18pt-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
-  line-height: normal;
-  font-display: swap; /*คือ จะช่วยให้ฟอนต์โหลดได้เร็วขึ้นและไม่บล็อกการแสดงผลของหน้าเว็บ*/
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Inter';
-  src: url('../Font/Inter_18pt-Medium.ttf') format('truetype');
+  src: url('./Inter_18pt-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
-  line-height: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Inter Bold';
-  src: url('../Font/Inter_18pt-Bold.ttf') format('truetype');
+  font-family: 'Inter';
+  src: url('./Inter_18pt-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
-  line-height: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Inter ExtraBold';
-  src: url('../Font/Inter_18pt-Bold.ttf') format('truetype');
+  font-family: 'Inter';
+  src: url('./Inter_18pt-ExtraBold.ttf') format('truetype');
   font-weight: 900;
   font-style: normal;
-  line-height: normal;
   font-display: swap;
 }

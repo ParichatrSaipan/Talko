@@ -13,14 +13,16 @@ function ButtonFinish({ onFinish }: ButtonFinishProps) {
 					position: absolute;
 					right: 20px;
 					bottom: 48px;
+					height: 59px;
 					left: 20px;
 					border: 0;
-					border-radius: 999px;
-					padding: 22px 24px;
+					border-radius: 9999px;
+					padding: 16px ;
 					background: linear-gradient(100deg, #9cf2d7 0%, #71c5fb 100%);
 					color: #000;
-					font: inherit;
-					font-size: 20px;
+					font-family: inter;
+					font-weight: 500;
+					font-size: 16px;
 					box-shadow: 0 12px 28px rgba(74, 199, 223, .18);
 					animation: talk-finish-pop .45s cubic-bezier(.2, .9, .3, 1.25) both;
 				}

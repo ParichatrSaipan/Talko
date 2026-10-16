@@ -1,9 +1,15 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Inter';
+}
+
 .main-topics-page {
 	min-height: 100svh;
 	overflow-x: hidden;
 	background: #000;
 	color: #fff;
-	font-family: 'Inter';
 }
 
 .main-topics-header {
@@ -19,7 +25,7 @@
 	display: flex;
 	align-items: center;
 	gap: 10px;
-	font: 18px 'Inter', sans-serif;
+	font-size: 18px;
 }
 
 .main-topics-brand-mark {
@@ -118,7 +124,7 @@
 
 .main-topics-hero h1 {
 	margin: 0;
-	font: 34px 'Inter Bold';
+	font-size: 34px;
 	color: #000;
     bottom: -5px;
 }
@@ -141,8 +147,153 @@
 }
 
 .main-topics-hero > * {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.main-topics-page:is(.main-topics-page--work, .main-topics-page--travel, .main-topics-page--interview) .main-topics-hero {
+	height: 175px;
+	padding: 0;
+	justify-content: center;
+	overflow: hidden;
+	background: #7EC7FF;
+}
+
+.main-topics-page:is(.main-topics-page--work, .main-topics-page--travel, .main-topics-page--interview) .main-topics-hero::after {
+	display: none;
+}
+
+.main-topics-page:is(.main-topics-page--work, .main-topics-page--travel, .main-topics-page--interview) .main-topics-hero-icon {
+	display: none;
+}
+
+.main-topics-page:is(.main-topics-page--work, .main-topics-page--travel, .main-topics-page--interview) .main-topics-hero h1 {
 	position: relative;
-	z-index: auto;
+	z-index: 2;
+	font-size: 28px;
+	font-weight: 700;
+}
+
+.work-hero-pattern {
+	position: absolute;
+	inset: 0;
+	overflow: hidden;
+	pointer-events: none;
+}
+
+.work-pattern-circle,
+.work-pattern-laptop {
+	position: absolute;
+	display: block;
+}
+
+.work-pattern-circle {
+	border-radius: 50%;
+	background: hsla(153, 100%, 84%, 0.071);
+}
+
+.work-pattern-circle::after {
+	content: '';
+	position: absolute;
+	inset: 18%;
+	border-radius: 50%;
+	background: hsla(153, 100%, 84%, 0.08);
+}
+
+.work-pattern-circle--one {
+	width: 82px;
+	height: 82px;
+	top: -55px;
+	left: -39px;
+}
+
+.work-pattern-circle--two {
+	width: 194px;
+	height: 194px;
+	top: 24px;
+	left: 29px;
+}
+
+.work-pattern-circle--three {
+	width: 146px;
+	height: 146px;
+	top: -73px;
+	right: -42px;
+}
+
+.work-pattern-circle--four {
+	width: 76px;
+	height: 76px;
+	bottom: -60px;
+	left: 51%;
+}
+
+.work-pattern-laptop {
+	width: 90px;
+	height: 55px;
+	background: url('../../assets/icon_Computer2.svg') center / contain no-repeat;
+	opacity: 0.12;
+}
+
+.main-topics-page--travel .work-pattern-laptop {
+	background-image: url('../../assets/icon_Location2.svg');
+	width: 90px;
+	height: 55px;
+
+}
+
+.main-topics-page--interview .work-pattern-laptop {
+	background-image: url('../../assets/icon_sound2.svg');
+	width: 90px;
+	height: 55px;
+}
+
+.work-pattern-laptop--one {
+	top: 24px;
+	left: 18px;
+}
+
+.work-pattern-laptop--two {
+	top: 44px;
+	left: 47%;
+	transform: scale(0.42);
+}
+
+.work-pattern-laptop--three {
+	top: 18px;
+	right: 11%;
+}
+
+.work-pattern-laptop--four {
+	top: 114px;
+	left: -15px;
+	transform: scale(0.7);
+}
+
+.work-pattern-laptop--five {
+	top: 112px;
+	left: 33%;
+	transform: scale(0.55);
+}
+
+.work-pattern-laptop--six {
+	top: 96px;
+	right: 8%;
+	transform: scale(0.55);
+}
+
+.main-topics-page:is(.main-topics-page--work, .main-topics-page--travel, .main-topics-page--interview) .main-topics-content {
+	position: relative;
+	z-index: 2;
+	margin-top: -22px;
+	padding-top: 28px;
+	border-radius: 28px 28px 0 0;
+	background: #000;
+}
+
+.main-topics-page:is(.main-topics-page--work, .main-topics-page--interview) .main-topics-intro {
+	margin-top: 0;
 }
     
 .main-topics-content {
@@ -150,7 +301,6 @@
 }
 
 .main-topics-filters {
-	margin-top: 80px;
 	margin-inline: -16px;
 	padding-inline: 16px;
 	display: flex;
@@ -175,7 +325,7 @@
 	background: #fff;
 	box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.10);
 	color: #070707;
-	font: 14px'Inter';
+	font-size: 14px;
 	text-align: center;
 }
 
@@ -190,7 +340,6 @@
 .main-topics-intro {
 	margin: 80px 0 23px;
 	font-size: 14px;
-	font-family: 'Inter';
 }
 
 .main-topics-filters + .main-topics-intro {
@@ -230,12 +379,13 @@
 
 .main-topic-card h2 {
 	margin: 0 0 2px;
-	font: 14px 'Inter Bold';
+	font-size: 14px;
+	font-weight: 700;
 }
 
 .main-topic-card p {
 	margin: 0;
-	font: 12px 'Inter Regular';
+	font-size: 12px;
 
 }
 
@@ -245,7 +395,7 @@
 	bottom: 15px;
 	padding: 8px 10px;
 	border-radius: 100px;
-	font: 10px 'Inter Regular';
+	font-size: 10px;
 }
 
 .main-topic-status--progress {

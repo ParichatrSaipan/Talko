@@ -1,3 +1,10 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Inter';
+}
+
 .main-home-page {
 	min-height: 100svh;
 	background:
@@ -5,7 +12,6 @@
 		radial-gradient(circle at 0 0, #193342, transparent 38%),
 		#000;
 	color: #fff;
-	font-family: 'Inter', sans-serif;
 }
 
 .main-home-content {
@@ -15,7 +21,7 @@
 
 .main-home-content h1 {
 	margin: 0 0 20px;
-	font-family: 'Inter Bold';
+	font-weight: 700;
 	font-size: 32px;
 }
 
@@ -26,9 +32,10 @@
   color: transparent;
 }
 
-.main-home-section h2 {
-	margin: 0 0 20px;
-	font: 14px 'Inter';
+ .main-home-section h2 {
+	margin: 0 0 9px;
+	font-size: 14px;
+	font-weight: 500;
 }
 
 .main-home-progress-grid {
@@ -51,12 +58,12 @@
 .main-home-stat strong {
 	margin-bottom: 6px;
 	color: #7EC7FF;
-	font-family: 'Inter Bold';
+	font-weight: 700;
 	font-size: 20px;
 }
 
 .main-home-stat span {
-	font: 10px 'Inter Regular';
+	font-size: 10px;
 }
 
 .main-home-featured {
@@ -129,12 +136,12 @@
 
 .main-home-card-copy small {
 	color: #515151;;
-	font: 14px 'Inter Regular';
+	font-size: 14px;
 }
 
 .main-home-card-copy > strong {
 	margin-top: 17px;
-	font-family: 'Inter Bold';
+	font-weight: 700;
 	font-size: 20px;
 }
 
@@ -147,13 +154,17 @@
 	border: 0;
 	background: transparent;
 	color: #515151;
-	font: 14px 'Inter Regular';
+	font-size: 14px;
 }
 
 .main-home-card-action i {
-	margin-left: 8px;
-	font: 25px 'Inter';
+	width: 9px;
+	height: 9px;
+	margin-left: 10px;
 	display: inline-block;
+	border-top: 2.5px solid currentColor;
+	border-right: 2.5px solid currentColor;
+	transform: rotate(45deg);
 }
 
 .main-home-explore {
@@ -218,7 +229,7 @@
 }
 
 .main-home-practice-links strong {
-	font-family: 'Inter Bold', 'Inter', sans-serif;
+	font-weight: 700;
 	font-size: 16px;
 }
 

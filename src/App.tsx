@@ -1,38 +1,44 @@
 import { useEffect, useState } from 'react'
 import { supabase } from './lib/supabase'
-import Home from './GetStarted/GetStarted'
-import SignIn from './SignIn/SignIn'
-import Age from './QuestionPage/Age'
-import Gender from './QuestionPage/Gender'
-import Name from './QuestionPage/Name'
-import Job from './QuestionPage/Job'
-import RoleInterested from './QuestionPage/RoleInterested'
-import LanguageLevel from './LanguageLevelTest/LanguageLevelStart'
-import LevelTest from './LanguageLevelTest/LevelTest'
-import LevelTestResult from './LanguageLevelTest/LevelTest.Result'
+import GetStartedPage from './GetStarted/GetStartedPage'
+import SignInAccountPage from './Account/SignInAccountPage'
+import AgePage from './UserOnboarding/AgePage'
+import GenderPage from './UserOnboarding/GenderPage'
+import NamePage from './UserOnboarding/NamePage'
+import RolePage from './UserOnboarding/RolePage'
+import RoleInterestedPage from './UserOnboarding/RoleInterestedPage'
+import CEFRLandingPage from './CEFRTest/CEFRLandingPage'
+import CEFRTestPage from './CEFRTest/CEFRTestPage'
+import CEFRResultPage from './CEFRTest/CEFRResultPage'
 import ChooseTopics from './Topics/ChooseTopics/ChooseTopics'
 import MainInterview from './Topics/MainTopics/MainInterview'
 import MainWork from './Topics/MainTopics/MainWork'
 import MainTravel from './Topics/MainTopics/MainTravel'
-import CallComponent from './Topics/AvatarCall/calling'
+import AvatarCallingPage from './Topics/AvatarCall/AvatarCallingPage'
 import Talk from './Topics/AvatarTalk/Talk'
-import AvatarResult from './Topics/AvatarResult/AvatarResult'
+import AvatarResultPage from './Topics/AvatarResult/AvatarResultPage'
 import type { MenuDestination } from './Hamburger/Menu'
 import { MenuSelection } from './Hamburger/MenuSelection'
 import MainHome from './Topics/MainHome/MainHome'
-import ProfileUser from './Profile/ProfileUser'
-import EditJob from './Profile/EditJob'
-import Practice from './Practice/Practice'
-import Vocab from './Vocab/Vocab'
-import CreateAccount from './CreateAccount/CreateAccount'
+import ProfileUserPage from './Profile/ProfileUserPage'
+import EditJobPage from './Profile/EditJobPage'
+import RecentPracticePage from './RecentPractice/RecentPracticePage'
+import VocabPage from './Vocab/VocabPage'
+import CreateAccountPage from './Account/CreateAccountPage'
+import ForgotPasswordPage from './Account/ForgotPasswordPage'
+import VerifyEmailPage from './Account/VerifyEmailPage'
+import CreateNewPwPage from './Account/CreateNewPwPage'
 import type { TopicCard } from './Topics/MainTopics/MainTopics.Component'
 
-type Page = 'home' | 'sign-in' | 'create-account' | 'age' | 'gender' | 'name' | 'work' | 'role-interested' | 'language-level' | 'level-test' | 'level-result' | 'topics' | 'main-home' | 'main-topics' | 'main-work' | 'main-travel' | 'call' | 'talk' | 'avatar-result' | 'profile' | 'edit-profile' | 'practice' | 'vocab'
+type Page = 'home' | 'sign-in' | 'create-account' | 'reset-password' | 'verify-email' | 'create-new-password' | 'age' | 'gender' | 'name' | 'work' | 'role-interested' | 'language-level' | 'level-test' | 'level-result' | 'topics' | 'main-home' | 'main-topics' | 'main-work' | 'main-travel' | 'call' | 'talk' | 'avatar-result' | 'profile' | 'edit-profile' | 'practice' | 'vocab'
 
 const pagePaths: Record<Page, string> = {
   home: '/get-started',
   'sign-in': '/sign-in',
   'create-account': '/create-account',
+  'reset-password': '/reset-password',
+  'verify-email': '/verify-email',
+  'create-new-password': '/create-new-password',
   age: '/onboarding/age',
   gender: '/onboarding/gender',
   name: '/onboarding/name',
@@ -197,20 +203,32 @@ function App() {
 
   function renderPage() {
   if (page === 'home') {
-    return <Home onSignIn={() => setPage('sign-in')} />
+    return <GetStartedPage onSignIn={() => setPage('sign-in')} />
   }
 
   if (page === 'sign-in') {
-    return <SignIn onCreateAccount={() => setPage('create-account')} onLogin={() => setPage('main-home')} />
+    return <SignInAccountPage onCreateAccount={() => setPage('create-account')} onForgotPassword={() => setPage('reset-password')} onLogin={() => setPage('main-home')} />
   }
 
   if (page === 'create-account') {
-    return <CreateAccount onCreateAccount={() => setPage('age')} />
+    return <CreateAccountPage onCreateAccount={() => setPage('age')} />
+  }
+
+  if (page === 'reset-password') {
+    return <ForgotPasswordPage onCreateAccount={() => setPage('create-account')} onSubmitEmail={() => setPage('verify-email')} />
+  }
+
+  if (page === 'verify-email') {
+    return <VerifyEmailPage />
+  }
+
+  if (page === 'create-new-password') {
+    return <CreateNewPwPage onResetPassword={() => setPage('sign-in')} />
   }
 
   if (page === 'age') {
     return (
-      <Age
+      <AgePage
         onBack={() => setPage('sign-in')}
         onSelect={() => setPage('gender')}
         onMenuNavigate={navigateFromMenu}
@@ -220,7 +238,7 @@ function App() {
 
   if (page === 'gender') {
     return (
-      <Gender
+      <GenderPage
         onBack={() => setPage('age')}
         onSelect={() => setPage('name')}
         onMenuNavigate={navigateFromMenu}
@@ -230,7 +248,7 @@ function App() {
 
   if (page === 'name') {
     return (
-      <Name
+      <NamePage
         onBack={() => setPage('gender')}
         onContinue={(name) => {
           setProfileName(name)
@@ -243,7 +261,7 @@ function App() {
 
   if (page === 'work') {
     return (
-      <Job
+      <RolePage
         onBack={() => setPage('main-home')}
         onContinue={(role) => {
           setProfileRole(role)
@@ -257,7 +275,7 @@ function App() {
 
   if (page === 'role-interested') {
     return (
-      <RoleInterested
+      <RoleInterestedPage
         onBack={() => setPage('main-home')}
         onContinue={(roleInterest) => {
           setInterviewRole(roleInterest)
@@ -270,15 +288,15 @@ function App() {
   }
 
   if (page === 'language-level') {
-    return <LanguageLevel onBack={() => setPage('name')} onContinue={() => setPage('level-test')} onMenuNavigate={navigateFromMenu} />
+    return <CEFRLandingPage onBack={() => setPage('name')} onContinue={() => setPage('level-test')} onMenuNavigate={navigateFromMenu} />
   }
 
   if (page === 'level-test') {
-    return <LevelTest onBack={() => setPage('language-level')} onNext={() => setPage('level-result')} onMenuNavigate={navigateFromMenu} />
+    return <CEFRTestPage onBack={() => setPage('language-level')} onNext={() => setPage('level-result')} onMenuNavigate={navigateFromMenu} />
   }
 
   if (page === 'level-result') {
-    return <LevelTestResult onContinue={() => setPage('topics')} />
+    return <CEFRResultPage onContinue={() => setPage('topics')} />
   }
 
   if (page === 'main-home') {
@@ -286,12 +304,12 @@ function App() {
   }
 
   if (page === 'profile') {
-    return <ProfileUser username={profileName} role={profileRole} roleInterest={interviewRole} onPracticeSelect={() => setPage('practice')} onEdit={() => setPage('edit-profile')} onMenuNavigate={navigateFromMenu} />
+    return <ProfileUserPage username={profileName} role={profileRole} roleInterest={interviewRole} onPracticeSelect={() => setPage('practice')} onEdit={() => setPage('edit-profile')} onMenuNavigate={navigateFromMenu} />
   }
 
   if (page === 'edit-profile') {
     return (
-      <EditJob
+      <EditJobPage
         username={profileName}
         role={profileRole}
         roleInterest={interviewRole}
@@ -309,11 +327,11 @@ function App() {
   }
 
   if (page === 'practice') {
-    return <Practice onBack={() => setPage('profile')} onTravelSelect={() => setPage('main-travel')} onWorkSelect={openWork} onMenuNavigate={navigateFromMenu} />
+    return <RecentPracticePage onBack={() => setPage('profile')} onTravelSelect={() => setPage('main-travel')} onWorkSelect={openWork} onMenuNavigate={navigateFromMenu} />
   }
 
   if (page === 'vocab') {
-    return <Vocab onMenuNavigate={navigateFromMenu} />
+    return <VocabPage onMenuNavigate={navigateFromMenu} />
   }
 
   if (page === 'main-topics') {
@@ -336,7 +354,7 @@ function App() {
         : 'interview'
 
     return (
-      <CallComponent
+      <AvatarCallingPage
         characterVariant={characterVariant}
         title={selectedTopic?.title}
         practiceItems={selectedTopic?.practiceItems}
@@ -358,7 +376,7 @@ function App() {
   }
 
   if (page === 'avatar-result') {
-    return <AvatarResult onContinue={() => setPage(topicReturnPage)} onMenuNavigate={navigateFromMenu} />
+    return <AvatarResultPage onContinue={() => setPage(topicReturnPage)} onMenuNavigate={navigateFromMenu} />
   }
 
   return <ChooseTopics onInterviewSelect={openInterview} onWorkSelect={openWork} onTravelSelect={() => setPage('main-travel')} onMenuNavigate={navigateFromMenu} />

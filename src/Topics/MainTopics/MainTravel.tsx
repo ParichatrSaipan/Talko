@@ -9,8 +9,8 @@ import findingItemImage from '../../assets/ImageScene/Finding an Item.svg'
 import askingPriceImage from '../../assets/ImageScene/Asking About the Price.svg'
 import askingDirectionsImage from '../../assets/ImageScene/Asking for Directions.svg'
 import publicTransportationImage from '../../assets/ImageScene/Using Public Transportation.svg'
-import { callingPracticeItems } from '../AvatarCall/callingPracticeData'
-import MainTopicsComponent from './MainTopics.Component'
+import { callingPracticeItems } from '../AvatarCall/CallingIntroduceData'
+import MainTopics from './MainTopics.Component'
 import type { TopicCard } from './MainTopics.Component'
 import type { MenuDestination } from '../../Hamburger/Menu'
 
@@ -36,9 +36,10 @@ type MainTravelProps = {
 
 function MainTravel({ onTopicSelect, onMenuNavigate }: MainTravelProps) {
 	return (
-		<MainTopicsComponent
+		<MainTopics
 			title="Travel"
 			icon={travelIcon}
+			variant="travel"
 			categories={travelCategories}
 			topics={travelTopics}
 			onTopicSelect={onTopicSelect}

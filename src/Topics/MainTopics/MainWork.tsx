@@ -5,8 +5,8 @@ import gettingHelpImage from '../../assets/ImageScene/Getting Help & Solving Pro
 import sharingIdeasImage from '../../assets/ImageScene/Sharing Ideas & Opinions.svg'
 import meetingsImage from '../../assets/ImageScene/Meetings & Discussions.svg'
 import feedbackImage from '../../assets/ImageScene/Giving & Receiving Feedback.svg'
-import { callingPracticeItems } from '../AvatarCall/callingPracticeData'
-import MainTopicsComponent from './MainTopics.Component'
+import { callingPracticeItems } from '../AvatarCall/CallingIntroduceData'
+import MainTopics from './MainTopics.Component'
 import type { TopicCard } from './MainTopics.Component'
 import type { MenuDestination } from '../../Hamburger/Menu'
 
@@ -25,7 +25,16 @@ const workTopics: TopicCard[] = [
 ]
 
 function MainWork({ onTopicSelect, onMenuNavigate }: MainWorkProps) {
-	return <MainTopicsComponent title="Work" icon={workIcon} topics={workTopics} onTopicSelect={onTopicSelect} onMenuNavigate={onMenuNavigate} />
+	return (
+		<MainTopics
+			title="Work"
+			icon={workIcon}
+			variant="work"
+			topics={workTopics}
+			onTopicSelect={onTopicSelect}
+			onMenuNavigate={onMenuNavigate}
+		/>
+	)
 }
 
 export default MainWork

@@ -56,7 +56,7 @@ function MainHome({ username, onInterviewSelect, onWorkSelect, onTravelSelect, o
 							<small>Travel</small>
 							<strong>Hotel Check-in</strong>
 							<button className="main-home-card-action" type="button">
-								Continue <i aria-hidden="true">›</i>
+								Continue <i aria-hidden="true" />
 							</button>
 						</span>
 					</article>
@@ -69,7 +69,7 @@ function MainHome({ username, onInterviewSelect, onWorkSelect, onTravelSelect, o
 						<span className="main-home-card-copy">
 							<small>Work</small>
 							<strong>Ask for<br />Clarification</strong>
-							<span className="main-home-card-action">Start <i aria-hidden="true">›</i></span>
+							<span className="main-home-card-action">Start <i aria-hidden="true" /></span>
 						</span>
 					</button>
 				</section>

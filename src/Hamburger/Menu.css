@@ -1,3 +1,10 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Inter';
+}
+
 .menu-overlay {
 	position: fixed;
 	inset: 0;
@@ -14,7 +21,6 @@
 	padding: 26px 16px;
 	background: #fff;
 	color: #080808;
-	font-family: 'Inter', sans-serif;
 	box-shadow: -4px 0 18px rgba(0, 0, 0, .16);
 	animation: menu-slide-in .25s ease-out both;
 }
@@ -27,7 +33,7 @@
 
 .menu-heading h2 {
 	margin: 0;
-	font-family: 'Inter Bold';
+	font-weight: 700;
 	font-size: 16px;
 }
 
@@ -38,7 +44,9 @@
 	border: 0;
 	background: transparent;
 	color: #080808;
-	font: 34px/1 'Inter Regular', sans-serif;
+	font-weight: 400;
+	font-size: 34px 
+	
 }
 
 .menu-navigation {
@@ -59,7 +67,8 @@
 	border-radius: 2px;
 	background: transparent;
 	color: #080808;
-	font: 14px 'Inter';
+	font-weight: 500;
+	font-size: 14px;
 	text-align: left;
 }
 
@@ -91,7 +100,8 @@
 .menu-label {
 	margin: 36px 0 13px;
 	color: #515151;
-	font: 14px 'Inter Regular';
+	font-size: 14px;
+	font-weight: 400;
 }
 
 .menu-link--spaced {

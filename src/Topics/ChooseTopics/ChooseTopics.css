@@ -1,8 +1,14 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Inter';
+}
+
 .topics-page {
   min-height: 100svh;
   background: #000;
   color: #fff;
-  font-family: 'Inter', sans-serif;
 }
 
 .topics-header {
@@ -19,7 +25,6 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  font-family: 'Inter';
   font-size: 18px;
 }
 
@@ -63,7 +68,7 @@
 .topics-content h1 {
   margin: 0 0 42px;
   font-size: 30px;
-  font-family: 'Inter Bold';
+  font-weight: 700;
 
 }
 
@@ -130,14 +135,14 @@
 }
 
 .topic-illustration img {
-  width: 120px;
-  height: 116px;
+  width: 110px;
+  height: 110px;
   object-fit: contain;
 }
 
 .topic-card h2 {
   margin: 0;
-  font-family: 'Inter Bold';
+  font-weight: 700;
   font-size: 20px;
 }
 
@@ -146,7 +151,7 @@
   width: 170px;
   color: #515151;
   font-size: 14px;
-  font-family: 'Inter Regular';
+  font-weight: 400;
 }
 
 .topic-card button {
@@ -157,8 +162,9 @@
   flex: 0 0 auto;
   border: 0;
   background: transparent;
+  font-weight: 500;
   color: #515151;
-  font: 14px 'Inter Regular';
+  font-size: 14px;
   padding: 0 10px 10px 0;
 }
 
@@ -166,7 +172,8 @@
   content: '›';
   margin-left: 14px;
   color: #515151;
-  font: 20px 'Inter bold';
+  font-size: 20px;
+  font-weight: 700;
   vertical-align: -2px;
 }
 

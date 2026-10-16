@@ -17,9 +17,11 @@ export type TopicCard = {
 	statusType?: 'progress' | 'completed' | 'working'
 }
 
-type MainTopicsComponentProps = {
+type MainTopicsProps = {
 	title?: string
 	icon?: string
+	variant?: 'default' | 'work' | 'travel' | 'interview'
+	intro?: string
 	categories?: string[]
 	topics?: TopicCard[]
 	onTopicSelect?: (topic: TopicCard) => void
@@ -35,17 +37,31 @@ const topicCards: TopicCard[] = [
 	{ title: 'topics', description: 'xxxxxx' },
 ]
 
-function MainTopicsComponent({ title = 'Interview', icon = interviewIcon, categories, topics = topicCards, onTopicSelect, onMenuNavigate }: MainTopicsComponentProps) {
+function MainTopics({ title = 'Interview', icon = interviewIcon, variant = 'default', intro = 'Pick a Scenario.', categories, topics = topicCards, onTopicSelect, onMenuNavigate }: MainTopicsProps) {
 	const [activeCategory, setActiveCategory] = useState(categories?.[0] ?? '')
 	const visibleTopics = !categories || activeCategory === 'All'
 		? topics
 		: topics.filter((topic) => topic.category === activeCategory)
 
 	return (
-		<main className="main-topics-page">
+		<main className={`main-topics-page main-topics-page--${variant}`}>
 			<Header onMenuNavigate={onMenuNavigate} />
 
 			<section className="main-topics-hero">
+				{variant !== 'default' && (
+					<div className="work-hero-pattern" aria-hidden="true">
+						<span className="work-pattern-circle work-pattern-circle--one" />
+						<span className="work-pattern-circle work-pattern-circle--two" />
+						<span className="work-pattern-circle work-pattern-circle--three" />
+						<span className="work-pattern-circle work-pattern-circle--four" />
+						<span className="work-pattern-laptop work-pattern-laptop--one" />
+						<span className="work-pattern-laptop work-pattern-laptop--two" />
+						<span className="work-pattern-laptop work-pattern-laptop--three" />
+						<span className="work-pattern-laptop work-pattern-laptop--four" />
+						<span className="work-pattern-laptop work-pattern-laptop--five" />
+						<span className="work-pattern-laptop work-pattern-laptop--six" />
+					</div>
+				)}
 				<span className="main-topics-hero-icon">
 					<img src={icon} alt="" />
 				</span>
@@ -69,7 +85,7 @@ function MainTopicsComponent({ title = 'Interview', icon = interviewIcon, catego
 						))}
 					</div>
 				)}
-				<p className="main-topics-intro">Pick a Scenario.</p>
+				<p className="main-topics-intro">{intro}</p>
 				<div className="main-topics-grid">
 					{visibleTopics.map((topic, index) => (
 						<article
@@ -93,4 +109,4 @@ function MainTopicsComponent({ title = 'Interview', icon = interviewIcon, catego
 	)
 }
 
-export default MainTopicsComponent
+export default MainTopics
