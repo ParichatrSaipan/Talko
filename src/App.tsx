@@ -368,6 +368,7 @@ function App() {
     return (
       <Talk
         variant={topicReturnPage === 'main-work' ? 'work' : topicReturnPage === 'main-topics' ? 'interview' : 'default'}
+        scenarioId={selectedTopic?.id}
         onBack={() => setPage('call')}
         onFinish={() => setPage('avatar-result')}
         onMenuNavigate={navigateFromMenu}

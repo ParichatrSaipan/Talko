@@ -1,13 +1,15 @@
 //หน้าหัวข้อหลักแต่ละหมวดหมู่ interview, work, travel
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../../Font/Fonts.css'
 import './MainTopics.Component.css'
 import interviewIcon from '../../assets/icon_Interview.svg'
 import mainImage from '../../assets/image_main.svg'
 import Header from '../../Header/Header.Component'
 import type { MenuDestination } from '../../Hamburger/Menu'
+import { getScenarios } from '../../api/talko'
 
 export type TopicCard = {
+	id?: number
 	title: string
 	description: string
 	image?: string
@@ -15,6 +17,12 @@ export type TopicCard = {
 	practiceItems?: string[]
 	status?: string
 	statusType?: 'progress' | 'completed' | 'working'
+}
+
+const categoryByVariant: Record<string, string> = {
+	interview: 'Interview',
+	work: 'Work',
+	travel: 'Travel',
 }
 
 type MainTopicsProps = {
@@ -39,9 +47,36 @@ const topicCards: TopicCard[] = [
 
 function MainTopics({ title = 'Interview', icon = interviewIcon, variant = 'default', intro = 'Pick a Scenario.', categories, topics = topicCards, onTopicSelect, onMenuNavigate }: MainTopicsProps) {
 	const [activeCategory, setActiveCategory] = useState(categories?.[0] ?? '')
+	const [fetchedTopics, setFetchedTopics] = useState<TopicCard[] | null>(null)
+
+	const fetchCategory = categoryByVariant[variant]
+
+	useEffect(() => {
+		if (!fetchCategory) return
+		let active = true
+		getScenarios()
+			.then((scenarios) => {
+				if (!active) return
+				setFetchedTopics(
+					scenarios
+						.filter((scenario) => scenario.category === fetchCategory)
+						.map((scenario) => ({
+							id: scenario.id,
+							title: scenario.title,
+							description: scenario.description,
+						})),
+				)
+			})
+			.catch(() => {})
+		return () => {
+			active = false
+		}
+	}, [fetchCategory])
+
+	const sourceTopics = fetchedTopics ?? topics
 	const visibleTopics = !categories || activeCategory === 'All'
-		? topics
-		: topics.filter((topic) => topic.category === activeCategory)
+		? sourceTopics
+		: sourceTopics.filter((topic) => topic.category === activeCategory)
 
 	return (
 		<main className={`main-topics-page main-topics-page--${variant}`}>

@@ -8,12 +8,13 @@ import type { MenuDestination } from '../../Hamburger/Menu'
 import TalkAvatar from './TalkAvatar'
 import type { TalkState } from './TalkState'
 import soundIcon from '../../assets/icon_sound.svg'
-import translateIcon from '../../assets/icon_Translate.svg'
 import typingIcon from '../../assets/icon_Typing.svg'
 import voiceIcon from '../../assets/icon_Voice.svg'
 import hintIcon from '../../assets/icon_Hit.svg'
 import saveIcon from '../../assets/icon_Save.svg'
 import sendIcon from '../../assets/icon_Send.svg'
+import { getWord, sendChat } from '../../api/talko'
+import type { Turn, WordInfo } from '../../api/talko'
 import { getSavedVocabulary, removeVocabularyItem, saveVocabularyItem } from '../../Vocab/vocabularyStorage'
 import type { SavedVocabularyCategory } from '../../Vocab/vocabularyStorage'
 
@@ -23,39 +24,19 @@ type TalkProps = {
 	isConversationFinished?: boolean
 	onMenuNavigate?: (destination: MenuDestination) => void
 	variant?: 'default' | 'work' | 'interview'
+	scenarioId?: number
+	level?: string
 }
 
-type WordInfo = {
-	word: string
-	pronunciation: string
-	translation: string
-	example: string
-	exampleTranslation: string
-}
+const WELCOME_MESSAGE = 'Welcome to Talko! Say hello to start our conversation.'
 
-const TALK_BUBBLE_SPEECH = 'Welcome to Talko! My name is Talko and I’m your personal AI tutor.'
-
-const words: Record<string, WordInfo> = {
-	welcome: { word: 'Welcome', pronunciation: '/ˈwel.kəm/', translation: 'ยินดีต้อนรับ', example: 'Welcome to our English class.', exampleTranslation: 'ยินดีต้อนรับสู่ชั้นเรียนภาษาอังกฤษของเรา' },
-	to: { word: 'To', pronunciation: '/tuː/', translation: 'ไปยัง, ถึง', example: 'I am going to school.', exampleTranslation: 'ฉันกำลังไปโรงเรียน' },
-	talko: { word: 'Talko', pronunciation: '/ˈtɔːk.oʊ/', translation: 'ทอล์คโก', example: 'Talko is your AI tutor.', exampleTranslation: 'Talko คือครู AI ของคุณ' },
-	my: { word: 'My', pronunciation: '/maɪ/', translation: 'ของฉัน', example: 'My name is Alex.', exampleTranslation: 'ฉันชื่ออเล็กซ์' },
-	name: { word: 'Name', pronunciation: '/neɪm/', translation: 'ชื่อ', example: 'What is your name?', exampleTranslation: 'คุณชื่ออะไร' },
-	is: { word: 'Is', pronunciation: '/ɪz/', translation: 'คือ, เป็น, อยู่', example: 'This is my book.', exampleTranslation: 'นี่คือหนังสือของฉัน' },
-	and: { word: 'And', pronunciation: '/ænd/', translation: 'และ', example: 'You and I can practice together.', exampleTranslation: 'คุณและฉันสามารถฝึกด้วยกันได้' },
-	im: { word: 'I’m', pronunciation: '/aɪm/', translation: 'ฉันคือ, ฉันเป็น', example: 'I’m ready to practice.', exampleTranslation: 'ฉันพร้อมที่จะฝึกแล้ว' },
-	your: { word: 'Your', pronunciation: '/jʊr/', translation: 'ของคุณ', example: 'Your English is getting better.', exampleTranslation: 'ภาษาอังกฤษของคุณกำลังดีขึ้น' },
-	personal: { word: 'Personal', pronunciation: '/ˈpɜː.sən.əl/', translation: 'ส่วนตัว', example: 'This is your personal lesson.', exampleTranslation: 'นี่คือบทเรียนส่วนตัวของคุณ' },
-	ai: { word: 'AI', pronunciation: '/ˌeɪˈaɪ/', translation: 'ปัญญาประดิษฐ์', example: 'AI can help you practice.', exampleTranslation: 'AI สามารถช่วยคุณฝึกฝนได้' },
-	tutor: { word: 'Tutor', pronunciation: '/ˈtuː.tər/', translation: 'ครูสอนพิเศษ', example: 'Can you help me with this task?', exampleTranslation: 'คุณช่วยฉันเกี่ยวกับงานนี้ได้ไหม' },
-}
-
-function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate, variant = 'default' }: TalkProps) {
+function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate, variant = 'default', scenarioId, level = 'B1' }: TalkProps) {
 	const [selectedWord, setSelectedWord] = useState<WordInfo | null>(null)
 	const [savedWords, setSavedWords] = useState<Set<string>>(
 		() => new Set(getSavedVocabulary().map((item) => item.word)),
 	)
-	const [isTranslated, setIsTranslated] = useState(false)
+	const [reply, setReply] = useState(WELCOME_MESSAGE)
+	const [history, setHistory] = useState<Turn[]>([])
 	const [isSentencePlaybackActive, setIsSentencePlaybackActive] = useState(false)
 	const [isSpeaking, setIsSpeaking] = useState(false)
 	const [isAwaitingReply, setIsAwaitingReply] = useState(false)
@@ -71,23 +52,11 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 	const speechRequestRef = useRef(0)
 	const avatarState: TalkState = isSentencePlaybackActive
 		? 'speaking'
-		: isSpeaking || isAwaitingReply
-			? 'listening'
-			: 'idle'
-
-	function beginListening() {
-		setIsSentencePlaybackActive(false)
-		setIsAwaitingReply(true)
-		sentencePlaybackButtonRef.current?.blur()
-	}
-
-	function selectWord(key: keyof typeof words) {
-		setIsSpeaking(false)
-		setIsAwaitingReply(false)
-		setIsTyping(false)
-		setSelectedWord(words[key])
-		setIsWordSoundPlayed(false)
-	}
+		: isAwaitingReply
+			? 'thinking'
+			: isSpeaking
+				? 'listening'
+				: 'idle'
 
 	function playWord(word: string, onEnd?: () => void) {
 		const requestId = ++speechRequestRef.current
@@ -103,6 +72,21 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 		utterance.onend = finish
 		utterance.onerror = finish
 		window.speechSynthesis.speak(utterance)
+	}
+
+	async function lookupWord(raw: string) {
+		const clean = raw.toLowerCase().replace(/[^a-z'’-]/g, '')
+		if (!clean) return
+		setIsSpeaking(false)
+		setIsTyping(false)
+		setSelectedWord({ word: clean, pronunciation: '', translation: '...', example: '', exampleTranslation: '' })
+		setIsWordSoundPlayed(false)
+		try {
+			const info = await getWord(clean)
+			setSelectedWord(info)
+		} catch {
+			setSelectedWord({ word: clean, pronunciation: '', translation: 'ดึงข้อมูลไม่สำเร็จ', example: '', exampleTranslation: '' })
+		}
 	}
 
 	function toggleSavedWord(wordInfo: WordInfo) {
@@ -137,23 +121,37 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 			sentencePlaybackButtonRef.current?.blur()
 			return
 		}
-
-		setIsAwaitingReply(false)
 		setIsSentencePlaybackActive(true)
-		playWord(
-			TALK_BUBBLE_SPEECH,
-			beginListening,
-		)
+		playWord(reply, () => setIsSentencePlaybackActive(false))
 	}
 
-	function handleTypedMessage(event: FormEvent<HTMLFormElement>) {
+	async function handleTypedMessage(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault()
 		const message = typedMessage.trim()
-		if (!message) return
+		if (!message || isAwaitingReply) return
 		setSentMessages((current) => [...current, message])
-		if (message.toLowerCase() === 'hi') setIsFinishedByMessage(true)
 		setTypedMessage('')
 		setIsTyping(false)
+		const priorHistory = history
+		setHistory((current) => [...current, { role: 'user', content: message }])
+		setIsAwaitingReply(true)
+		try {
+			const result = await sendChat({
+				mode: scenarioId ? 'scenario' : 'free',
+				scenario_id: scenarioId ?? null,
+				message,
+				history: priorHistory,
+				level,
+			})
+			setReply(result.reply)
+			setHistory((current) => [...current, { role: 'model', content: result.reply }])
+			playWord(result.reply)
+			if (result.finished) setIsFinishedByMessage(true)
+		} catch {
+			setReply('Sorry, I had trouble responding. Please try again.')
+		} finally {
+			setIsAwaitingReply(false)
+		}
 	}
 
 	function openKeyboard() {
@@ -169,20 +167,12 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 					<button className="talk-back" type="button" onClick={onBack} aria-label="Go back" />
 					<TalkAvatar state={avatarState} variant={variant} />
 				</div>
-				<div className="talk-bubble" aria-label={TALK_BUBBLE_SPEECH}>
-					<button className="talk-word-token" type="button" onClick={() => selectWord('welcome')}>Welcome</button>{' '}
-					<button className="talk-word-token" type="button" onClick={() => selectWord('to')}>to</button>{' '}
-					<button className="talk-word-token" type="button" onClick={() => selectWord('talko')}>Talko</button>!<br />
-					<button className="talk-word-token" type="button" onClick={() => selectWord('my')}>My</button>{' '}
-					<button className="talk-word-token" type="button" onClick={() => selectWord('name')}>name</button>{' '}
-					<button className="talk-word-token" type="button" onClick={() => selectWord('is')}>is</button>{' '}
-					<button className="talk-word-token" type="button" onClick={() => selectWord('talko')}>Talko</button>{' '}
-					<button className="talk-word-token" type="button" onClick={() => selectWord('and')}>and</button><br />
-					<button className="talk-word-token" type="button" onClick={() => selectWord('im')}>I’m</button>{' '}
-					<button className="talk-word-token" type="button" onClick={() => selectWord('your')}>your</button>{' '}
-					<button className="talk-word-token" type="button" onClick={() => selectWord('personal')}>personal</button>{' '}
-					<button className="talk-word-token" type="button" onClick={() => selectWord('ai')}>AI</button>{' '}
-					<button className="talk-word-token" type="button" onClick={() => selectWord('tutor')}>tutor</button>
+				<div className="talk-bubble" aria-label={reply}>
+					{reply.split(' ').map((token, index) => (
+						<span key={`${token}-${index}`}>
+							<button className="talk-word-token" type="button" onClick={() => lookupWord(token)}>{token}</button>{' '}
+						</span>
+					))}
 					<div className="talk-bubble-tools">
 						<button
 							ref={sentencePlaybackButtonRef}
@@ -193,9 +183,7 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 						>
 							<img src={soundIcon} alt="" />
 						</button>
-						<button type="button" onClick={() => setIsTranslated(!isTranslated)} aria-pressed={isTranslated} aria-label="Translate sentence"><img src={translateIcon} alt="" /></button>
 					</div>
-					{isTranslated && <p className="talk-sentence-translation" lang="th">ยินดีต้อนรับสู่ Talko! ฉันชื่อ Talko และฉันคือครู AI ส่วนตัวของคุณ</p>}
 				</div>
 				{sentMessages.length > 0 && (
 					<div className="talk-user-messages" aria-live="polite">
@@ -206,35 +194,8 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 				)}
 				{isHelpVisible && (
 					<div className="talk-help-messages" role="status" aria-label="Conversation suggestions">
-						<p className="talk-help-user-message talk-help-user-message--intro">Need a little help.</p>
 						<div className="talk-help-card">
-							<p>Think in Thai first. What do you want to tell?</p>
-							<div className="talk-help-card-tools" aria-hidden="true">
-								<img src={soundIcon} alt="" />
-								<img src={translateIcon} alt="" />
-							</div>
-						</div>
-						<p className="talk-help-user-message" lang="th">เคยทำแอปตอนมหาลัย รับผิดชอบ UX/UI</p>
-						<div className="talk-help-card talk-help-card--suggestions">
-							<p>Useful words:</p>
-							<ul>
-								<li>university project</li>
-								<li>responsible for</li>
-								<li>UX/UI design</li>
-							</ul>
-							<p>Try starting with:</p>
-							<strong>“One project I’m proud of is...”</strong>
-							<div className="talk-help-card-tools" aria-hidden="true">
-								<img src={soundIcon} alt="" />
-								<img src={translateIcon} alt="" />
-							</div>
-						</div>
-						<div className="talk-help-card">
-							<p>Try answering yourself!</p>
-							<div className="talk-help-card-tools" aria-hidden="true">
-								<img src={soundIcon} alt="" />
-								<img src={translateIcon} alt="" />
-							</div>
+							<p>Think in Thai first, then try to say it in English.</p>
 						</div>
 					</div>
 				)}
@@ -276,7 +237,7 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 							enterKeyHint="send"
 							ref={typingInputRef}
 						/>
-						<button className="talk-typing-send" type="submit" aria-label="Send response"><img src={sendIcon} alt="" /></button>
+						<button className="talk-typing-send" type="submit" aria-label="Send response" disabled={isAwaitingReply}><img src={sendIcon} alt="" /></button>
 						<button className="talk-typing-close" type="button" onClick={() => setIsTyping(false)} aria-label="Close keyboard">×</button>
 					</form>
 				) : (
@@ -289,12 +250,6 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 							onPointerUp={() => setIsSpeaking(false)}
 							onPointerCancel={() => setIsSpeaking(false)}
 							onPointerLeave={() => setIsSpeaking(false)}
-							onKeyDown={(event) => {
-								if (event.key === 'Enter' || event.key === ' ') setIsSpeaking(true)
-							}}
-							onKeyUp={(event) => {
-								if (event.key === 'Enter' || event.key === ' ') setIsSpeaking(false)
-							}}
 							aria-label="Hold to speak"
 						>
 							<img src={voiceIcon} alt="" />
@@ -314,7 +269,7 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 								<img src={hintIcon} alt="" />
 							</button>
 						</div>
-						<span className="talk-control-hint">{isSpeaking ? 'Listening...' : 'Hold to speak'}</span>
+						<span className="talk-control-hint">{isAwaitingReply ? 'Talko is thinking...' : 'Type to answer'}</span>
 					</div>
 				))}
 			</section>
