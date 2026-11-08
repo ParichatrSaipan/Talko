@@ -10,26 +10,6 @@ function CEFRResultPage({ onContinue }: { onContinue: () => void }) {
 			<div className="level-result-content">
 					<p className="level-result-eyebrow">YOUR ESTIMATED LEVEL</p>
 					<h1>Intermediate</h1>
-					<p className="level-result-description">
-						You can communicate in familiar situations and<br />
-						express your ideas with reasonable confidence.
-					</p>
-
-					<section className="level-result-section">
-						<h2>STRENGTHS</h2>
-						<ul>
-							<li>Everyday vocabulary</li>
-							<li>Basic sentence structure</li>
-						</ul>
-					</section>
-
-					<section className="level-result-section level-result-improve">
-						<h2>AREAS TO IMPROVE</h2>
-						<ul>
-							<li>Speaking fluency</li>
-							<li>Complex sentence construction</li>
-						</ul>
-					</section>
 
 					<button className="level-result-continue" type="button" onClick={onContinue}>Continue</button>
 			</div>

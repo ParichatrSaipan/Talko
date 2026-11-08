@@ -321,8 +321,8 @@
 	background: #000;
 }
 
-/* ขอบโค้งของกล่องสีดำ: ตรงกลางโปร่งใส เติมสีฟ้าแค่สองมุม
-   ค้างอยู่ใต้สีฟ้า การ์ดจะหายเข้าไปพอดีขอบโค้ง */
+/* ขอบโค้งของกล่องสีดำ: ตรงกลางสีดำ เติมสีฟ้าแค่สองมุม
+   ค้างอยู่ใต้สีฟ้า การ์ดจะลอดใต้แถบนี้ เหลือพื้นสีดำด้านบนตอนเลื่อน */
 .main-topics-page:is(.main-topics-page--work, .main-topics-page--travel, .main-topics-page--interview) .main-topics-content::before {
 	content: '';
 	position: sticky;
@@ -334,6 +334,7 @@
 	background:
 		radial-gradient(circle at 100% 100%, transparent calc(var(--main-topics-panel-radius) - 0.5px), var(--main-topics-hero-color) var(--main-topics-panel-radius)) top left / var(--main-topics-panel-radius) var(--main-topics-panel-radius) no-repeat,
 		radial-gradient(circle at 0 100%, transparent calc(var(--main-topics-panel-radius) - 0.5px), var(--main-topics-hero-color) var(--main-topics-panel-radius)) top right / var(--main-topics-panel-radius) var(--main-topics-panel-radius) no-repeat;
+	background-color: #000; /* ตรงกลางเป็นสีดำ ตอนเลื่อนการ์ดจะลอดใต้ เหลือพื้นสีดำใต้ขอบโค้ง ไม่เห็นการ์ดโผล่ขึ้นมา */
 }
 
 .main-topics-page:is(.main-topics-page--work, .main-topics-page--interview) .main-topics-intro {

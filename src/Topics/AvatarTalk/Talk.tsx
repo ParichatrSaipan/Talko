@@ -263,6 +263,7 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 				{!selectedWord && (isConversationFinished || isFinishedByMessage ? (
 					<ButtonFinish onFinish={onFinish} />
 				) : isTyping ? (
+					<div className="talk-typing-bar">
 					<form className="talk-typing" onSubmit={handleTypedMessage}>
 						<input
 							type="text"
@@ -279,6 +280,7 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 							<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
 						</button>
 					</form>
+					</div>
 				) : (
 					<div className="talk-controls">
 						<button

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import '../Font/Fonts.css'
 import './CEFRTest.css'
 import Header from '../Header/Header.Component'
@@ -20,6 +20,27 @@ function CEFRTestPage({ onBack, onNext, onMenuNavigate }: { onBack: () => void; 
 
   const question = questions[questionIndex]
   const progress = Math.round((questionIndex / totalQuestions) * 100)
+  const questionRef = useRef<HTMLDivElement>(null)
+
+  // วัดจำนวนบรรทัดของคำถามที่ขนาด 20px ถ้าเกิน 3 บรรทัดให้ใส่ class is-long (ตัว 16px)
+  useLayoutEffect(() => {
+    const element = questionRef.current
+    if (!element) return
+
+    function fitQuestion() {
+      if (!element) return
+      element.classList.remove('is-long')
+      const style = getComputedStyle(element)
+      const fontSize = parseFloat(style.fontSize)
+      const lineHeight = parseFloat(style.lineHeight) || fontSize * 1.2
+      const textHeight = element.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom)
+      element.classList.toggle('is-long', Math.round(textHeight / lineHeight) > 3)
+    }
+
+    fitQuestion()
+    window.addEventListener('resize', fitQuestion)
+    return () => window.removeEventListener('resize', fitQuestion)
+  }, [question.question])
 
   function selectAnswer(answer: string) {
     setSelectedAnswers((currentAnswers) => {
@@ -60,7 +81,7 @@ function CEFRTestPage({ onBack, onNext, onMenuNavigate }: { onBack: () => void; 
           <span style={{ width: `${progress}%` }} />
         </div>
 
-        <div className="level-test-question" aria-live="polite">
+        <div className="level-test-question" aria-live="polite" ref={questionRef}>
           {question.question}
         </div>
 

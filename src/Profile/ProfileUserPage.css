@@ -15,7 +15,7 @@
 .profile-content {
 	width: min(100%, 430px);
 	margin: 0 auto;
-	padding: 27px 16px;
+	padding: 27px 16px 120px;
 }
 
 .profile-user {
