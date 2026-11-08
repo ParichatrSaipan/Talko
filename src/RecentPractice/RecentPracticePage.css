@@ -81,3 +81,139 @@
 	outline: 3px solid #8de7ed;
 	outline-offset: 3px;
 }
+
+/* Restart Conversation sheet */
+.practice-restart-backdrop {
+	position: fixed;
+	inset: 0;
+	z-index: 50;
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	background: rgba(0, 0, 0, .25);
+	backdrop-filter: blur(6px);
+	-webkit-backdrop-filter: blur(6px);
+	animation: practice-restart-fade .2s ease;
+}
+
+.practice-restart-sheet {
+	width: min(100%, 430px);
+	min-height: 62svh;
+	position: relative;
+	padding: 46px 16px 84px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-radius: 28px 28px 0 0;
+	background: #fff;
+	color: #080808;
+	text-align: center;
+	animation: practice-restart-up .25s ease;
+}
+
+.practice-restart-close {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	width: 32px;
+	height: 32px;
+	padding: 0;
+	display: grid;
+	place-items: center;
+	border: 0;
+	background: transparent;
+}
+
+.practice-restart-close svg,
+.practice-restart-icon svg {
+	display: block;
+	fill: none;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+.practice-restart-close svg {
+	width: 24px;
+	height: 24px;
+	stroke: #080808;
+	stroke-width: 2.2;
+}
+
+.practice-restart-icon {
+	width: 62px;
+	height: 62px;
+	display: grid;
+	place-items: center;
+	border-radius: 50%;
+	background: #7EC7FF;
+	box-shadow: 0 4px 12px rgba(126, 199, 255, .45);
+}
+
+.practice-restart-icon svg {
+	width: 32px;
+	height: 32px;
+	stroke: #fff;
+	stroke-width: 2.6;
+}
+
+.practice-restart-sheet h2 {
+	margin-top: 22px;
+	font-size: 20px;
+	font-family: 'Inter Bold';
+	font-weight: 700;
+}
+
+.practice-restart-sheet p {
+	max-width: 300px;
+	margin-top: 14px;
+	color: #515151;
+	font-size: 12px;
+	line-height: 1.4;
+}
+
+.practice-restart-actions {
+	width: 100%;
+	padding-top: 103px;
+	display: grid;
+	gap: 22px;
+}
+
+.practice-restart-actions button {
+	height: 64px;
+	border: 0;
+	border-radius: 100px;
+	color: #080808;
+	font-size: 16px;
+	box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.10);
+}
+
+.practice-restart-confirm {
+	background: linear-gradient(90deg, #ADFFDA 0%, #7EC7FF 100%);
+}
+
+.practice-restart-cancel {
+	background: #F0F0F0;
+}
+
+.practice-restart-actions button:focus-visible,
+.practice-restart-close:focus-visible {
+	outline: 3px solid #8de7ed;
+	outline-offset: 3px;
+}
+
+@keyframes practice-restart-fade {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+@keyframes practice-restart-up {
+	from { transform: translateY(100%); }
+	to { transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.practice-restart-backdrop,
+	.practice-restart-sheet {
+		animation: none;
+	}
+}

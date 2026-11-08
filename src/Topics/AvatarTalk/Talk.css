@@ -88,13 +88,17 @@
 	width: 40px;
 	height: 40px;
 	border: 0;
+	padding: 0;
+	display: grid;
+	place-items: center;
 	border-radius: 50%;
 	background: #fff;
 }
 
 .talk-back::before {
 	content: '';
-	display: inline-block;
+	display: block;
+	box-sizing: border-box;
 	width: 10px;
 	height: 10px;
 	border-left: 3px solid #111;
@@ -447,7 +451,8 @@
 
 .talk-bubble-tools img,
 .talk-word-sound img {
-	width: 18px;
+	width: 16px;
+	height: 16px;
 	display: block;
 }
 
@@ -664,7 +669,7 @@
 	bottom: 0;
 	left: 0;
 	z-index: 6;
-	padding: 20px 29.5px 45px;
+	padding: 20px 29.5px 70px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -672,8 +677,8 @@
 }
 
 .talk-control {
-	width: 66px;
-	height: 66px;
+	width: 56px;
+	height: 56px;
 	padding: 0;
 	display: grid;
 	place-items: center;
@@ -683,13 +688,13 @@
 }
 
 .talk-control img {
-	width: 31px;
+	width: 25px;
 	object-fit: contain;
 }
 
 .talk-control--voice {
-	width: 78px;
-	height: 78px;
+	width: 70px;
+	height: 70px;
 	touch-action: none;
 }
 
@@ -703,15 +708,15 @@
 }
 
 .talk-help-control {
-	width: 66px;
-	height: 66px;
+	width: 56px;
+	height: 56px;
 	position: relative;
-	flex: 0 0 66px;
+	flex: 0 0 56px;
 }
 
 .talk-help-prompt {
 	position: absolute;
-	bottom: 94px;
+	bottom: 84px;
 	left: 50%;
 	z-index: 2;
 	padding: 10px;
@@ -774,7 +779,7 @@
 }
 
 .talk-typing > button {
-	height: 42px;
+	height: 40px;
 	padding: 0 16px;
 	border: 0;
 	border-radius: 999px;
@@ -785,23 +790,34 @@
 }
 
 .talk-typing > .talk-typing-send {
-	width: 44px;
-	height: 44px;
+	width: 40px;
+	height: 40px;
 	padding: 0;
 	background: transparent;
 }
 
 .talk-typing-send img {
-	width: 44px;
-	height: 44px;
+	width: 40px;
+	height: 40px;
 	display: block;
 }
 
 .talk-typing > .talk-typing-close {
-	width: 36px;
+	width: 40px;
 	padding: 0;
+	display: grid;
+	place-items: center;
 	background: #eee;
-	font-size: 23px;
+}
+
+.talk-typing-close svg {
+	width: 20px;
+	height: 20px;
+	display: block;
+	fill: none;
+	stroke: #111;
+	stroke-width: 2.5;
+	stroke-linecap: round;
 }
 
 @keyframes talk-word-sheet-in {

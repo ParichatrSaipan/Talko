@@ -5,7 +5,7 @@
 }
 
 .app-header {
-	height: 72px;
+	height: 53px;
 	padding: 26px 18px;
 	display: flex;
 	align-items: center;
@@ -31,8 +31,7 @@
 }
 
 .app-header-web-icon {
-	width: 35px;
-	height: 40px;
+	width: 25px;
 }
 
 .app-header-talko-logo {
@@ -41,8 +40,8 @@
 }
 
 .app-header-menu {
-	width: 27px;
-	height: 24px;
+	width: 25px;
+	height: 20px;
 	padding: 0;
 	display: grid;
 	align-content: space-between;

@@ -13,6 +13,7 @@ import voiceIcon from '../../assets/icon_Voice.svg'
 import hintIcon from '../../assets/icon_Hit.svg'
 import saveIcon from '../../assets/icon_Save.svg'
 import sendIcon from '../../assets/icon_Send.svg'
+import translateIcon from '../../assets/icon_Translate.svg'
 import { getWord, sendChat } from '../../api/talko'
 import type { Turn, WordInfo } from '../../api/talko'
 import { getSavedVocabulary, removeVocabularyItem, saveVocabularyItem } from '../../Vocab/vocabularyStorage'
@@ -29,6 +30,9 @@ type TalkProps = {
 }
 
 const WELCOME_MESSAGE = 'Welcome to Talko! Say hello to start our conversation.'
+const WELCOME_TRANSLATION = 'ยินดีต้อนรับสู่ Talko! ทักทายเพื่อเริ่มบทสนทนากันได้เลย'
+// TODO: ข้อความจาก backend ยังไม่มีคำแปล — ต่อ API แปลประโยคภายหลัง
+const NO_TRANSLATION = 'ยังไม่มีคำแปลสำหรับข้อความนี้'
 
 function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate, variant = 'default', scenarioId, level = 'B1' }: TalkProps) {
 	const [selectedWord, setSelectedWord] = useState<WordInfo | null>(null)
@@ -37,8 +41,10 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 	)
 	const [reply, setReply] = useState(WELCOME_MESSAGE)
 	const [history, setHistory] = useState<Turn[]>([])
+	const [isTranslated, setIsTranslated] = useState(false)
 	const [isSentencePlaybackActive, setIsSentencePlaybackActive] = useState(false)
 	const [isSpeaking, setIsSpeaking] = useState(false)
+	const [isTypingHintVisible, setIsTypingHintVisible] = useState(false)
 	const [isAwaitingReply, setIsAwaitingReply] = useState(false)
 	const [isTyping, setIsTyping] = useState(false)
 	const [typedMessage, setTypedMessage] = useState('')
@@ -144,11 +150,13 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 				level,
 			})
 			setReply(result.reply)
+			setIsTranslated(false)
 			setHistory((current) => [...current, { role: 'model', content: result.reply }])
 			playWord(result.reply)
 			if (result.finished) setIsFinishedByMessage(true)
 		} catch {
 			setReply('Sorry, I had trouble responding. Please try again.')
+			setIsTranslated(false)
 		} finally {
 			setIsAwaitingReply(false)
 		}
@@ -183,7 +191,9 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 						>
 							<img src={soundIcon} alt="" />
 						</button>
+						<button type="button" onClick={() => setIsTranslated(!isTranslated)} aria-pressed={isTranslated} aria-label="Translate sentence"><img src={translateIcon} alt="" /></button>
 					</div>
+					{isTranslated && <p className="talk-sentence-translation" lang="th">{reply === WELCOME_MESSAGE ? WELCOME_TRANSLATION : NO_TRANSLATION}</p>}
 				</div>
 				{sentMessages.length > 0 && (
 					<div className="talk-user-messages" aria-live="polite">
@@ -194,8 +204,35 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 				)}
 				{isHelpVisible && (
 					<div className="talk-help-messages" role="status" aria-label="Conversation suggestions">
+						<p className="talk-help-user-message talk-help-user-message--intro">Need a little help.</p>
 						<div className="talk-help-card">
-							<p>Think in Thai first, then try to say it in English.</p>
+							<p>Think in Thai first. What do you want to tell?</p>
+							<div className="talk-help-card-tools" aria-hidden="true">
+								<img src={soundIcon} alt="" />
+								<img src={translateIcon} alt="" />
+							</div>
+						</div>
+						<p className="talk-help-user-message" lang="th">เคยทำแอปตอนมหาลัย รับผิดชอบ UX/UI</p>
+						<div className="talk-help-card talk-help-card--suggestions">
+							<p>Useful words:</p>
+							<ul>
+								<li>university project</li>
+								<li>responsible for</li>
+								<li>UX/UI design</li>
+							</ul>
+							<p>Try starting with:</p>
+							<strong>“One project I’m proud of is...”</strong>
+							<div className="talk-help-card-tools" aria-hidden="true">
+								<img src={soundIcon} alt="" />
+								<img src={translateIcon} alt="" />
+							</div>
+						</div>
+						<div className="talk-help-card">
+							<p>Try answering yourself!</p>
+							<div className="talk-help-card-tools" aria-hidden="true">
+								<img src={soundIcon} alt="" />
+								<img src={translateIcon} alt="" />
+							</div>
 						</div>
 					</div>
 				)}
@@ -238,11 +275,22 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 							ref={typingInputRef}
 						/>
 						<button className="talk-typing-send" type="submit" aria-label="Send response" disabled={isAwaitingReply}><img src={sendIcon} alt="" /></button>
-						<button className="talk-typing-close" type="button" onClick={() => setIsTyping(false)} aria-label="Close keyboard">×</button>
+						<button className="talk-typing-close" type="button" onClick={() => setIsTyping(false)} aria-label="Close keyboard">
+							<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+						</button>
 					</form>
 				) : (
 					<div className="talk-controls">
-						<button className="talk-control talk-control--typing" type="button" onClick={openKeyboard} aria-label="Type a response"><img src={typingIcon} alt="" /></button>
+						<button
+							className="talk-control talk-control--typing"
+							type="button"
+							onClick={() => { setIsTypingHintVisible(false); openKeyboard() }}
+							onPointerDown={() => setIsTypingHintVisible(true)}
+							onPointerUp={() => setIsTypingHintVisible(false)}
+							onPointerCancel={() => setIsTypingHintVisible(false)}
+							onPointerLeave={() => setIsTypingHintVisible(false)}
+							aria-label="Type a response"
+						><img src={typingIcon} alt="" /></button>
 						<button
 							className={`talk-control talk-control--voice${isSpeaking ? ' is-speaking' : ''}`}
 							type="button"
@@ -250,6 +298,8 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 							onPointerUp={() => setIsSpeaking(false)}
 							onPointerCancel={() => setIsSpeaking(false)}
 							onPointerLeave={() => setIsSpeaking(false)}
+							// TODO: ยังไม่ได้ต่อระบบอัดเสียง — ตอนนี้ปล่อยปุ่มแล้วไปหน้า Speaking Feedback เลย
+							onClick={onFinish}
 							aria-label="Hold to speak"
 						>
 							<img src={voiceIcon} alt="" />
@@ -269,7 +319,7 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 								<img src={hintIcon} alt="" />
 							</button>
 						</div>
-						<span className="talk-control-hint">{isAwaitingReply ? 'Talko is thinking...' : 'Type to answer'}</span>
+						{(isAwaitingReply || isTypingHintVisible) && <span className="talk-control-hint">{isAwaitingReply ? 'Talko is thinking...' : 'Type to answer'}</span>}
 					</div>
 				))}
 			</section>

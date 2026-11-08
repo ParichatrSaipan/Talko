@@ -167,6 +167,10 @@
   border: 1px solid rgba(0, 0, 0, 0.20);
 }
 
+.social-button:disabled {
+  cursor: default;
+}
+
 .social-button + .social-button {
   margin-top: 11px;
 }

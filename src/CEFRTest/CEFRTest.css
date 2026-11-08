@@ -97,7 +97,7 @@
 
 .level-test-content {
   min-height: calc(100svh - 74px);
-  padding: 59px 16px 0px;
+  padding: 40px 16px 20px;
 }
 
 .level-test-progress-labels {
@@ -147,7 +147,8 @@
 .level-test-answers {
   display: grid;
   gap: 17px;
-  margin-top: 61.55px;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 .level-test-answer {
@@ -179,6 +180,7 @@
 .level-test-letter {
   width: 33px;
   height: 33px;
+  flex-shrink: 0;
   display: grid;
   place-items: center;
   border-radius: 50%;
@@ -188,14 +190,11 @@
 }
 
 .level-test-navigation {
-  position: fixed;
-  bottom: 0;
   right: 16px;
   left: 16px;
   z-index: 10; 
   display: flex;
   justify-content: space-between; /*คือการจัดวางให้ปุ่มอยู่ด้านซ้ายและขวา*/
-  margin-bottom: 88px;
 }
 
 .level-test-navigation button {

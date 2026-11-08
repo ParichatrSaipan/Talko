@@ -2,7 +2,6 @@ import { useState } from 'react'
 import type { FormEvent } from 'react'
 import './CreateAccountPage.css'
 import '../Font/Fonts.css'
-import { supabase } from '../lib/supabase'
 import AuthCard from './AuthCard.Component'
 
 type CreateAccountPageProps = {
@@ -22,36 +21,10 @@ function CreateAccountPage({ onCreateAccount }: CreateAccountPageProps) {
   const [showPassword, setShowPassword] = useState(false)
   const [confirmedPassword, setConfirmedPassword] = useState('')
   const [showConfirmedPassword, setShowConfirmedPassword] = useState(false)
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  // TODO: ต่อ backend สมัครสมาชิกภายหลัง — ตอนนี้กด Create account แล้วไปหน้าถัดไปเลย
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-
-    if (!meetsPasswordRequirements(password)) {
-      setError('')
-      return
-    }
-
-    if (password !== confirmedPassword) {
-      setError('')
-      return
-    }
-
-    setError('')
-    setLoading(true)
-    const { error: signUpError } = await supabase.auth.signUp({
-      email,
-      password,
-      options: { data: { username } },
-    })
-    setLoading(false)
-
-    if (signUpError) {
-      setError(signUpError.message)
-      return
-    }
-
     onCreateAccount()
   }
 
@@ -59,20 +32,13 @@ function CreateAccountPage({ onCreateAccount }: CreateAccountPageProps) {
   const passwordNeedsRequirements = !passwordMeetsRequirements
   const passwordIsInvalid = password.length > 0 && passwordNeedsRequirements
   const passwordsDoNotMatch = confirmedPassword.length > 0 && password !== confirmedPassword
-  const formIsComplete = Boolean(
-    username.trim()
-    && email.trim()
-    && passwordMeetsRequirements
-    && confirmedPassword
-    && password === confirmedPassword,
-  )
 
   return (
     <main className="create-account-page">
       <AuthCard className="create-account-card">
         <h1>Create Account</h1>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} noValidate>
           <label htmlFor="create-username">Username</label>
           <input
             id="create-username"
@@ -108,10 +74,7 @@ function CreateAccountPage({ onCreateAccount }: CreateAccountPageProps) {
               value={password}
               aria-describedby={passwordNeedsRequirements ? 'create-password-requirements' : undefined}
               aria-invalid={passwordIsInvalid}
-              onChange={(event) => {
-                setPassword(event.target.value)
-                setError('')
-              }}
+              onChange={(event) => setPassword(event.target.value)}
               required
             />
             <button
@@ -149,11 +112,8 @@ function CreateAccountPage({ onCreateAccount }: CreateAccountPageProps) {
               placeholder="***********"
               autoComplete="new-password"
               value={confirmedPassword}
-              onChange={(event) => {
-                setConfirmedPassword(event.target.value)
-                setError('')
-              }}
-              aria-describedby={passwordsDoNotMatch ? 'create-confirm-password-error' : error ? 'create-account-error' : undefined}
+              onChange={(event) => setConfirmedPassword(event.target.value)}
+              aria-describedby={passwordsDoNotMatch ? 'create-confirm-password-error' : undefined}
               aria-invalid={passwordsDoNotMatch}
               required
             />
@@ -183,11 +143,9 @@ function CreateAccountPage({ onCreateAccount }: CreateAccountPageProps) {
             </p>
           )}
 
-          <p className="create-account-error" id="create-account-error" role="alert">
-            {error}
-          </p>
+          <p className="create-account-error" id="create-account-error" />
 
-          <button type="submit" disabled={!formIsComplete || loading}>{loading ? 'Creating...' : 'Create account'}</button>
+          <button type="submit">Create account</button>
         </form>
       </AuthCard>
     </main>

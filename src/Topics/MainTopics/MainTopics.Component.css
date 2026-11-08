@@ -5,11 +5,17 @@
 }
 
 .main-topics-page {
-	height: 100svh;
-	height: 100dvh;
+	--main-topics-header-height: 53px; /* ต้องเท่ากับความสูง .app-header ใน Header.Component.css */
+	--main-topics-hero-padding: 60px; /* ระยะบน/ล่างของชื่อหมวด (Work, Travel, Interview) */
+	--main-topics-title-height: 34px;
+	--main-topics-hero-height: calc(var(--main-topics-hero-padding) * 2 + var(--main-topics-title-height)); /* ความสูงสีฟ้าตอนยังไม่เลื่อน */
+	--main-topics-hero-min-visible: 89px; /* สีฟ้าที่เหลือให้เห็นหลังเลื่อน */
+	--main-topics-panel-radius: 28px; /* ความโค้งขอบบนกล่องสีดำ */
+	--main-topics-hero-color: #7EC7FF;
+	min-height: 100svh;
+	min-height: 100dvh;
 	display: flex;
 	flex-direction: column;
-	overflow: hidden;
 	background: #000;
 	color: #fff;
 }
@@ -17,6 +23,13 @@
 .main-topics-page > .app-header,
 .main-topics-hero {
 	flex: 0 0 auto;
+}
+
+/* แถบ Talko ค้างอยู่บนสุดตอนเลื่อน */
+.main-topics-page > .app-header {
+	position: sticky;
+	top: 0;
+	z-index: 10;
 }
 
 .main-topics-header {
@@ -160,11 +173,15 @@
 }
 
 .main-topics-page:is(.main-topics-page--work, .main-topics-page--travel, .main-topics-page--interview) .main-topics-hero {
-	height: 175px;
+	/* เลื่อนขึ้นไปจนเหลือสีฟ้าให้เห็นตาม --main-topics-hero-min-visible แล้วค้างไว้ */
+	position: sticky;
+	top: calc(var(--main-topics-header-height) + var(--main-topics-hero-min-visible) - var(--main-topics-hero-height));
+	z-index: 3; /* อยู่เหนือการ์ด การ์ดจะเลื่อนลอดใต้สีฟ้า */
+	height: var(--main-topics-hero-height); /* ชื่อหมวดอยู่กลาง จึงห่างบน/ล่าง = --main-topics-hero-padding */
 	padding: 0;
 	justify-content: center;
-	overflow: hidden;
-	background: #7EC7FF;
+	overflow: clip; /* ห้ามใช้ hidden — จะทำให้ชื่อหมวด (sticky) วัดตำแหน่งผิด */
+	background: var(--main-topics-hero-color);
 }
 
 .main-topics-page:is(.main-topics-page--work, .main-topics-page--travel, .main-topics-page--interview) .main-topics-hero::after {
@@ -176,8 +193,13 @@
 }
 
 .main-topics-page:is(.main-topics-page--work, .main-topics-page--travel, .main-topics-page--interview) .main-topics-hero h1 {
-	position: relative;
+	/* เลื่อนขึ้นตามสีฟ้า แล้วหยุดอยู่กลางส่วนสีฟ้าที่เหลือ */
+	position: sticky;
+	top: calc(var(--main-topics-header-height) + (var(--main-topics-hero-min-visible) - var(--main-topics-title-height)) / 2);
+	bottom: auto;
 	z-index: 2;
+	height: var(--main-topics-title-height);
+	line-height: var(--main-topics-title-height);
 	font-size: 28px;
 	font-family: 'Inter Bold';
 
@@ -295,10 +317,23 @@
 .main-topics-page:is(.main-topics-page--work, .main-topics-page--travel, .main-topics-page--interview) .main-topics-content {
 	position: relative;
 	z-index: 2;
-	margin-top: -22px;
-	padding-top: 28px;
-	border-radius: 28px 28px 0 0;
+	padding-top: 0;
 	background: #000;
+}
+
+/* ขอบโค้งของกล่องสีดำ: ตรงกลางโปร่งใส เติมสีฟ้าแค่สองมุม
+   ค้างอยู่ใต้สีฟ้า การ์ดจะหายเข้าไปพอดีขอบโค้ง */
+.main-topics-page:is(.main-topics-page--work, .main-topics-page--travel, .main-topics-page--interview) .main-topics-content::before {
+	content: '';
+	position: sticky;
+	top: calc(var(--main-topics-header-height) + var(--main-topics-hero-min-visible));
+	z-index: 4;
+	flex: 0 0 var(--main-topics-panel-radius);
+	margin: 0 -16px;
+	pointer-events: none;
+	background:
+		radial-gradient(circle at 100% 100%, transparent calc(var(--main-topics-panel-radius) - 0.5px), var(--main-topics-hero-color) var(--main-topics-panel-radius)) top left / var(--main-topics-panel-radius) var(--main-topics-panel-radius) no-repeat,
+		radial-gradient(circle at 0 100%, transparent calc(var(--main-topics-panel-radius) - 0.5px), var(--main-topics-hero-color) var(--main-topics-panel-radius)) top right / var(--main-topics-panel-radius) var(--main-topics-panel-radius) no-repeat;
 }
 
 .main-topics-page:is(.main-topics-page--work, .main-topics-page--interview) .main-topics-intro {
@@ -306,12 +341,10 @@
 }
     
 .main-topics-content {
-	min-height: 0;
 	padding: 0 16px 16px;
 	display: flex;
 	flex: 1 1 auto;
 	flex-direction: column;
-	overflow: hidden;
 }
 
 .main-topics-filters {
@@ -364,7 +397,6 @@
 }
 
 .main-topics-grid {
-	min-height: 0;
 	padding-bottom: 90px;
 	display: grid;
 	flex: 1 1 auto;
@@ -374,15 +406,6 @@
 	align-content: start;
     justify-content: center;
 	gap: 24px;
-	overflow-y: auto;
-	overflow-x: hidden;
-	overscroll-behavior: contain;
-	-webkit-overflow-scrolling: touch;
-	scrollbar-width: none;
-}
-
-.main-topics-grid::-webkit-scrollbar {
-	display: none;
 }
 
 .main-topic-card {

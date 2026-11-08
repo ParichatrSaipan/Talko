@@ -3,24 +3,14 @@ import '../Font/Fonts.css'
 import './CEFRTest.css'
 import Header from '../Header/Header.Component'
 import type { MenuDestination } from '../Hamburger/Menu'
-
-const questions = [
-  {
-    beforeBlank: 'If I ',
-    afterBlank: ' enough money,',
-    nextLine: 'I would travel around Europe.',
-    answers: ['have', 'had', 'will have', 'having'],
-  },
-  {
-    beforeBlank: 'She ',
-    afterBlank: ' English every day.',
-    nextLine: '',
-    answers: ['study', 'studies', 'studied', 'studying'],
-  },
-]
+import { ASSESSMENT_BANK } from './USassessment_bank'
 
 const answerLetters = ['A', 'B', 'C', 'D']
-const totalQuestions = 15
+const totalQuestions = Math.min(15, ASSESSMENT_BANK.length)
+const questions = Array.from({ length: totalQuestions }, (_, index) => {
+  const bankIndex = Math.floor(((index + 0.5) * ASSESSMENT_BANK.length) / totalQuestions)
+  return ASSESSMENT_BANK[bankIndex]
+})
 
 function CEFRTestPage({ onBack, onNext, onMenuNavigate }: { onBack: () => void; onNext: () => void; onMenuNavigate?: (destination: MenuDestination) => void }) {
   const [questionIndex, setQuestionIndex] = useState(0)
@@ -49,7 +39,7 @@ function CEFRTestPage({ onBack, onNext, onMenuNavigate }: { onBack: () => void; 
   }
 
   function goNext() {
-    if (questionIndex < questions.length - 1) {
+    if (questionIndex < totalQuestions - 1) {
       setQuestionIndex((currentIndex) => currentIndex + 1)
       return
     }
@@ -71,15 +61,14 @@ function CEFRTestPage({ onBack, onNext, onMenuNavigate }: { onBack: () => void; 
         </div>
 
         <div className="level-test-question" aria-live="polite">
-          &quot;{question.beforeBlank}<span>______</span>{question.afterBlank}
-          {question.nextLine && <><br />{question.nextLine}</>}&quot;
+          {question.question}
         </div>
 
         <div className="level-test-answers" role="group" aria-label="Answer choices">
-          {question.answers.map((answer, answerIndex) => (
+          {question.options.map((answer, answerIndex) => (
             <button
               className={`level-test-answer${selectedAnswers[questionIndex] === answer ? ' is-selected' : ''}`}
-              key={answer}
+              key={`${question.id}-${answer}`}
               type="button"
               onClick={() => selectAnswer(answer)}
             >
