@@ -40,6 +40,12 @@ html:has(.home-page) {
 	--page-bottom: #ADFFDA;
 }
 
+/* หน้า Result / Practice: ขอบล่างมีแสงเขียวเข้ม (#1b3f36 → #07110f) ใช้สีกลางให้ต่อกันเนียน */
+html:has(.avatar-result-page),
+html:has(.practice-page) {
+	--page-bottom: #112823;
+}
+
 /* หน้า Talko is calling ไม่มี header: ใช้สีบน/ล่างของ gradient หน้านั้น */
 html:has(.call-page) {
 	--page-top: #7EC7FF;
