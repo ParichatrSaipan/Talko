@@ -63,7 +63,7 @@
 .call-practice-card {
 	width: 100%;
 	max-width: 335px;
-	min-height: 467px;
+	height: 467px;
     padding: 32px 20px 64px 20px;
 	margin-bottom: 47px;
 	box-sizing: border-box;
