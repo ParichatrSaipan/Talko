@@ -19,20 +19,42 @@ body {
 	font-family: 'Inter';
 }
 
-/* สีพื้นหลังนอกตัวหน้า (ใต้แถบเครื่องมือ Safari / ตอนดึงหน้าเด้ง) ให้ตรงกับสีล่างสุดของแต่ละหน้า
-   ไม่งั้นหน้าพื้นสีอ่อนจะเห็นแถบดำด้านล่าง ความสูงแต่ละเครื่องไม่เท่ากันก็ยังต่อกันเนียน */
+/* สีพื้นหลังนอกตัวหน้า สำหรับหน้าพื้นสีอ่อน
+   --page-top: สีแถบบนของ iPhone (Safari ใช้สีพื้นหลัง body) ให้ตรงกับ header
+   --page-bottom: สีใต้แถบเครื่องมือ Safari / ตอนดึงหน้าเด้ง ให้ตรงกับสีล่างสุดของหน้า
+   ความสูงจอแต่ละเครื่องไม่เท่ากันก็ยังต่อกันเนียน */
 html:has(.question-page),
-html:has(.question-page) body,
-html:has(.level-test-page),
-html:has(.level-test-page) body {
-	background: #72baf0;
+html:has(.level-test-page) {
+	--page-top: #fff;
+	--page-bottom: #72baf0;
 }
 
-html:has(.call-page),
-html:has(.call-page) body,
-html:has(.home-page),
-html:has(.home-page) body {
-	background: #ADFFDA;
+html:has(.call-page) {
+	--page-top: #7EC7FF;
+	--page-bottom: #ADFFDA;
+}
+
+html:has(.home-page) {
+	--page-top: #fff;
+	--page-bottom: #ADFFDA;
+}
+
+html:is(:has(.question-page), :has(.level-test-page), :has(.call-page), :has(.home-page)),
+html:is(:has(.question-page), :has(.level-test-page), :has(.call-page), :has(.home-page)) body {
+	background: var(--page-top);
+}
+
+/* ชั้นสีล่างล็อกครึ่งล่างของจอ อยู่หลังตัวหน้า (z-index: -1) จึงเห็นเฉพาะส่วนที่อยู่นอกตัวหน้า */
+html:is(:has(.question-page), :has(.level-test-page), :has(.call-page), :has(.home-page)) body::after {
+	content: '';
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: -1;
+	height: 50vh;
+	background: var(--page-bottom);
+	pointer-events: none;
 }
 
 button,
