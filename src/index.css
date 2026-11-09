@@ -19,11 +19,12 @@ body {
 	font-family: 'Inter';
 }
 
-/* สีพื้นหลังนอกตัวหน้า สำหรับหน้าพื้นสีอ่อน
-   --page-top: สีแถบบนของ iPhone (Safari ใช้สีพื้นหลัง body) ให้ตรงกับ header
-   --page-bottom: สีใต้แถบเครื่องมือ Safari / ตอนดึงหน้าเด้ง ให้ตรงกับสีล่างสุดของหน้า
-   ความสูงจอแต่ละเครื่องไม่เท่ากันก็ยังต่อกันเนียน */
-/* ทุกหน้าที่มี header: ด้านบนขาวตาม header ด้านล่างดำ (สีพื้นของหน้าพื้นมืด) */
+/* สีนอกตัวหน้าบน iPhone (Safari)
+   --page-top:    สีแถบบนสุด (เวลา/แบต) = สีขาวตาม header
+   --page-bottom: สีด้านล่าง (ใต้แถบเครื่องมือ Safari / ตอนเลื่อนสุดแล้วหน้าเด้ง) = สีล่างสุดของหน้า
+   ด้านล่างใช้สีพื้นของ html เพราะเป็นสีที่ Safari แสดงในพื้นที่นอกตัวหน้า */
+
+/* ทุกหน้าที่มี header: ด้านบนขาว ด้านล่างดำ (หน้าพื้นมืด) */
 html:has(.app-header) {
 	--page-top: #fff;
 	--page-bottom: #000;
@@ -45,22 +46,20 @@ html:has(.call-page) {
 	--page-bottom: #ADFFDA;
 }
 
-html:is(:has(.app-header), :has(.call-page)),
+html:is(:has(.app-header), :has(.call-page)) {
+	background: var(--page-bottom);
+}
+
 html:is(:has(.app-header), :has(.call-page)) body {
 	background: var(--page-top);
 }
 
-/* ชั้นสีล่างล็อกครึ่งล่างของจอ อยู่หลังตัวหน้า (z-index: -1) จึงเห็นเฉพาะส่วนที่อยู่นอกตัวหน้า */
-html:is(:has(.app-header), :has(.call-page)) body::after {
-	content: '';
-	position: fixed;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	z-index: -1;
-	height: 50vh;
-	background: var(--page-bottom);
-	pointer-events: none;
+/* header ติดขอบบนจอเสมอ: Safari บน iOS 26 ใช้สีของ element ที่ติดขอบบนเป็นสีแถบบนสุด
+   แถบบนจึงเป็นสีขาวตาม header ทุกหน้า แม้เลื่อนหน้าลงไปแล้ว */
+.app-header {
+	position: sticky;
+	top: 0;
+	z-index: 10;
 }
 
 button,
