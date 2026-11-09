@@ -54,6 +54,20 @@ html:is(:has(.app-header), :has(.call-page)) body {
 	background: var(--page-top);
 }
 
+/* ชั้นสีล็อกครึ่งล่างของจอ อยู่หลังตัวหน้า (z-index: -1) เห็นเฉพาะส่วนที่อยู่นอกตัวหน้า
+   Safari ใช้ชั้นนี้เป็นสีใต้แถบเครื่องมือด้านล่าง (ทดสอบบน iPhone แล้ว ด้านล่างเป็นสีของหน้า) */
+html:is(:has(.app-header), :has(.call-page)) body::after {
+	content: '';
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: -1;
+	height: 50vh;
+	background: var(--page-bottom);
+	pointer-events: none;
+}
+
 /* header ติดขอบบนจอเสมอ: Safari บน iOS 26 ใช้สีของ element ที่ติดขอบบนเป็นสีแถบบนสุด
    แถบบนจึงเป็นสีขาวตาม header ทุกหน้า แม้เลื่อนหน้าลงไปแล้ว */
 .app-header {
