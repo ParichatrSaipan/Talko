@@ -5,10 +5,11 @@ import './CEFRTest.css'
 import Header from '../Header/Header.Component'
 import type { MenuDestination } from '../Hamburger/Menu'
 
-function CEFRLandingPage({ onBack, onContinue, onMenuNavigate }: { onBack: () => void; onContinue: () => void; onMenuNavigate?: (destination: MenuDestination) => void }) {
+// onMenuNavigate ยังรับไว้ให้ App ส่งมาได้เหมือนเดิม แต่หน้านี้ไม่แสดงปุ่มเมนูแล้ว
+function CEFRLandingPage({ onBack, onContinue }: { onBack: () => void; onContinue: () => void; onMenuNavigate?: (destination: MenuDestination) => void }) {
   return (
     <main className="question-page language-level-page">
-      <Header onMenuNavigate={onMenuNavigate} />
+      <Header showMenu={false} />
 
       <section className="language-level-content">
         <button className="question-back-button" type="button" onClick={onBack} aria-label="Go back">

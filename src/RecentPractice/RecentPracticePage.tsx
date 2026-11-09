@@ -13,7 +13,7 @@ type RecentPracticePageProps = {
 	onMenuNavigate?: (destination: MenuDestination) => void
 }
 
-function RecentPracticePage({ onBack, onMenuNavigate }: RecentPracticePageProps) {
+function RecentPracticePage({ onBack, onTravelSelect, onWorkSelect, onMenuNavigate }: RecentPracticePageProps) {
 	const [activeTab, setActiveTab] = useState<PracticeStatus>('in-progress')
 	// TODO: ยังไม่ได้ต่อ backend — ลบแล้วจะกลับมาเมื่อรีเฟรชหน้า
 	const [items, setItems] = useState<PracticeItem[]>(practiceItems)
@@ -28,6 +28,17 @@ function RecentPracticePage({ onBack, onMenuNavigate }: RecentPracticePageProps)
 		window.addEventListener('keydown', handleKeyDown)
 		return () => window.removeEventListener('keydown', handleKeyDown)
 	}, [pendingRestart])
+
+	// แท็บ In progress: กดแล้วไปหน้าหัวข้อนั้นเพื่อฝึกต่อ ไม่ต้องถามเริ่มใหม่
+	// แท็บ Completed: ถามก่อนว่าจะเริ่มบทสนทนาใหม่ไหม (practice-restart-sheet)
+	function openPractice(item: PracticeItem) {
+		if (item.status === 'in-progress') {
+			if (item.category === 'Work') onWorkSelect()
+			else onTravelSelect()
+			return
+		}
+		setPendingRestart(item)
+	}
 
 	function confirmRestart() {
 		if (!pendingRestart) return
@@ -65,7 +76,7 @@ function RecentPracticePage({ onBack, onMenuNavigate }: RecentPracticePageProps)
 
 				<div className="practice-list" role="tabpanel">
 					{visiblePractice.map((item) => (
-						<button className="profile-practice-card" type="button" key={item.id} onClick={() => setPendingRestart(item)}>
+						<button className="profile-practice-card" type="button" key={item.id} onClick={() => openPractice(item)}>
 							<span className="profile-practice-icon" aria-hidden="true"><img src={item.icon} alt="" /></span>
 							<span className="profile-practice-copy">
 								<strong>{item.title}</strong>

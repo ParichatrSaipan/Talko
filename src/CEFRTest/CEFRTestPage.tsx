@@ -12,7 +12,8 @@ const questions = Array.from({ length: totalQuestions }, (_, index) => {
   return ASSESSMENT_BANK[bankIndex]
 })
 
-function CEFRTestPage({ onBack, onNext, onMenuNavigate }: { onBack: () => void; onNext: () => void; onMenuNavigate?: (destination: MenuDestination) => void }) {
+// onMenuNavigate ยังรับไว้ให้ App ส่งมาได้เหมือนเดิม แต่หน้านี้ไม่แสดงปุ่มเมนูแล้ว
+function CEFRTestPage({ onBack, onNext }: { onBack: () => void; onNext: () => void; onMenuNavigate?: (destination: MenuDestination) => void }) {
   const [questionIndex, setQuestionIndex] = useState(0)
   const [selectedAnswers, setSelectedAnswers] = useState<(string | null)[]>(
     () => questions.map(() => null),
@@ -70,7 +71,7 @@ function CEFRTestPage({ onBack, onNext, onMenuNavigate }: { onBack: () => void; 
 
   return (
     <main className="level-test-page">
-      <Header onMenuNavigate={onMenuNavigate} />
+      <Header showMenu={false} />
 
       <section className="level-test-content">
         <div className="level-test-progress-labels">
