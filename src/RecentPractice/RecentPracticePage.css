@@ -99,7 +99,6 @@
 
 .practice-restart-sheet {
 	width: min(100%, 430px);
-	min-height: 62svh;
 	position: relative;
 	padding: 46px 16px 84px;
 	display: flex;
@@ -173,14 +172,14 @@
 }
 
 .practice-restart-actions {
-	width: 100%;
-	padding-top: 103px;
+	padding-top: 40px;
 	display: grid;
 	gap: 22px;
 }
 
 .practice-restart-actions button {
-	height: 64px;
+	padding: 0 60px;
+	height: 60px;
 	border: 0;
 	border-radius: 100px;
 	color: #080808;
