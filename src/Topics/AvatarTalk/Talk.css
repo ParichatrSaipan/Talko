@@ -765,6 +765,18 @@
 	background: var(--talk-page-bg);
 }
 
+/* ตอนแป้นพิมพ์มือถือเปิด (class ใส่จาก Talk.tsx): ยกแถบล่างขึ้นเหนือแป้นพิมพ์ และลดระยะล่างลง
+   ตอนแป้นพิมพ์ปิดจะใช้ค่าปกติด้านบน ปุ่มจึงไม่ลอยสูงเกินไป */
+.talk-page.keyboard-open .talk-controls,
+.talk-page.keyboard-open .talk-typing-bar {
+	bottom: var(--keyboard-inset, 0px);
+	padding-bottom: 8px;
+}
+
+.talk-page.keyboard-open .talk-control-hint {
+	display: none;
+}
+
 .talk-typing {
 	display: grid;
 	grid-template-columns: 1fr auto auto;

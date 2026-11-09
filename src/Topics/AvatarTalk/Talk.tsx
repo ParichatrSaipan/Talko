@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { flushSync } from 'react-dom'
 import './Talk.css'
@@ -56,6 +56,30 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 	const typingInputRef = useRef<HTMLInputElement>(null)
 	const sentencePlaybackButtonRef = useRef<HTMLButtonElement>(null)
 	const speechRequestRef = useRef(0)
+	const pageRef = useRef<HTMLElement>(null)
+
+	// ตรวจจับแป้นพิมพ์บนมือถือผ่าน Visual Viewport: ใส่ class keyboard-open + ตัวแปร --keyboard-inset (ความสูงแป้นพิมพ์)
+	// เพื่อยกแถบล่างขึ้นเหนือแป้นพิมพ์เฉพาะตอนเปิดอยู่ ตอนปิดแป้นพิมพ์ layout เหมือนเดิม
+	useEffect(() => {
+		const viewport = window.visualViewport
+		const page = pageRef.current
+		if (!viewport || !page) return
+		function updateKeyboardState() {
+			if (!viewport || !page) return
+			const inset = Math.max(0, window.innerHeight - viewport.height - viewport.offsetTop)
+			const isOpen = inset > 150
+			page.classList.toggle('keyboard-open', isOpen)
+			page.style.setProperty('--keyboard-inset', `${isOpen ? inset : 0}px`)
+		}
+		updateKeyboardState()
+		viewport.addEventListener('resize', updateKeyboardState)
+		viewport.addEventListener('scroll', updateKeyboardState)
+		return () => {
+			viewport.removeEventListener('resize', updateKeyboardState)
+			viewport.removeEventListener('scroll', updateKeyboardState)
+		}
+	}, [])
+
 	const avatarState: TalkState = isSentencePlaybackActive
 		? 'speaking'
 		: isAwaitingReply
@@ -168,7 +192,7 @@ function Talk({ onBack, onFinish, isConversationFinished = false, onMenuNavigate
 	}
 
 	return (
-		<main className="talk-page">
+		<main className="talk-page" ref={pageRef}>
 			<Header onMenuNavigate={onMenuNavigate} />
 			<section className="talk-content">
 				<div className="talk-stage">
