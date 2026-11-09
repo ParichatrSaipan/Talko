@@ -72,6 +72,7 @@ function getPageFromPath(pathname = window.location.pathname): Page {
 
 const jobRoleStorageKey = 'talko.jobRole'
 const interviewRoleStorageKey = 'talko.interviewRole'
+const mockSessionStorageKey = 'talko.mockSession'
 
 function getStoredJobRole() {
   try {
@@ -107,6 +108,23 @@ function storeInterviewRole(role: string) {
   }
 }
 
+function getStoredMockSession() {
+  try {
+    return localStorage.getItem(mockSessionStorageKey) === 'true'
+  } catch {
+    return false
+  }
+}
+
+function storeMockSession(signedIn: boolean) {
+  try {
+    if (signedIn) localStorage.setItem(mockSessionStorageKey, 'true')
+    else localStorage.removeItem(mockSessionStorageKey)
+  } catch {
+    // Keep the session in memory only when storage is unavailable.
+  }
+}
+
 function getActiveMenuDestination(page: Page, topicReturnPage: 'main-topics' | 'main-work' | 'main-travel'): MenuDestination | null {
   if (page === 'main-home' || page === 'topics') return 'home'
   if (page === 'role-interested' || page === 'main-topics') return 'interview'
@@ -121,7 +139,10 @@ function getActiveMenuDestination(page: Page, topicReturnPage: 'main-topics' | '
 }
 
 function App() {
-  const [page, setPage] = useState<Page>(getPageFromPath)
+  const [page, setPage] = useState<Page>(() => {
+    const initialPage = getPageFromPath()
+    return !supabase && getStoredMockSession() && (initialPage === 'home' || initialPage === 'sign-in') ? 'main-home' : initialPage
+  })
   const [topicReturnPage, setTopicReturnPage] = useState<'main-topics' | 'main-work' | 'main-travel'>('main-topics')
   const [selectedTopic, setSelectedTopic] = useState<TopicCard | null>(null)
   const [profileName, setProfileName] = useState('Alex')
@@ -145,6 +166,7 @@ function App() {
   }, [page])
 
   useEffect(() => {
+    if (!supabase) return
     supabase.auth.getSession().then(({ data }) => {
       if (data.session) {
         setPage((current) => (current === 'home' || current === 'sign-in' ? 'main-home' : current))
@@ -196,7 +218,8 @@ function App() {
       storeJobRole('')
       setInterviewRole('')
       storeInterviewRole('')
-      supabase.auth.signOut()
+      storeMockSession(false)
+      supabase?.auth.signOut()
       setPage('home')
     }
   }
@@ -207,11 +230,17 @@ function App() {
   }
 
   if (page === 'sign-in') {
-    return <SignInAccountPage onCreateAccount={() => setPage('create-account')} onForgotPassword={() => setPage('reset-password')} onLogin={() => setPage('main-home')} />
+    return <SignInAccountPage onCreateAccount={() => setPage('create-account')} onForgotPassword={() => setPage('reset-password')} onLogin={() => {
+      storeMockSession(true)
+      setPage('main-home')
+    }} />
   }
 
   if (page === 'create-account') {
-    return <CreateAccountPage onCreateAccount={() => setPage('age')} />
+    return <CreateAccountPage onCreateAccount={() => {
+      storeMockSession(true)
+      setPage('age')
+    }} />
   }
 
   if (page === 'reset-password') {
