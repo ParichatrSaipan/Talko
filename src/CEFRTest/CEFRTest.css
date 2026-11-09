@@ -59,6 +59,7 @@
 /*LevelTest Page Styles*/
 .level-test-page {
   min-height: 100svh;
+  min-height: 100dvh; /* ยืดเต็มจอตามแถบเบราว์เซอร์ที่หด/ขยาย */
   background: linear-gradient(180deg, #a8f5d8 0%, #72baf0 100%);
   color: #080808;
 }

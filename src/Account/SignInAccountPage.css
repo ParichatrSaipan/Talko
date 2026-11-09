@@ -6,6 +6,7 @@
 
 .sign-in-page {
   min-height: 100svh; /* Use 100svh to account for mobile browser UI */
+  min-height: 100dvh; /* ยืดเต็มจอตามแถบเบราว์เซอร์ที่หด/ขยาย */
   display: flex;
   justify-content: center;
   align-items: center;

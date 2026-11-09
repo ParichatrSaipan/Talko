@@ -6,6 +6,7 @@
 
 .practice-page {
 	min-height: 100svh;
+	min-height: 100dvh; /* ยืดเต็มจอตามแถบเบราว์เซอร์ที่หด/ขยาย */
 	background:
 		radial-gradient(circle at 0 100%, rgba(36, 80, 68, .82), transparent 48%),
 		radial-gradient(circle at 0 0, #1a3444, transparent 40%),

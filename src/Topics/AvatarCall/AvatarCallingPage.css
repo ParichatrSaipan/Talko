@@ -6,6 +6,7 @@
 
 .call-page {
 	min-height: 100svh;
+	min-height: 100dvh; /* ยืดเต็มจอตามแถบเบราว์เซอร์ที่หด/ขยาย */
 	padding: 56px 20px 0;
 	padding-bottom: max(16px, env(safe-area-inset-bottom));
 	box-sizing: border-box;

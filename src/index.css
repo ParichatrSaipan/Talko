@@ -50,8 +50,10 @@ html:is(:has(.app-header), :has(.call-page)) {
 	background: var(--page-bottom);
 }
 
+/* body ใช้สีล่างด้วย: ตอนเลื่อนหน้าแล้วแถบ Safari หดเหลือปุ่มเล็ก Safari จะใช้สี body เป็นสีด้านล่าง
+   ส่วนด้านบนได้สีขาวจาก header ที่ติดขอบบนจออยู่แล้ว */
 html:is(:has(.app-header), :has(.call-page)) body {
-	background: var(--page-top);
+	background: var(--page-bottom);
 }
 
 /* แถบสีบางๆ ติดขอบล่างจอ อยู่ "บน" เนื้อหา

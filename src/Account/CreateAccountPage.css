@@ -6,6 +6,7 @@
 .create-account-page {
   width: 100%;
   min-height: 100svh;
+  min-height: 100dvh; /* ยืดเต็มจอตามแถบเบราว์เซอร์ที่หด/ขยาย */
   padding: 16px;
   display: flex;
   justify-content: center;

@@ -6,6 +6,7 @@
 
 .topics-page {
   min-height: 100svh;
+  min-height: 100dvh; /* ยืดเต็มจอตามแถบเบราว์เซอร์ที่หด/ขยาย */
   background: #000;
   color: #fff;
 }

@@ -5,6 +5,7 @@
 }
 .profile-page {
 	min-height: 100svh;
+	min-height: 100dvh; /* ยืดเต็มจอตามแถบเบราว์เซอร์ที่หด/ขยาย */
 	background:
 		radial-gradient(circle at 100% 45%, rgba(33, 76, 65, .76), transparent 44%),
 		radial-gradient(circle at 0 0, #193442, transparent 38%),
