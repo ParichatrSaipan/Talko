@@ -62,20 +62,18 @@ html:is(:has(.app-header), :has(.call-page)) body {
 	background: var(--page-bottom);
 }
 
-/* แถบสีบางๆ ติดขอบล่างจอ อยู่ "บน" เนื้อหา
-   Safari บน iPhone ดูสีของ element ที่ล็อกติดขอบจอและมองเห็นได้ แล้วใช้เป็นสีแถบด้านล่าง
-   (แบบเดียวกับ header สีขาวที่ทำให้แถบบนเป็นสีขาว) ถ้าแถบนี้ถูกเนื้อหาบัง Safari จะใช้สี body (ขาว) แทน
-   สีเดียวกับสีล่างสุดของหน้า และบางแค่ 3px จึงแทบมองไม่เห็น
-   z-index 9: อยู่ใต้ header (10), เมนู (100) และแผ่นคำศัพท์หน้า Talk (20) */
-html:is(:has(.app-header), :has(.call-page)) body::after {
+/* หน้า Talko is calling ไม่มี header: Safari จะใช้สี body (เขียวมิ้นต์ = สีล่าง) เป็นสีแถบบนแทน
+   จึงใส่แถบสีฟ้าล็อกติดขอบบนจอ ให้ Safari ใช้เป็นสีแถบบน (แบบเดียวกับ header สีขาวในหน้าอื่น)
+   สีเดียวกับสีบนสุดของ gradient หน้านี้ (#7EC7FF ทึบช่วงบนประมาณ 40px) จึงมองไม่เห็นรอยต่อ */
+html:has(.call-page) body::before {
 	content: '';
 	position: fixed;
+	top: 0;
 	right: 0;
-	bottom: 0;
 	left: 0;
 	z-index: 9;
-	height: 3px;
-	background: var(--page-bottom);
+	height: 24px;
+	background: var(--page-top);
 	pointer-events: none;
 }
 
