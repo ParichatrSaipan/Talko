@@ -3,7 +3,7 @@ import { useState } from 'react'
 import '../../Font/Fonts.css'
 import './MainTopics.Component.css'
 import interviewIcon from '../../assets/icon_Interview.svg'
-import mainImage from '../../assets/image_main.svg'
+import mainImage from '../../assets/image_main.webp'
 import Header from '../../Header/Header.Component'
 import type { MenuDestination } from '../../Hamburger/Menu'
 

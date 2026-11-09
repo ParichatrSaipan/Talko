@@ -118,15 +118,15 @@
 	position: relative;
 	overflow: hidden;
 	border-radius: 24px;
-	background: #d6d6d6 url('../../assets/bg_blue.svg') center / cover;
+	background: #d6d6d6 url('../../assets/bg_blue.webp') center / cover;
 }
 
 .talk-video--work {
-	background: url('../../assets/bg_Purple.svg') center / cover;
+	background: url('../../assets/bg_Purple.webp') center / cover;
 }
 
 .talk-video--interview {
-	background: #d6d6d6 url('../../assets/bg_Orange.svg') center / cover;
+	background: #d6d6d6 url('../../assets/bg_Orange.webp') center / cover;
 }
 
 .talk-video--idle,

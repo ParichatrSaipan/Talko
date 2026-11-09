@@ -165,6 +165,22 @@ function App() {
     }
   }, [page])
 
+  // สีแถบบนของเบราว์เซอร์ (theme-color) ตามแต่ละหน้า: อ่านจาก --page-top ใน index.css ที่เดียว
+  // หน้าที่ไม่ได้กำหนดไว้ (หน้าพื้นดำไม่มี header) ใช้สีดำ
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      const color = getComputedStyle(document.documentElement).getPropertyValue('--page-top').trim() || '#000000'
+      let meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')
+      if (!meta) {
+        meta = document.createElement('meta')
+        meta.name = 'theme-color'
+        document.head.appendChild(meta)
+      }
+      meta.content = color
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [page])
+
   useEffect(() => {
     if (!supabase) return
     supabase.auth.getSession().then(({ data }) => {
