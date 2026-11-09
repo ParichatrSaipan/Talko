@@ -19,6 +19,22 @@ body {
 	font-family: 'Inter';
 }
 
+/* สีพื้นหลังนอกตัวหน้า (ใต้แถบเครื่องมือ Safari / ตอนดึงหน้าเด้ง) ให้ตรงกับสีล่างสุดของแต่ละหน้า
+   ไม่งั้นหน้าพื้นสีอ่อนจะเห็นแถบดำด้านล่าง ความสูงแต่ละเครื่องไม่เท่ากันก็ยังต่อกันเนียน */
+html:has(.question-page),
+html:has(.question-page) body,
+html:has(.level-test-page),
+html:has(.level-test-page) body {
+	background: #72baf0;
+}
+
+html:has(.call-page),
+html:has(.call-page) body,
+html:has(.home-page),
+html:has(.home-page) body {
+	background: #ADFFDA;
+}
+
 button,
 input,
 select,
