@@ -6,7 +6,8 @@
 
 .call-page {
 	min-height: 100svh;
-	padding: 56px 20px 120px 20px;
+	padding: 56px 20px 0;
+	padding-bottom: max(16px, env(safe-area-inset-bottom));
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
@@ -63,6 +64,7 @@
 	max-width: 335px;
 	min-height: 467px;
     padding: 32px 20px 64px 20px;
+	margin-bottom: 47px;
 	box-sizing: border-box;
 	position: relative;
 	overflow: hidden;
@@ -116,7 +118,8 @@
 
 .call-actions {
 	width: min(100%, 311px);
-	margin-top: 47px;
+	/* ดันปุ่มรับ/วางสายลงไปชิดล่างจอ (ระยะห่างจากการ์ดขั้นต่ำอยู่ที่ margin-bottom ของ .call-practice-card) */
+	margin-top: auto;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -167,3 +170,72 @@
 	object-fit: contain;
 }
 
+/* จอเตี้ย: ย่อการ์ดและปุ่ม ให้ปุ่มรับ/วางสายอยู่ในจอโดยไม่ต้องเลื่อน */
+@media (max-height: 760px) {
+	.call-page {
+		padding-top: 32px;
+	}
+
+	.call-page h1 {
+		margin-bottom: 24px;
+	}
+
+	.call-practice-card {
+		min-height: 360px;
+		padding-top: 24px;
+	}
+
+	.call-practice-card p {
+		margin: 16px 0;
+	}
+
+	.call-character {
+		width: 200px;
+		bottom: -28px;
+	}
+
+	.call-practice-card {
+		margin-bottom: 24px;
+	}
+
+	.call-action {
+		width: 72px;
+		height: 72px;
+		padding: 0;
+		display: grid;
+		place-items: center;
+	}
+}
+
+@media (max-height: 620px) {
+	.call-page {
+		padding-top: 20px;
+	}
+
+	.call-page h1 {
+		margin-bottom: 16px;
+		font-size: 28px;
+	}
+
+	.call-practice-card {
+		min-height: 300px;
+	}
+
+	.call-practice-card li {
+		line-height: 26px;
+	}
+
+	.call-character {
+		width: 160px;
+		bottom: -22px;
+	}
+
+	.call-practice-card {
+		margin-bottom: 16px;
+	}
+
+	.call-action {
+		width: 64px;
+		height: 64px;
+	}
+}

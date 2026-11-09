@@ -112,17 +112,20 @@
 }
 
 .characters {
-  min-height: 0;
-  flex: 1 1 auto;
-  display: flex;
-  align-items: flex-end;
+  /* ตัวละครกินพื้นที่ที่เหลือของจอ จอเตี้ยจะย่อรูปลง ปุ่ม Get Started จึงไม่หลุดจอ */
+  position: relative;
+  min-height: 140px;
+  flex: 1 1 0;
 }
 
 .characters img {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: contain;
+  object-position: center bottom;
 }
 
 .welcome-panel {
@@ -130,7 +133,7 @@
   z-index: 2; 
   max-width: 100%;
   margin-top: -28px;
-  padding: 46px 32px  80px;
+  padding: 46px 32px max(80px, env(safe-area-inset-bottom));
   box-sizing: border-box;
   border-radius: 40px 40px 0 0;
   background: linear-gradient(180deg, #7EC7FF 5.17%, #ADFFDA 99.95%);
@@ -172,6 +175,23 @@
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
 }
 
+/* จอเตี้ย (เช่น iPhone SE): ลดระยะห่างแนวตั้งลง */
+@media (max-height: 700px) {
+  .hero-copy h1 {
+    padding-top: 28px;
+    font-size: 34px;
+  }
 
+  .hero-copy p {
+    margin-top: 12px;
+  }
 
+  .welcome-panel {
+    padding-top: 32px;
+    padding-bottom: max(28px, env(safe-area-inset-bottom));
+  }
 
+  .primary-button {
+    margin-top: 28px;
+  }
+}

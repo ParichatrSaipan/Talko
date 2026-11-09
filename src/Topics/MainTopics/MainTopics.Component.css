@@ -364,7 +364,9 @@
 
 .main-topics-filter {
 	min-width: 107px;
+	flex: 0 0 auto;
 	height: 41px;
+	white-space: nowrap;
 	padding: 4px 8px;
 	display: inline-flex;
 	align-items: center;
@@ -401,17 +403,18 @@
 	padding-bottom: 90px;
 	display: grid;
 	flex: 1 1 auto;
-	/*grid-template-columns: repeat(2, minmax(0, 1fr));*/
-    grid-template-columns: repeat(2, 153px);
+	/* 2 คอลัมน์ ยืดหดตามความกว้างจอ (จอเล็กหดลง จอใหญ่ขยายได้ถึง 180px แล้วจัดกลาง) */
+	grid-template-columns: repeat(2, minmax(0, 180px));
 	grid-auto-rows: max-content;
 	align-content: start;
-    justify-content: center;
-	gap: 24px;
+	justify-content: center;
+	gap: clamp(12px, 5vw, 24px);
 }
 
 .main-topic-card {
 	min-height: 216px;
-	width: 153px;
+	width: 100%;
+	min-width: 0;
 	padding: 6px;
 	position: relative;
 	overflow: hidden;

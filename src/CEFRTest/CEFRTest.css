@@ -35,7 +35,8 @@
 .language-level-character img {
   position: absolute;
   transform: translateX(-50%); /*คือการจัดวางให้อยู่ตรงกลาง*/
-  height: 350px;
+  /* จอเตี้ยย่อตัวละครลง ไม่ให้ทับปุ่ม Continue (สูงสุด 350px ตามดีไซน์) */
+  height: clamp(140px, calc(100svh - 450px), 350px);
 }
 
 
@@ -51,8 +52,8 @@
   color: #fff;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.10);
   font-size: 16px;
-  bottom: 0;
-  margin-bottom: 88px;
+  bottom: env(safe-area-inset-bottom, 0px);
+  margin-bottom: clamp(32px, 10svh, 88px);
 }
 
 /*LevelTest Page Styles*/
@@ -110,7 +111,7 @@
 }
 
 .level-test-progress-track {
-  width: 343px;
+  width: 100%;
   height: 6.181px;
   margin-top: 4px;
   border-radius: 100px;

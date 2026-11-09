@@ -163,7 +163,7 @@
 
 .vocab-card {
 	min-height: 91px;
-	min-width: 343px;
+	min-width: 0;
 	padding: 16px;
 	display: flex;
 	align-items: center;
